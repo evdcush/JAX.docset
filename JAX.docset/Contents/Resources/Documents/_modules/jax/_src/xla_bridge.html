@@ -1,0 +1,1794 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>jax._src.xla_bridge &#8212; JAX  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/style.css?v=02ed413a" />
+    <link rel="stylesheet" href="../../../_static/style.css" type="text/css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../../../_static/design-tabs.js?v=36754332"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/jax/_src/xla_bridge';</script>
+    <link rel="icon" href="../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/jax_logo_250px.png" class="logo__image only-light" alt="JAX  documentation - Home"/>
+    <script>document.write(`<img src="../../../_static/jax_logo_250px.png" class="logo__image only-dark" alt="JAX  documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installing JAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/quickstart.html">JAX Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/thinking_in_jax.html">How to Think in JAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/Common_Gotchas_in_JAX.html">🔪 JAX - The Sharp Bits 🔪</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq.html">JAX Frequently Asked Questions (FAQ)</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../jax-101/index.html">Tutorial: JAX 101</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/01-jax-basics.html">JAX As Accelerated NumPy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/02-jitting.html">Just In Time Compilation with JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/03-vectorization.html">Automatic Vectorization in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/04-advanced-autodiff.html">Advanced Automatic Differentiation in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/05-random-numbers.html">Pseudo Random Numbers in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/05.1-pytrees.html">Working with Pytrees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/06-parallelism.html">Parallel Evaluation in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/07-state.html">Stateful Computations in JAX</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Further Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../user_guides.html">User Guides</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../profiling.html">Profiling JAX programs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../device_memory_profiling.html">Device Memory Profiling</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../debugging/index.html">Runtime value debugging in JAX</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../debugging/print_breakpoint.html"><code class="docutils literal notranslate"><span class="pre">jax.debug.print</span></code> and <code class="docutils literal notranslate"><span class="pre">jax.debug.breakpoint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../debugging/checkify_guide.html">The <code class="docutils literal notranslate"><span class="pre">checkify</span></code> transformation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../debugging/flags.html">JAX debugging flags</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../gpu_performance_tips.html">GPU performance tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../persistent_compilation_cache.html">Persistent Compilation Cache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jaxpr.html">Understanding Jaxprs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/external_callbacks.html">External Callbacks in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../type_promotion.html">Type promotion semantics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytrees.html">Pytrees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../aot.html">Ahead-of-time lowering and compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../errors.html">JAX Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../transfer_guard.html">Transfer guard</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../pallas/index.html">Pallas: a JAX kernel language</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../pallas/design.html">Pallas Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pallas/quickstart.html">Pallas Quickstart</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../pallas/tpu/index.html">Pallas TPU</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../pallas/tpu/details.html">Writing TPU kernels with Pallas</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../pallas/tpu/pipelining.html">Pipelining and <code class="docutils literal notranslate"><span class="pre">BlockSpec</span></code>s</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../advanced_guide.html">Advanced Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/neural_network_with_tfds_data.html">Training a Simple Neural Network, with tensorflow/datasets Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Neural_Network_and_Data_Loading.html">Training a Simple Neural Network, with PyTorch Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/vmapped_log_probs.html">Autobatching for Bayesian Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../multi_process.html">Using JAX in multi-host and multi-process environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Distributed_arrays_and_automatic_parallelization.html">Distributed arrays and automatic parallelization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/shard_map.html">SPMD multi-device parallelism with <code class="docutils literal notranslate"><span class="pre">shard_map</span></code></a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/xmap_tutorial.html">Named axes and easy-to-revise parallelism with <code class="docutils literal notranslate"><span class="pre">xmap</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/autodiff_cookbook.html">The Autodiff Cookbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Custom_derivative_rules_for_Python_code.html">Custom derivative rules for JAX-transformable Python functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/autodiff_remat.html">Control autodiff’s saved values with <code class="docutils literal notranslate"><span class="pre">jax.checkpoint</span></code> (aka <code class="docutils literal notranslate"><span class="pre">jax.remat</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/How_JAX_primitives_work.html">How JAX primitives work</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Writing_custom_interpreters_in_Jax.html">Writing custom Jaxpr interpreters in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Custom_Operation_for_GPUs.html">Custom operations for GPUs with C++ and CUDA</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/convolutions.html">Generalized Convolutions in JAX</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../contributor_guide.html">Developer Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html">Contributing to JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../developer.html">Building from source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax_internal_api.html">Internal APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autodidax.html">Autodidax: JAX core from scratch</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jep/index.html">JAX Enhancement Proposals (JEPs)</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/263-prng.html">263: JAX PRNG Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/2026-custom-derivatives.html">2026: Custom JVP/VJP rules for JAX-transformable functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/4008-custom-vjp-update.html">4008: Custom VJP and `nondiff_argnums` update</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/4410-omnistaging.html">4410: Omnistaging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/9263-typed-keys.html">9263: Typed keys &amp; pluggable RNGs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/9407-type-promotion.html">9407: Design of Type Promotion Semantics for JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/9419-jax-versioning.html">9419: Jax and Jaxlib versioning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/10657-sequencing-effects.html">10657: Sequencing side-effects in JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/11830-new-remat-checkpoint.html">11830: `jax.remat` / `jax.checkpoint` new implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/12049-type-annotations.html">12049: Type Annotation Roadmap for JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/14273-shard-map.html">14273: `shard_map` (`shmap`) for simple per-device code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/15856-jex.html">15856: `jax.extend`, an extensions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/17111-shmap-transpose.html">17111: Efficient transposition of `shard_map` (and other maps)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/18137-numpy-scipy-scope.html">18137: Scope of JAX NumPy &amp; SciPy Wrappers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../investigating_a_regression.html">Investigating a regression</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../building_on_jax.html">Building on JAX</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../notes.html">Notes</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_compatibility.html">API compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../deprecation.html">Python and NumPy version support policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax_array_migration.html">jax.Array migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../async_dispatch.html">Asynchronous dispatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../concurrency.html">Concurrency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../gpu_memory_allocation.html">GPU memory allocation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../rank_promotion_warning.html">Rank promotion warning</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../jax.html">Public API: jax package</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.numpy.html"><code class="docutils literal notranslate"><span class="pre">jax.numpy</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fft.html">jax.numpy.fft.fft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fft2.html">jax.numpy.fft.fft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fftfreq.html">jax.numpy.fft.fftfreq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fftn.html">jax.numpy.fft.fftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fftshift.html">jax.numpy.fft.fftshift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.hfft.html">jax.numpy.fft.hfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifft.html">jax.numpy.fft.ifft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifft2.html">jax.numpy.fft.ifft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifftn.html">jax.numpy.fft.ifftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifftshift.html">jax.numpy.fft.ifftshift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ihfft.html">jax.numpy.fft.ihfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.irfft.html">jax.numpy.fft.irfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.irfft2.html">jax.numpy.fft.irfft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.irfftn.html">jax.numpy.fft.irfftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfft.html">jax.numpy.fft.rfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfft2.html">jax.numpy.fft.rfft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfftfreq.html">jax.numpy.fft.rfftfreq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfftn.html">jax.numpy.fft.rfftn</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.scipy.html"><code class="docutils literal notranslate"><span class="pre">jax.scipy</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.logpmf.html">jax.scipy.stats.bernoulli.logpmf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.pmf.html">jax.scipy.stats.bernoulli.pmf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.cdf.html">jax.scipy.stats.bernoulli.cdf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.ppf.html">jax.scipy.stats.bernoulli.ppf</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.lax.html"><code class="docutils literal notranslate"><span class="pre">jax.lax</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.random.html"><code class="docutils literal notranslate"><span class="pre">jax.random</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.sharding.html"><code class="docutils literal notranslate"><span class="pre">jax.sharding</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.debug.html"><code class="docutils literal notranslate"><span class="pre">jax.debug</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.dlpack.html"><code class="docutils literal notranslate"><span class="pre">jax.dlpack</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.distributed.html"><code class="docutils literal notranslate"><span class="pre">jax.distributed</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.dtypes.html"><code class="docutils literal notranslate"><span class="pre">jax.dtypes</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.flatten_util.html"><code class="docutils literal notranslate"><span class="pre">jax.flatten_util</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.image.html"><code class="docutils literal notranslate"><span class="pre">jax.image</span></code> module</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.nn.html"><code class="docutils literal notranslate"><span class="pre">jax.nn</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-13"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.nn.initializers.html"><code class="docutils literal notranslate"><span class="pre">jax.nn.initializers</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.ops.html"><code class="docutils literal notranslate"><span class="pre">jax.ops</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.profiler.html"><code class="docutils literal notranslate"><span class="pre">jax.profiler</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.stages.html"><code class="docutils literal notranslate"><span class="pre">jax.stages</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.tree.html"><code class="docutils literal notranslate"><span class="pre">jax.tree</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.tree_util.html"><code class="docutils literal notranslate"><span class="pre">jax.tree_util</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.typing.html"><code class="docutils literal notranslate"><span class="pre">jax.typing</span></code> module</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.extend.html"><code class="docutils literal notranslate"><span class="pre">jax.extend</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.extend.linear_util.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.linear_util</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.extend.mlir.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.mlir</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.extend.random.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.random</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.example_libraries.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-15"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.example_libraries.optimizers.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries.optimizers</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.example_libraries.stax.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries.stax</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.experimental.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.array_api.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.array_api</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.checkify.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.checkify</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.host_callback.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.host_callback</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.maps.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.maps</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.pjit.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.pjit</span></code> module</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../jax.experimental.sparse.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.sparse</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.BCOO.html">jax.experimental.sparse.BCOO</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_broadcast_in_dim.html">jax.experimental.sparse.bcoo_broadcast_in_dim</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_concatenate.html">jax.experimental.sparse.bcoo_concatenate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_dot_general.html">jax.experimental.sparse.bcoo_dot_general</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_dot_general_sampled.html">jax.experimental.sparse.bcoo_dot_general_sampled</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_dynamic_slice.html">jax.experimental.sparse.bcoo_dynamic_slice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_extract.html">jax.experimental.sparse.bcoo_extract</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_fromdense.html">jax.experimental.sparse.bcoo_fromdense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_gather.html">jax.experimental.sparse.bcoo_gather</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_multiply_dense.html">jax.experimental.sparse.bcoo_multiply_dense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_multiply_sparse.html">jax.experimental.sparse.bcoo_multiply_sparse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_update_layout.html">jax.experimental.sparse.bcoo_update_layout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_reduce_sum.html">jax.experimental.sparse.bcoo_reduce_sum</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_reshape.html">jax.experimental.sparse.bcoo_reshape</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_slice.html">jax.experimental.sparse.bcoo_slice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_sort_indices.html">jax.experimental.sparse.bcoo_sort_indices</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_squeeze.html">jax.experimental.sparse.bcoo_squeeze</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_sum_duplicates.html">jax.experimental.sparse.bcoo_sum_duplicates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_todense.html">jax.experimental.sparse.bcoo_todense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_transpose.html">jax.experimental.sparse.bcoo_transpose</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.jet.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.jet</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.custom_partitioning.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.custom_partitioning</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.multihost_utils.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.multihost_utils</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.compilation_cache.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.compilation_cache</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.key_reuse.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.key_reuse</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.mesh_utils.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.mesh_utils</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.lib.html"><code class="docutils literal notranslate"><span class="pre">jax.lib</span></code> module</a></li>
+</ul>
+</li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../glossary.html">JAX Glossary of Terms</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/google/jax" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for jax._src.xla_bridge</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2018 The JAX Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     https://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+
+<span class="sd">&quot;&quot;&quot;Interface and utility functions to XLA.</span>
+
+<span class="sd">This module wraps the XLA client(s) and builders to standardize their interfaces</span>
+<span class="sd">and provide some automatic type mapping logic for converting between Numpy and</span>
+<span class="sd">XLA. There are also a handful of related casting utilities.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Mapping</span>
+<span class="kn">import</span> <span class="nn">dataclasses</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">lru_cache</span><span class="p">,</span> <span class="n">partial</span>
+<span class="kn">import</span> <span class="nn">importlib</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pkgutil</span>
+<span class="kn">import</span> <span class="nn">platform</span> <span class="k">as</span> <span class="nn">py_platform</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">config</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">distributed</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">traceback_util</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">util</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">hardware_utils</span>
+<span class="kn">from</span> <span class="nn">jax._src.cloud_tpu_init</span> <span class="kn">import</span> <span class="n">maybe_import_libtpu</span>
+<span class="kn">from</span> <span class="nn">jax._src.lib</span> <span class="kn">import</span> <span class="n">cuda_versions</span>
+<span class="kn">from</span> <span class="nn">jax._src.lib</span> <span class="kn">import</span> <span class="n">xla_client</span>
+<span class="kn">from</span> <span class="nn">jax._src.lib</span> <span class="kn">import</span> <span class="n">xla_extension</span>
+<span class="kn">from</span> <span class="nn">jax._src.lib</span> <span class="kn">import</span> <span class="n">xla_extension_version</span>
+<span class="kn">from</span> <span class="nn">jax._src.lib</span> <span class="kn">import</span> <span class="n">jaxlib</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">jax_plugins</span><span class="p">:</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span>
+<span class="k">try</span><span class="p">:</span>
+  <span class="kn">import</span> <span class="nn">jax_plugins</span>  <span class="c1"># type: ignore</span>
+<span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
+  <span class="n">jax_plugins</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+  <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Failed to import jax_plugins: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+  <span class="n">jax_plugins</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="n">traceback_util</span><span class="o">.</span><span class="n">register_exclusion</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+
+<span class="n">XlaBackend</span> <span class="o">=</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">Client</span>
+
+<span class="n">MIN_COMPUTE_CAPABILITY</span> <span class="o">=</span> <span class="mi">52</span>
+
+<span class="c1"># TODO(phawkins): Remove jax_xla_backend.</span>
+<span class="n">_XLA_BACKEND</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">DEFINE_string</span><span class="p">(</span>
+    <span class="s1">&#39;jax_xla_backend&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Deprecated, please use --jax_platforms instead.&#39;</span><span class="p">)</span>
+<span class="n">BACKEND_TARGET</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">DEFINE_string</span><span class="p">(</span>
+    <span class="s1">&#39;jax_backend_target&#39;</span><span class="p">,</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;JAX_BACKEND_TARGET&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>
+    <span class="s1">&#39;Either &quot;local&quot; or &quot;rpc:address&quot; to connect to a remote service target.&#39;</span><span class="p">)</span>
+<span class="c1"># TODO(skye): warn when this is used once we test out --jax_platforms a bit</span>
+<span class="n">_PLATFORM_NAME</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">DEFINE_string</span><span class="p">(</span>
+    <span class="s1">&#39;jax_platform_name&#39;</span><span class="p">,</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;JAX_PLATFORM_NAME&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>
+    <span class="s1">&#39;Deprecated, please use --jax_platforms instead.&#39;</span><span class="p">)</span>
+<span class="n">CUDA_VISIBLE_DEVICES</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">DEFINE_string</span><span class="p">(</span>
+    <span class="s1">&#39;jax_cuda_visible_devices&#39;</span><span class="p">,</span> <span class="s1">&#39;all&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Restricts the set of CUDA devices that JAX will use. Either &quot;all&quot;, or a &#39;</span>
+    <span class="s1">&#39;comma-separate list of integer device IDs.&#39;</span><span class="p">)</span>
+<span class="n">_ROCM_VISIBLE_DEVICES</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">DEFINE_string</span><span class="p">(</span>
+    <span class="s1">&#39;jax_rocm_visible_devices&#39;</span><span class="p">,</span> <span class="s1">&#39;all&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Restricts the set of ROCM devices that JAX will use. Either &quot;all&quot;, or a &#39;</span>
+    <span class="s1">&#39;comma-separate list of integer device IDs.&#39;</span><span class="p">)</span>
+
+<span class="n">_USE_MOCK_GPU_CLIENT</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">DEFINE_bool</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;use_mock_gpu_client&quot;</span><span class="p">,</span>
+    <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;If True, use a mock GPU client instead of a real one.&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">_MOCK_NUM_GPUS</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;mock_num_gpus&quot;</span><span class="p">,</span>
+    <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Mock GPU client number of gpus.&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">_CPU_ENABLE_GLOO_COLLECTIVES</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">DEFINE_bool</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;jax_cpu_enable_gloo_collectives&quot;</span><span class="p">,</span>
+    <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;If True, enable cross-process collectives on CPU using Gloo.&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># TODO(yueshengys): turn default back to True after resolving memory increase</span>
+<span class="c1"># issue.</span>
+<span class="n">_CPU_ENABLE_ASYNC_DISPATCH</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">DEFINE_bool</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;jax_cpu_enable_async_dispatch&quot;</span><span class="p">,</span>
+    <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Only applies to non-parallel computations. If False, run computations&quot;</span>
+    <span class="s2">&quot;inline without async dispatch.&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="c1"># Warn the user if they call fork(), because it&#39;s not going to go well for them.</span>
+<span class="k">def</span> <span class="nf">_at_fork</span><span class="p">():</span>
+  <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+    <span class="s2">&quot;os.fork() was called. os.fork() is incompatible with multithreaded code, &quot;</span>
+    <span class="s2">&quot;and JAX is multithreaded, so this will likely lead to a deadlock.&quot;</span><span class="p">,</span>
+    <span class="ne">RuntimeWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">_at_fork_handler_installed</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="c1"># Backends</span>
+
+
+<span class="k">def</span> <span class="nf">_get_tpu_library_path</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="n">path_from_env</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;TPU_LIBRARY_PATH&quot;</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">path_from_env</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">path_from_env</span>
+
+  <span class="n">libtpu_module</span> <span class="o">=</span> <span class="n">maybe_import_libtpu</span><span class="p">()</span>
+  <span class="k">if</span> <span class="n">libtpu_module</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">libtpu_module</span><span class="o">.</span><span class="n">get_library_path</span><span class="p">()</span>
+
+  <span class="k">return</span> <span class="kc">None</span>
+
+
+<span class="k">def</span> <span class="nf">tpu_client_timer_callback</span><span class="p">(</span><span class="n">timer_secs</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">Client</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="k">def</span> <span class="nf">_log_warning</span><span class="p">():</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+      <span class="sa">f</span><span class="s1">&#39;TPU backend initialization is taking more than </span><span class="si">{</span><span class="n">timer_secs</span><span class="si">}</span><span class="s1"> seconds. &#39;</span>
+      <span class="s1">&#39;Did you run your code on all TPU hosts? &#39;</span>
+      <span class="s1">&#39;See https://jax.readthedocs.io/en/latest/multi_process.html &#39;</span>
+      <span class="s1">&#39;for more information.&#39;</span><span class="p">)</span>
+
+  <span class="c1"># Will log a warning after `timer_secs`.</span>
+  <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Timer</span><span class="p">(</span><span class="n">timer_secs</span><span class="p">,</span> <span class="n">_log_warning</span><span class="p">)</span>
+  <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+  <span class="k">try</span><span class="p">:</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">make_tpu_client</span><span class="p">(</span><span class="n">_get_tpu_library_path</span><span class="p">())</span>
+  <span class="k">finally</span><span class="p">:</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+
+  <span class="k">return</span> <span class="n">client</span>
+
+
+<span class="c1"># Backends</span>
+<span class="c1">#</span>
+<span class="c1"># We have no particular opinion about how &quot;backends&quot; relate to &quot;devices&quot;. For</span>
+<span class="c1"># example, there could be multiple backends that provide the same kind of</span>
+<span class="c1"># device.</span>
+
+<span class="n">BackendFactory</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">Union</span><span class="p">[</span><span class="n">xla_client</span><span class="o">.</span><span class="n">Client</span><span class="p">,</span> <span class="kc">None</span><span class="p">]]</span>
+<span class="n">TopologyFactory</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="n">xla_client</span><span class="o">.</span><span class="n">DeviceTopology</span><span class="p">,</span> <span class="kc">None</span><span class="p">]]</span>
+
+<span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
+<span class="k">class</span> <span class="nc">BackendRegistration</span><span class="p">:</span>
+  <span class="n">factory</span><span class="p">:</span> <span class="n">BackendFactory</span>
+
+  <span class="c1"># Priority of this backend when choosing a default backend. Higher = more</span>
+  <span class="c1"># preferred.</span>
+  <span class="n">priority</span><span class="p">:</span> <span class="nb">int</span>
+
+  <span class="c1"># If this backend fails to initialize, should we log a user-visible warning?</span>
+  <span class="c1"># For plugins (e.g., TPU) we usually want a visible failure, because why</span>
+  <span class="c1"># install a plugin if you don&#39;t intend it to be used?</span>
+  <span class="n">fail_quietly</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+
+  <span class="c1"># Is this plugin experimental? If a plugin is deemed experimental, we issue</span>
+  <span class="c1"># a warning when it is initialized. This is mostly to set user expectations</span>
+  <span class="c1"># correctly: we don&#39;t want users to think that JAX is buggy because of a</span>
+  <span class="c1"># a buggy plugin.</span>
+  <span class="n">experimental</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+
+  <span class="c1"># The C API (`PJRT_Api*`) if this backend is a plugin.</span>
+  <span class="n">c_api</span><span class="p">:</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="n">_backend_factories</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">BackendRegistration</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">_default_backend</span><span class="p">:</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">Client</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">_backends</span> <span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">Client</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">_backend_errors</span> <span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">_backend_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+<span class="n">_plugins_registered</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">_plugin_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+<span class="n">_topology_factories</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">TopologyFactory</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">_plugin_callbacks</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">_plugin_callback_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+
+<span class="c1"># The set of known non-experimental plugins.</span>
+<span class="c1">#</span>
+<span class="c1"># If a plugin passes the JAX test suite, it can be added to the allowlist below.</span>
+<span class="c1"># Send a PR if you would like to be added.</span>
+<span class="c1">#</span>
+<span class="c1"># It is fine for a plugin not to implement every feature that JAX uses, provided</span>
+<span class="c1"># that a reasonable feature set is implemented and the plugin fails gracefully</span>
+<span class="c1"># for unimplemented features. Wrong outputs are not acceptable.</span>
+<span class="n">_nonexperimental_plugins</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;cuda&#39;</span><span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">register_backend_factory</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">factory</span><span class="p">:</span> <span class="n">BackendFactory</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
+                             <span class="n">priority</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                             <span class="n">fail_quietly</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                             <span class="n">experimental</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                             <span class="n">make_topology</span><span class="p">:</span> <span class="n">TopologyFactory</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                             <span class="n">c_api</span><span class="p">:</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="k">with</span> <span class="n">_backend_lock</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">_backends</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Backend </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> already initialized&quot;</span><span class="p">)</span>
+  <span class="n">_backend_factories</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">BackendRegistration</span><span class="p">(</span>
+    <span class="n">factory</span><span class="p">,</span> <span class="n">priority</span><span class="p">,</span> <span class="n">fail_quietly</span><span class="p">,</span> <span class="n">experimental</span><span class="p">,</span> <span class="n">c_api</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">make_topology</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">_topology_factories</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">make_topology</span>
+
+
+<span class="k">def</span> <span class="nf">make_cpu_client</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">Client</span><span class="p">:</span>
+  <span class="n">collectives</span><span class="p">:</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">_xla</span><span class="o">.</span><span class="n">CpuCollectives</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="k">if</span> <span class="n">_CPU_ENABLE_GLOO_COLLECTIVES</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+    <span class="n">collectives</span> <span class="o">=</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">_xla</span><span class="o">.</span><span class="n">make_gloo_tcp_collectives</span><span class="p">(</span>  <span class="c1"># type: ignore</span>
+      <span class="n">distributed_client</span><span class="o">=</span><span class="n">distributed</span><span class="o">.</span><span class="n">global_state</span><span class="o">.</span><span class="n">client</span><span class="p">,</span>
+    <span class="p">)</span>
+  <span class="k">if</span> <span class="n">xla_extension_version</span> <span class="o">&gt;=</span> <span class="mi">257</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">make_cpu_client</span><span class="p">(</span>  <span class="c1"># type: ignore</span>
+      <span class="n">asynchronous</span><span class="o">=</span><span class="n">_CPU_ENABLE_ASYNC_DISPATCH</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+      <span class="n">distributed_client</span><span class="o">=</span><span class="n">distributed</span><span class="o">.</span><span class="n">global_state</span><span class="o">.</span><span class="n">client</span><span class="p">,</span>
+      <span class="n">node_id</span><span class="o">=</span><span class="n">distributed</span><span class="o">.</span><span class="n">global_state</span><span class="o">.</span><span class="n">process_id</span><span class="p">,</span>
+      <span class="n">num_nodes</span><span class="o">=</span><span class="n">distributed</span><span class="o">.</span><span class="n">global_state</span><span class="o">.</span><span class="n">num_processes</span><span class="p">,</span>
+      <span class="n">collectives</span><span class="o">=</span><span class="n">collectives</span><span class="p">,</span>
+    <span class="p">)</span>
+  <span class="k">return</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">make_cpu_client</span><span class="p">(</span>  <span class="c1"># type: ignore</span>
+    <span class="n">distributed_client</span><span class="o">=</span><span class="n">distributed</span><span class="o">.</span><span class="n">global_state</span><span class="o">.</span><span class="n">client</span><span class="p">,</span>
+    <span class="n">node_id</span><span class="o">=</span><span class="n">distributed</span><span class="o">.</span><span class="n">global_state</span><span class="o">.</span><span class="n">process_id</span><span class="p">,</span>
+    <span class="n">num_nodes</span><span class="o">=</span><span class="n">distributed</span><span class="o">.</span><span class="n">global_state</span><span class="o">.</span><span class="n">num_processes</span><span class="p">,</span>
+    <span class="n">collectives</span><span class="o">=</span><span class="n">collectives</span><span class="p">,</span>
+  <span class="p">)</span>
+
+
+<span class="n">register_backend_factory</span><span class="p">(</span>
+    <span class="s2">&quot;cpu&quot;</span><span class="p">,</span> <span class="n">make_cpu_client</span><span class="p">,</span> <span class="n">priority</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">fail_quietly</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_check_cuda_compute_capability</span><span class="p">(</span><span class="n">devices_to_check</span><span class="p">):</span>
+  <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">devices_to_check</span><span class="p">:</span>
+    <span class="n">compute_cap</span> <span class="o">=</span> <span class="n">cuda_versions</span><span class="o">.</span><span class="n">cuda_compute_capability</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">compute_cap</span> <span class="o">&lt;</span> <span class="n">MIN_COMPUTE_CAPABILITY</span><span class="p">:</span>
+      <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Device </span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2"> has CUDA compute capability </span><span class="si">{</span><span class="n">compute_cap</span><span class="o">/</span><span class="mi">10</span><span class="si">}</span><span class="s2"> which is &quot;</span>
+        <span class="s2">&quot;lower than the minimum supported compute capability &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">MIN_COMPUTE_CAPABILITY</span><span class="o">/</span><span class="mi">10</span><span class="si">}</span><span class="s2">. See &quot;</span>
+        <span class="s2">&quot;https://jax.readthedocs.io/en/latest/installation.html#nvidia-gpu for &quot;</span>
+        <span class="s2">&quot;more details&quot;</span><span class="p">,</span>
+        <span class="ne">RuntimeWarning</span>
+      <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_check_cuda_versions</span><span class="p">(</span><span class="n">raise_on_first_error</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                         <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+  <span class="k">assert</span> <span class="n">cuda_versions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+  <span class="n">results</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+
+  <span class="k">def</span> <span class="nf">_make_msg</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                <span class="n">runtime_version</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                <span class="n">build_version</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                <span class="n">min_supported</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                <span class="n">debug_msg</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">debug_msg</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Package: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+              <span class="sa">f</span><span class="s2">&quot;Version JAX was built against: </span><span class="si">{</span><span class="n">build_version</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+              <span class="sa">f</span><span class="s2">&quot;Minimum supported: </span><span class="si">{</span><span class="n">min_supported</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+              <span class="sa">f</span><span class="s2">&quot;Installed version: </span><span class="si">{</span><span class="n">runtime_version</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">min_supported</span><span class="p">:</span>
+      <span class="n">req_str</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The local installation version must be no lower than &quot;</span>
+                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">min_supported</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">req_str</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;The local installation must be the same version as &quot;</span>
+                 <span class="s2">&quot;the version against which JAX was built.&quot;</span><span class="p">)</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Outdated </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> installation found.</span><span class="se">\n</span><span class="s2">&quot;</span>
+           <span class="sa">f</span><span class="s2">&quot;Version JAX was built against: </span><span class="si">{</span><span class="n">build_version</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+           <span class="sa">f</span><span class="s2">&quot;Minimum supported: </span><span class="si">{</span><span class="n">min_supported</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+           <span class="sa">f</span><span class="s2">&quot;Installed version: </span><span class="si">{</span><span class="n">runtime_version</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+           <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">req_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">msg</span>
+
+  <span class="k">def</span> <span class="nf">_version_check</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                     <span class="n">get_version</span><span class="p">,</span>
+                     <span class="n">get_build_version</span><span class="p">,</span>
+                     <span class="n">scale_for_comparison</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+                     <span class="n">min_supported_version</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Checks the runtime CUDA component version against the JAX one.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      name: Of the CUDA component.</span>
+<span class="sd">      get_version: A function to get the local runtime version of the component.</span>
+<span class="sd">      get_build_version: A function to get the build version of the component.</span>
+<span class="sd">      scale_for_comparison: For rounding down a version to ignore patch/minor.</span>
+<span class="sd">      min_supported_version: An absolute minimum version required. Must be</span>
+<span class="sd">        passed without rounding down.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">      RuntimeError: If the component is not found, or is of unsupported version,</span>
+<span class="sd">        and if raising the error is not deferred till later.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">build_version</span> <span class="o">=</span> <span class="n">get_build_version</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">version</span> <span class="o">=</span> <span class="n">get_version</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+      <span class="n">err_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Unable to load </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">. Is it installed?&quot;</span>
+      <span class="k">if</span> <span class="n">raise_on_first_error</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+      <span class="n">err_msg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+      <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="s2">&quot;installed&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;msg&quot;</span><span class="p">:</span> <span class="n">err_msg</span><span class="p">})</span>
+      <span class="k">return</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">min_supported_version</span><span class="p">:</span>
+      <span class="n">min_supported_version</span> <span class="o">=</span> <span class="n">build_version</span> <span class="o">//</span> <span class="n">scale_for_comparison</span>
+    <span class="n">passed</span> <span class="o">=</span> <span class="n">min_supported_version</span> <span class="o">&lt;=</span> <span class="n">version</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">passed</span> <span class="ow">or</span> <span class="n">debug</span><span class="p">:</span>
+      <span class="n">msg</span> <span class="o">=</span> <span class="n">_make_msg</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                      <span class="n">runtime_version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span>
+                      <span class="n">build_version</span><span class="o">=</span><span class="n">build_version</span><span class="p">,</span>
+                      <span class="n">min_supported</span><span class="o">=</span><span class="n">min_supported_version</span><span class="p">,</span>
+                      <span class="n">debug_msg</span><span class="o">=</span><span class="n">passed</span><span class="p">)</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="n">passed</span> <span class="ow">and</span> <span class="n">raise_on_first_error</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">record</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+                  <span class="s2">&quot;installed&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                  <span class="s2">&quot;msg&quot;</span><span class="p">:</span> <span class="n">msg</span><span class="p">,</span>
+                  <span class="s2">&quot;passed&quot;</span><span class="p">:</span> <span class="n">passed</span><span class="p">,</span>
+                  <span class="s2">&quot;build_version&quot;</span><span class="p">:</span> <span class="n">build_version</span><span class="p">,</span>
+                  <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="n">version</span><span class="p">,</span>
+                  <span class="s2">&quot;minimum_supported&quot;</span><span class="p">:</span> <span class="n">min_supported_version</span><span class="p">}</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+
+  <span class="n">_version_check</span><span class="p">(</span><span class="s2">&quot;CUDA&quot;</span><span class="p">,</span> <span class="n">cuda_versions</span><span class="o">.</span><span class="n">cuda_runtime_get_version</span><span class="p">,</span>
+                 <span class="n">cuda_versions</span><span class="o">.</span><span class="n">cuda_runtime_build_version</span><span class="p">,</span>
+                 <span class="n">scale_for_comparison</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                 <span class="n">min_supported_version</span><span class="o">=</span><span class="mi">12010</span><span class="p">)</span>
+  <span class="n">_version_check</span><span class="p">(</span>
+      <span class="s2">&quot;cuDNN&quot;</span><span class="p">,</span>
+      <span class="n">cuda_versions</span><span class="o">.</span><span class="n">cudnn_get_version</span><span class="p">,</span>
+      <span class="n">cuda_versions</span><span class="o">.</span><span class="n">cudnn_build_version</span><span class="p">,</span>
+      <span class="c1"># NVIDIA promise both backwards and forwards compatibility for cuDNN patch</span>
+      <span class="c1"># versions:</span>
+      <span class="c1"># https://docs.nvidia.com/deeplearning/cudnn/developer-guide/index.html#api-compat</span>
+      <span class="n">scale_for_comparison</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+      <span class="n">min_supported_version</span><span class="o">=</span><span class="mi">8900</span>
+  <span class="p">)</span>
+  <span class="n">_version_check</span><span class="p">(</span><span class="s2">&quot;cuFFT&quot;</span><span class="p">,</span> <span class="n">cuda_versions</span><span class="o">.</span><span class="n">cufft_get_version</span><span class="p">,</span>
+                 <span class="n">cuda_versions</span><span class="o">.</span><span class="n">cufft_build_version</span><span class="p">,</span>
+                 <span class="c1"># Ignore patch versions.</span>
+                 <span class="n">scale_for_comparison</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+  <span class="n">_version_check</span><span class="p">(</span><span class="s2">&quot;cuSOLVER&quot;</span><span class="p">,</span> <span class="n">cuda_versions</span><span class="o">.</span><span class="n">cusolver_get_version</span><span class="p">,</span>
+                 <span class="n">cuda_versions</span><span class="o">.</span><span class="n">cusolver_build_version</span><span class="p">,</span>
+                 <span class="c1"># Ignore patch versions.</span>
+                 <span class="n">scale_for_comparison</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                 <span class="n">min_supported_version</span><span class="o">=</span><span class="mi">11400</span><span class="p">)</span>
+  <span class="n">_version_check</span><span class="p">(</span><span class="s2">&quot;cuPTI&quot;</span><span class="p">,</span> <span class="n">cuda_versions</span><span class="o">.</span><span class="n">cupti_get_version</span><span class="p">,</span>
+                 <span class="n">cuda_versions</span><span class="o">.</span><span class="n">cupti_build_version</span><span class="p">,</span>
+                 <span class="n">min_supported_version</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+  <span class="c1"># TODO(jakevdp) remove these checks when minimum jaxlib is v0.4.21</span>
+  <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">cuda_versions</span><span class="p">,</span> <span class="s2">&quot;cublas_get_version&quot;</span><span class="p">):</span>
+    <span class="n">_version_check</span><span class="p">(</span><span class="s2">&quot;cuBLAS&quot;</span><span class="p">,</span> <span class="n">cuda_versions</span><span class="o">.</span><span class="n">cublas_get_version</span><span class="p">,</span>
+                   <span class="n">cuda_versions</span><span class="o">.</span><span class="n">cublas_build_version</span><span class="p">,</span>
+                   <span class="c1"># Ignore patch versions.</span>
+                   <span class="n">scale_for_comparison</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                   <span class="n">min_supported_version</span><span class="o">=</span><span class="mi">120100</span><span class="p">)</span>
+  <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">cuda_versions</span><span class="p">,</span> <span class="s2">&quot;cusparse_get_version&quot;</span><span class="p">):</span>
+    <span class="n">_version_check</span><span class="p">(</span><span class="s2">&quot;cuSPARSE&quot;</span><span class="p">,</span> <span class="n">cuda_versions</span><span class="o">.</span><span class="n">cusparse_get_version</span><span class="p">,</span>
+                   <span class="n">cuda_versions</span><span class="o">.</span><span class="n">cusparse_build_version</span><span class="p">,</span>
+                   <span class="c1"># Ignore patch versions.</span>
+                   <span class="n">scale_for_comparison</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                   <span class="n">min_supported_version</span><span class="o">=</span><span class="mi">12100</span><span class="p">)</span>
+
+  <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">debug_results</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+    <span class="n">message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;installed&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;passed&#39;</span><span class="p">]:</span>
+      <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">debug_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+  <span class="n">join_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="si">{</span><span class="s2">&quot;-&quot;</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">50</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span>
+  <span class="k">if</span> <span class="n">debug_results</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;CUDA components status (debug):</span><span class="se">\n</span><span class="s1">&#39;</span>
+          <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">join_str</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">debug_results</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">errors</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unable to use CUDA because of the &#39;</span>
+                       <span class="sa">f</span><span class="s1">&#39;following issues with CUDA components:</span><span class="se">\n</span><span class="s1">&#39;</span>
+                       <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">join_str</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">make_gpu_client</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">,</span> <span class="n">platform_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">visible_devices_flag</span><span class="p">:</span> <span class="n">config</span><span class="o">.</span><span class="n">FlagHolder</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">Client</span><span class="p">:</span>
+  <span class="n">visible_devices</span> <span class="o">=</span> <span class="n">visible_devices_flag</span><span class="o">.</span><span class="n">value</span>
+  <span class="n">allowed_devices</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="k">if</span> <span class="n">visible_devices</span> <span class="o">!=</span> <span class="s2">&quot;all&quot;</span><span class="p">:</span>
+    <span class="n">allowed_devices</span> <span class="o">=</span> <span class="p">{</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">visible_devices</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)}</span>
+
+  <span class="n">use_mock_gpu_client</span> <span class="o">=</span> <span class="n">_USE_MOCK_GPU_CLIENT</span><span class="o">.</span><span class="n">value</span>
+  <span class="n">num_nodes</span> <span class="o">=</span> <span class="p">(</span>
+      <span class="n">_MOCK_NUM_GPUS</span><span class="o">.</span><span class="n">value</span>
+      <span class="k">if</span> <span class="n">use_mock_gpu_client</span>
+      <span class="k">else</span> <span class="n">distributed</span><span class="o">.</span><span class="n">global_state</span><span class="o">.</span><span class="n">num_processes</span>
+  <span class="p">)</span>
+  <span class="k">if</span> <span class="n">platform_name</span> <span class="o">==</span> <span class="s2">&quot;cuda&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;JAX_SKIP_CUDA_CONSTRAINTS_CHECK&quot;</span><span class="p">):</span>
+      <span class="n">_check_cuda_versions</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Skipped CUDA versions constraints check due to the &#39;</span>
+            <span class="s1">&#39;JAX_SKIP_CUDA_CONSTRAINTS_CHECK env var being set.&#39;</span><span class="p">)</span>
+
+    <span class="c1"># TODO(micky774): remove this check when minimum jaxlib is v0.4.26</span>
+    <span class="k">if</span> <span class="n">jaxlib</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">__version_info__</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">26</span><span class="p">):</span>
+      <span class="n">devices_to_check</span> <span class="o">=</span> <span class="p">(</span><span class="n">allowed_devices</span> <span class="k">if</span> <span class="n">allowed_devices</span> <span class="k">else</span>
+                          <span class="nb">range</span><span class="p">(</span><span class="n">cuda_versions</span><span class="o">.</span><span class="n">cuda_device_count</span><span class="p">()))</span>
+      <span class="n">_check_cuda_compute_capability</span><span class="p">(</span><span class="n">devices_to_check</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">make_gpu_client</span><span class="p">(</span>
+      <span class="n">distributed_client</span><span class="o">=</span><span class="n">distributed</span><span class="o">.</span><span class="n">global_state</span><span class="o">.</span><span class="n">client</span><span class="p">,</span>
+      <span class="n">node_id</span><span class="o">=</span><span class="n">distributed</span><span class="o">.</span><span class="n">global_state</span><span class="o">.</span><span class="n">process_id</span><span class="p">,</span>
+      <span class="n">num_nodes</span><span class="o">=</span><span class="n">num_nodes</span><span class="p">,</span>
+      <span class="n">platform_name</span><span class="o">=</span><span class="n">platform_name</span><span class="p">,</span>
+      <span class="n">allowed_devices</span><span class="o">=</span><span class="n">allowed_devices</span><span class="p">,</span>
+      <span class="n">mock</span><span class="o">=</span><span class="n">use_mock_gpu_client</span><span class="p">,</span>  <span class="c1"># type: ignore[call-arg]</span>
+  <span class="p">)</span>
+
+
+<span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">xla_client</span><span class="p">,</span> <span class="s2">&quot;make_gpu_client&quot;</span><span class="p">):</span>
+  <span class="n">register_backend_factory</span><span class="p">(</span>
+      <span class="s2">&quot;cuda&quot;</span><span class="p">,</span>
+      <span class="n">partial</span><span class="p">(</span>
+          <span class="n">make_gpu_client</span><span class="p">,</span>
+          <span class="n">platform_name</span><span class="o">=</span><span class="s2">&quot;cuda&quot;</span><span class="p">,</span>
+          <span class="n">visible_devices_flag</span><span class="o">=</span><span class="n">CUDA_VISIBLE_DEVICES</span><span class="p">,</span>
+      <span class="p">),</span>
+      <span class="n">priority</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+      <span class="n">fail_quietly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+  <span class="p">)</span>
+  <span class="n">register_backend_factory</span><span class="p">(</span>
+      <span class="s2">&quot;rocm&quot;</span><span class="p">,</span>
+      <span class="n">partial</span><span class="p">(</span>
+          <span class="n">make_gpu_client</span><span class="p">,</span>
+          <span class="n">platform_name</span><span class="o">=</span><span class="s2">&quot;rocm&quot;</span><span class="p">,</span>
+          <span class="n">visible_devices_flag</span><span class="o">=</span><span class="n">_ROCM_VISIBLE_DEVICES</span><span class="p">,</span>
+      <span class="p">),</span>
+      <span class="n">priority</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+      <span class="n">fail_quietly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+  <span class="p">)</span>
+
+
+<span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">xla_client</span><span class="p">,</span> <span class="s2">&quot;make_tpu_client&quot;</span><span class="p">):</span>
+  <span class="c1"># TODO(phawkins,skyewm): switch TPU plugin to use the PJRT plugin mechanism,</span>
+  <span class="c1"># and then fail loudly on initialization failure.</span>
+  <span class="n">register_backend_factory</span><span class="p">(</span>
+    <span class="s1">&#39;tpu&#39;</span><span class="p">,</span> <span class="n">partial</span><span class="p">(</span><span class="n">tpu_client_timer_callback</span><span class="p">,</span> <span class="n">timer_secs</span><span class="o">=</span><span class="mf">60.0</span><span class="p">),</span> <span class="n">priority</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+    <span class="n">fail_quietly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_get_pjrt_plugin_names_and_library_paths</span><span class="p">(</span>
+    <span class="n">plugins_from_env</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Gets the names and library paths of PJRT plugins to load from env var.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    plugins_from_env: plugin name and paths from env var. It is in the format</span>
+<span class="sd">      of &#39;name1:path1,name2:path2&#39; (&#39;name1;path1,name2;path2&#39; for windows).</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    A dict of {plugin_name: library path} for the PJRT plugins to load.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">plugins_from_env</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">{}</span>
+
+  <span class="n">pjrt_plugins</span> <span class="o">=</span> <span class="p">{}</span>
+  <span class="k">for</span> <span class="n">plugin</span> <span class="ow">in</span> <span class="n">plugins_from_env</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">name</span><span class="p">,</span> <span class="n">library_path</span> <span class="o">=</span> <span class="n">plugin</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">pathsep</span><span class="p">)</span>
+      <span class="n">pjrt_plugins</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">library_path</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+      <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+          <span class="s1">&#39;invalid value </span><span class="si">%s</span><span class="s1"> in env var PJRT_NAMES_AND_LIBRARY_PATHS </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+          <span class="n">plugin</span><span class="p">,</span>
+          <span class="n">plugins_from_env</span><span class="p">,</span>
+      <span class="p">)</span>
+  <span class="k">return</span> <span class="n">pjrt_plugins</span>
+
+
+<span class="k">def</span> <span class="nf">_get_pjrt_plugin_config</span><span class="p">(</span>
+    <span class="n">json_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span>
+    <span class="nb">str</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span>
+<span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Gets PJRT plugin configuration from a json file.</span>
+
+<span class="sd">  The json file needs to have a &quot;library_path&quot; field for the plugin library</span>
+<span class="sd">  path. It can have an optional &quot;create_option&quot; field for the options used when</span>
+<span class="sd">  creating a PJRT plugin client. The value of &quot;create_option&quot; is key-value</span>
+<span class="sd">  pairs. Please see xla_client._NameValueMapping for the supported types of</span>
+<span class="sd">  values.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">json_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+  <span class="k">if</span> <span class="s1">&#39;library_path&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+        <span class="s1">&#39;PJRT plugin config file should contain &quot;library_path&quot; field.&#39;</span>
+    <span class="p">)</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;library_path&#39;</span><span class="p">],</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;create_options&#39;</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">discover_pjrt_plugins</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Discovers plugins in the namespace package `jax_plugins` and import them.</span>
+
+<span class="sd">  There are two methods used to discover plugin modules. They are intended</span>
+<span class="sd">  to be used together by implementors in order to cover all packaging and</span>
+<span class="sd">  development cases:</span>
+
+<span class="sd">  1. Define a globally unique module under the `jax_plugins` namespace</span>
+<span class="sd">     package (i.e. just create a `jax_plugins` directory and define your</span>
+<span class="sd">     module below it).</span>
+<span class="sd">  2. If building a package via pyproject.toml or setup.py, advertise your</span>
+<span class="sd">     plugin module name by including an entry-point under the `jax_plugins`</span>
+<span class="sd">     group which points to your full module name.</span>
+
+<span class="sd">  During Jax startup, Jax will load each module discovered in such a way and</span>
+<span class="sd">  call its `initialize()` function. It is expected that this function should</span>
+<span class="sd">  register its concrete plugin name/implementations via call(s) to</span>
+<span class="sd">  `jax._src.xla_bridge.register_plugin(name, priority=, library_paty=,</span>
+<span class="sd">  options=)`. Since `initialize()` functions are called for all installed</span>
+<span class="sd">  plugins, they should avoid doing expensive, non-registration related work.</span>
+
+<span class="sd">  TODO: We should provide a variant of `register_plugin` which allows the</span>
+<span class="sd">  library_path and options to be resolved via a callback. This would enable</span>
+<span class="sd">  light-weight plugin registration in cases where options need to be derived</span>
+<span class="sd">  from heavy-weight system initialization.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">plugin_modules</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+  <span class="c1"># Scan installed modules under |jax_plugins|. Note that not all packaging</span>
+  <span class="c1"># scenarios are amenable to such scanning, so we also use the entry-point</span>
+  <span class="c1"># method to seed the list.</span>
+  <span class="k">if</span> <span class="n">jax_plugins</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">iter_modules</span><span class="p">(</span>
+        <span class="n">jax_plugins</span><span class="o">.</span><span class="n">__path__</span><span class="p">,</span> <span class="n">jax_plugins</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span>
+    <span class="p">):</span>
+      <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Discovered path based JAX plugin: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+      <span class="n">plugin_modules</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;No jax_plugins namespace packages available&quot;</span><span class="p">)</span>
+
+  <span class="c1"># Augment with advertised entrypoints.</span>
+  <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="c1"># Use the backport library because it provides a forward-compatible</span>
+    <span class="c1"># implementation.</span>
+    <span class="kn">from</span> <span class="nn">importlib_metadata</span> <span class="kn">import</span> <span class="n">entry_points</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">importlib.metadata</span> <span class="kn">import</span> <span class="n">entry_points</span>
+
+  <span class="k">for</span> <span class="n">entry_point</span> <span class="ow">in</span> <span class="n">entry_points</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="s2">&quot;jax_plugins&quot;</span><span class="p">):</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Discovered entry-point based JAX plugin: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                 <span class="n">entry_point</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="n">plugin_modules</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">entry_point</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+  <span class="c1"># Now load and initialize them all.</span>
+  <span class="k">for</span> <span class="n">plugin_module_name</span> <span class="ow">in</span> <span class="n">plugin_modules</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Loading plugin module </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">plugin_module_name</span><span class="p">)</span>
+    <span class="n">plugin_module</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">plugin_module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">plugin_module_name</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
+      <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Jax plugin configuration error: Plugin module </span><span class="si">%s</span><span class="s2"> &quot;</span>
+                     <span class="s2">&quot;does not exist&quot;</span><span class="p">,</span> <span class="n">plugin_module_name</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+      <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Jax plugin configuration error: Plugin module </span><span class="si">%s</span><span class="s2"> &quot;</span>
+                       <span class="s2">&quot;could not be loaded&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">plugin_module</span><span class="p">:</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="n">plugin_module</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+      <span class="k">except</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Jax plugin configuration error: Exception when &quot;</span>
+                         <span class="s2">&quot;calling </span><span class="si">%s</span><span class="s2">.initialize()&quot;</span><span class="p">,</span> <span class="n">plugin_module_name</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_options_from_jax_configs</span><span class="p">(</span><span class="n">plugin_name</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">plugin_name</span> <span class="o">!=</span> <span class="s2">&quot;cuda&quot;</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">{}</span>
+
+  <span class="n">options</span> <span class="o">=</span> <span class="p">{}</span>
+  <span class="n">visible_devices</span> <span class="o">=</span> <span class="n">CUDA_VISIBLE_DEVICES</span><span class="o">.</span><span class="n">value</span>
+  <span class="k">if</span> <span class="n">visible_devices</span> <span class="o">!=</span> <span class="s1">&#39;all&#39;</span><span class="p">:</span>
+    <span class="n">options</span><span class="p">[</span><span class="s1">&#39;visible_devices&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">visible_devices</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)]</span>
+  <span class="n">options</span><span class="p">[</span><span class="s1">&#39;enable_mock_nccl&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_USE_MOCK_GPU_CLIENT</span><span class="o">.</span><span class="n">value</span>
+  <span class="k">if</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;enable_mock_nccl&#39;</span><span class="p">]:</span>
+    <span class="n">options</span><span class="p">[</span><span class="s1">&#39;num_nodes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_MOCK_NUM_GPUS</span><span class="o">.</span><span class="n">value</span>
+  <span class="k">return</span> <span class="n">options</span>
+
+
+<span class="c1"># TODO(b/261345120): decide on a public name and expose a public method which is</span>
+<span class="c1"># an alias of this method.</span>
+<span class="k">def</span> <span class="nf">register_plugin</span><span class="p">(</span>
+    <span class="n">plugin_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">priority</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">400</span><span class="p">,</span>
+    <span class="n">library_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">options</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">c_api</span><span class="p">:</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Registers a backend factory for the PJRT plugin.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    plugin_name: the name of the plugin.</span>
+<span class="sd">    priority: the priority this plugin should be registered in jax backends.</span>
+<span class="sd">      Default to be 400.</span>
+<span class="sd">    library_path: Optional. The full path to the .so file of the plugin. The</span>
+<span class="sd">      plugin needs to provide either the library_path or the c_api.</span>
+<span class="sd">    options: Optional. It is used when creating a PJRT plugin client.</span>
+<span class="sd">    c_api: Optional. The plugin can provide a PJRT C API to be registered.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="nf">factory</span><span class="p">():</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">pjrt_plugin_initialized</span><span class="p">(</span><span class="n">plugin_name</span><span class="p">):</span>
+      <span class="n">xla_client</span><span class="o">.</span><span class="n">initialize_pjrt_plugin</span><span class="p">(</span><span class="n">plugin_name</span><span class="p">)</span>
+    <span class="n">updated_options</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">options</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">updated_options</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+    <span class="n">updated_options</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">_options_from_jax_configs</span><span class="p">(</span><span class="n">plugin_name</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">distributed</span><span class="o">.</span><span class="n">global_state</span><span class="o">.</span><span class="n">client</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">make_c_api_client</span><span class="p">(</span><span class="n">plugin_name</span><span class="p">,</span> <span class="n">updated_options</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="n">distribute_options</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;node_id&#39;</span><span class="p">:</span> <span class="n">distributed</span><span class="o">.</span><span class="n">global_state</span><span class="o">.</span><span class="n">process_id</span><span class="p">,</span>
+        <span class="s1">&#39;num_nodes&#39;</span><span class="p">:</span> <span class="n">distributed</span><span class="o">.</span><span class="n">global_state</span><span class="o">.</span><span class="n">num_processes</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="n">options</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">distribute_options</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">updated_options</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">make_c_api_client</span><span class="p">(</span>
+        <span class="n">plugin_name</span><span class="p">,</span> <span class="n">distribute_options</span><span class="p">,</span> <span class="n">distributed</span><span class="o">.</span><span class="n">global_state</span><span class="o">.</span><span class="n">client</span>
+    <span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">library_path</span> <span class="ow">and</span> <span class="n">c_api</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+        <span class="s2">&quot;Both library_path and c_api are provided when registering PJRT plugin&quot;</span>
+        <span class="s2">&quot; </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">plugin_name</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">library_path</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">c_api</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+        <span class="s2">&quot;Neither library_path nor c_api provided when registering PJRT plugin&quot;</span>
+        <span class="s2">&quot; </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">plugin_name</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span>
+
+  <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+      <span class="s1">&#39;registering PJRT plugin </span><span class="si">%s</span><span class="s1"> from </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">plugin_name</span><span class="p">,</span> <span class="n">library_path</span>
+  <span class="p">)</span>
+  <span class="k">if</span> <span class="n">library_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">c_api</span> <span class="o">=</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">load_pjrt_plugin_dynamically</span><span class="p">(</span><span class="n">plugin_name</span><span class="p">,</span> <span class="n">library_path</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+    <span class="n">xla_client</span><span class="o">.</span><span class="n">profiler</span><span class="o">.</span><span class="n">register_plugin_profiler</span><span class="p">(</span><span class="n">c_api</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">xla_extension_version</span> <span class="o">&gt;=</span> <span class="mi">236</span><span class="p">:</span>
+      <span class="k">assert</span> <span class="n">c_api</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+      <span class="n">xla_client</span><span class="o">.</span><span class="n">load_pjrt_plugin_with_c_api</span><span class="p">(</span><span class="n">plugin_name</span><span class="p">,</span> <span class="n">c_api</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">xla_extension_version</span> <span class="o">&gt;=</span> <span class="mi">239</span><span class="p">:</span>
+    <span class="n">make_topology</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">xla_client</span><span class="o">.</span><span class="n">make_c_api_device_topology</span><span class="p">,</span> <span class="n">c_api</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">make_topology</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">experimental</span> <span class="o">=</span> <span class="n">plugin_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_nonexperimental_plugins</span>
+  <span class="n">register_backend_factory</span><span class="p">(</span><span class="n">plugin_name</span><span class="p">,</span> <span class="n">factory</span><span class="p">,</span> <span class="n">priority</span><span class="o">=</span><span class="n">priority</span><span class="p">,</span>
+                           <span class="n">fail_quietly</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">experimental</span><span class="o">=</span><span class="n">experimental</span><span class="p">,</span>
+                           <span class="n">make_topology</span><span class="o">=</span><span class="n">make_topology</span><span class="p">,</span> <span class="n">c_api</span><span class="o">=</span><span class="n">c_api</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">c_api</span>
+
+
+<span class="k">def</span> <span class="nf">register_pjrt_plugin_factories_from_env</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Registers backend factories for PJRT plugins.</span>
+
+<span class="sd">  A backend factory will be registered for every PJRT plugin in the input</span>
+<span class="sd">  string, in the format of &#39;name1:path1,name2:path2&#39; (&#39;name1;path1,name2;path2&#39;</span>
+<span class="sd">  for windows). The path can be a path to the plugin library or a path to the</span>
+<span class="sd">  plugin configuration json file. The json file needs to have a &quot;library_path&quot;</span>
+<span class="sd">  field for the plugin library path. It can have an optional &quot;create_option&quot;</span>
+<span class="sd">  field for the options used when creating a PJRT plugin client. The value of</span>
+<span class="sd">  &quot;create_option&quot; is key-value pairs. Please see xla_client._NameValueMapping</span>
+<span class="sd">  for the supported types of values.</span>
+
+<span class="sd">  TPU PJRT plugin will be loaded and registered separately in make_tpu_client.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">pjrt_plugins</span> <span class="o">=</span> <span class="n">_get_pjrt_plugin_names_and_library_paths</span><span class="p">(</span>
+      <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;PJRT_NAMES_AND_LIBRARY_PATHS&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+  <span class="p">)</span>
+  <span class="k">for</span> <span class="n">plugin_name</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">pjrt_plugins</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.json&#39;</span><span class="p">):</span>
+      <span class="n">library_path</span><span class="p">,</span> <span class="n">options</span> <span class="o">=</span> <span class="n">_get_pjrt_plugin_config</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">library_path</span> <span class="o">=</span> <span class="n">path</span>
+      <span class="n">options</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+        <span class="s1">&#39;registering PJRT plugin </span><span class="si">%s</span><span class="s1"> from </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">plugin_name</span><span class="p">,</span> <span class="n">library_path</span>
+    <span class="p">)</span>
+    <span class="n">register_plugin</span><span class="p">(</span><span class="n">plugin_name</span><span class="p">,</span> <span class="n">library_path</span><span class="o">=</span><span class="n">library_path</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_discover_and_register_pjrt_plugins</span><span class="p">():</span>
+  <span class="k">global</span> <span class="n">_plugins_registered</span>
+
+  <span class="c1"># Needs a separate lock because register_backend_factory (called from</span>
+  <span class="c1"># register_plugin) requires to hold _backend_lock.</span>
+  <span class="k">with</span> <span class="n">_plugin_lock</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">_plugins_registered</span><span class="p">:</span>
+      <span class="c1"># Plugins in the namespace package `jax_plugins` or have an entry-point</span>
+      <span class="c1"># under the `jax_plugins` group will be imported.</span>
+      <span class="n">discover_pjrt_plugins</span><span class="p">()</span>
+      <span class="c1"># Registers plugins names and paths set in env var</span>
+      <span class="c1"># PJRT_NAMES_AND_LIBRARY_PATHS, in the format of &#39;name1:path1,name2:path2&#39;</span>
+      <span class="c1"># (&#39;name1;path1,name2;path2&#39; for windows).</span>
+      <span class="n">register_pjrt_plugin_factories_from_env</span><span class="p">()</span>
+      <span class="k">with</span> <span class="n">_plugin_callback_lock</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">factory</span> <span class="ow">in</span> <span class="n">_backend_factories</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+          <span class="k">if</span> <span class="n">factory</span><span class="o">.</span><span class="n">c_api</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="n">_plugin_callbacks</span><span class="p">:</span>
+              <span class="n">callback</span><span class="p">(</span><span class="n">c_api</span><span class="o">=</span><span class="n">factory</span><span class="o">.</span><span class="n">c_api</span><span class="p">)</span>
+      <span class="n">_plugins_registered</span> <span class="o">=</span> <span class="kc">True</span>
+
+
+<span class="n">_platform_aliases</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;cuda&quot;</span><span class="p">:</span> <span class="s2">&quot;gpu&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;rocm&quot;</span><span class="p">:</span> <span class="s2">&quot;gpu&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">_alias_to_platforms</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">_platform</span><span class="p">,</span> <span class="n">_alias</span> <span class="ow">in</span> <span class="n">_platform_aliases</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+  <span class="n">_alias_to_platforms</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">_alias</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_platform</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">is_known_platform</span><span class="p">(</span><span class="n">platform</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+  <span class="c1"># A platform is valid if there is a registered factory for it. It does not</span>
+  <span class="c1"># matter if we were unable to initialize that platform; we only care that</span>
+  <span class="c1"># we&#39;ve heard of it and it isn&#39;t, e.g., a typo.</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">platform</span> <span class="ow">in</span> <span class="n">_backend_factories</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">or</span>
+          <span class="n">platform</span> <span class="ow">in</span> <span class="n">_platform_aliases</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+
+<span class="k">def</span> <span class="nf">canonicalize_platform</span><span class="p">(</span><span class="n">platform</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Replaces platform aliases with their concrete equivalent.</span>
+
+<span class="sd">  In particular, replaces &quot;gpu&quot; with either &quot;cuda&quot; or &quot;rocm&quot;, depending on which</span>
+<span class="sd">  hardware is actually present. We want to distinguish &quot;cuda&quot; and &quot;rocm&quot; for</span>
+<span class="sd">  purposes such as MLIR lowering rules, but in many cases we don&#39;t want to</span>
+<span class="sd">  force users to care.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">platforms</span> <span class="o">=</span> <span class="n">_alias_to_platforms</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">platform</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">platforms</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">platform</span>
+
+  <span class="n">b</span> <span class="o">=</span> <span class="n">backends</span><span class="p">()</span>
+  <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">platforms</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">b</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+      <span class="k">return</span> <span class="n">p</span>
+  <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown backend: &#39;</span><span class="si">{</span><span class="n">platform</span><span class="si">}</span><span class="s2">&#39; requested, but no &quot;</span>
+                     <span class="sa">f</span><span class="s2">&quot;platforms that are instances of </span><span class="si">{</span><span class="n">platform</span><span class="si">}</span><span class="s2"> are present. &quot;</span>
+                     <span class="s2">&quot;Platforms present are: &quot;</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+
+
+<span class="k">def</span> <span class="nf">expand_platform_alias</span><span class="p">(</span><span class="n">platform</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Expands, e.g., &quot;gpu&quot; to [&quot;cuda&quot;, &quot;rocm&quot;].</span>
+
+<span class="sd">  This is used for convenience reasons: we expect cuda and rocm to act similarly</span>
+<span class="sd">  in many respects since they share most of the same code.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">_alias_to_platforms</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">platform</span><span class="p">,</span> <span class="p">[</span><span class="n">platform</span><span class="p">])</span>
+
+<span class="k">def</span> <span class="nf">is_gpu</span><span class="p">(</span><span class="n">platform</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">platform</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;cuda&quot;</span><span class="p">,</span> <span class="s2">&quot;rocm&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">backends_are_initialized</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+  <span class="s2">&quot;Returns true if backends have already been initialized.&quot;</span>
+  <span class="k">with</span> <span class="n">_backend_lock</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">_backends</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span>
+
+
+<span class="k">def</span> <span class="nf">register_plugin_callbacks</span><span class="p">(</span><span class="n">callback</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Registers a callback to be called with c_api after plugins discovery.</span>
+
+<span class="sd">  The callback will be called on all discovered PJRT C API plugins. If</span>
+<span class="sd">  `register_plugin_callbacks` is called before the plugins are discovered, the</span>
+<span class="sd">  callback will be called right after the plugins are discovered. Otherwise, the</span>
+<span class="sd">  callback will be called immediately when `register_plugin_callbacks` is</span>
+<span class="sd">  called.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    callback: the callback to be called with c_api.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">with</span> <span class="n">_plugin_callback_lock</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">_plugins_registered</span><span class="p">:</span>
+      <span class="k">for</span> <span class="n">factory</span> <span class="ow">in</span> <span class="n">_backend_factories</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">factory</span><span class="o">.</span><span class="n">c_api</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+          <span class="n">callback</span><span class="p">(</span><span class="n">c_api</span><span class="o">=</span><span class="n">factory</span><span class="o">.</span><span class="n">c_api</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">_plugin_callbacks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">backends</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">Client</span><span class="p">]:</span>
+  <span class="k">global</span> <span class="n">_backends</span>
+  <span class="k">global</span> <span class="n">_backend_errors</span>
+  <span class="k">global</span> <span class="n">_default_backend</span>
+  <span class="k">global</span> <span class="n">_at_fork_handler_installed</span>
+
+  <span class="n">_discover_and_register_pjrt_plugins</span><span class="p">()</span>
+
+  <span class="k">with</span> <span class="n">_backend_lock</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">_backends</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">_backends</span>
+
+    <span class="c1"># os.register_at_fork only exists on Unix.</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">_at_fork_handler_installed</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">os</span><span class="p">,</span> <span class="s2">&quot;register_at_fork&quot;</span><span class="p">):</span>
+      <span class="n">os</span><span class="o">.</span><span class="n">register_at_fork</span><span class="p">(</span><span class="n">before</span><span class="o">=</span><span class="n">_at_fork</span><span class="p">)</span>
+      <span class="n">_at_fork_handler_installed</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">if</span> <span class="n">jax_platforms</span> <span class="o">:=</span> <span class="n">config</span><span class="o">.</span><span class="n">jax_platforms</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+      <span class="n">platforms</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="c1"># Allow platform aliases in the list of platforms.</span>
+      <span class="k">for</span> <span class="n">platform</span> <span class="ow">in</span> <span class="n">jax_platforms</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">):</span>
+        <span class="n">platforms</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">expand_platform_alias</span><span class="p">(</span><span class="n">platform</span><span class="p">))</span>
+      <span class="n">priorities</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">platforms</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+      <span class="c1"># If the user specified a list of platforms explicitly, always fail</span>
+      <span class="c1"># loudly.</span>
+      <span class="n">fail_quietly_list</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">platforms</span><span class="p">)</span>
+      <span class="n">platform_registrations</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+        <span class="nb">zip</span><span class="p">(</span><span class="n">platforms</span><span class="p">,</span> <span class="n">priorities</span><span class="p">,</span> <span class="n">fail_quietly_list</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">platform_registrations</span> <span class="o">=</span> <span class="p">[</span>
+          <span class="p">(</span><span class="n">platform</span><span class="p">,</span> <span class="n">registration</span><span class="o">.</span><span class="n">priority</span><span class="p">,</span> <span class="n">registration</span><span class="o">.</span><span class="n">fail_quietly</span><span class="p">)</span>
+          <span class="k">for</span> <span class="n">platform</span><span class="p">,</span> <span class="n">registration</span>
+          <span class="ow">in</span> <span class="n">_backend_factories</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+      <span class="p">]</span>
+    <span class="n">default_priority</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1000</span>
+    <span class="k">for</span> <span class="n">platform</span><span class="p">,</span> <span class="n">priority</span><span class="p">,</span> <span class="n">fail_quietly</span> <span class="ow">in</span> <span class="n">platform_registrations</span><span class="p">:</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="n">backend</span> <span class="o">=</span> <span class="n">_init_backend</span><span class="p">(</span><span class="n">platform</span><span class="p">)</span>
+        <span class="n">_backends</span><span class="p">[</span><span class="n">platform</span><span class="p">]</span> <span class="o">=</span> <span class="n">backend</span>
+
+        <span class="k">if</span> <span class="n">priority</span> <span class="o">&gt;</span> <span class="n">default_priority</span><span class="p">:</span>
+          <span class="n">_default_backend</span> <span class="o">=</span> <span class="n">backend</span>
+          <span class="n">default_priority</span> <span class="o">=</span> <span class="n">priority</span>
+      <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="n">err_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Unable to initialize backend &#39;</span><span class="si">{</span><span class="n">platform</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">err</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="n">fail_quietly</span><span class="p">:</span>
+          <span class="n">_backend_errors</span><span class="p">[</span><span class="n">platform</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+          <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">jax_platforms</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+            <span class="n">err_msg</span> <span class="o">+=</span> <span class="s2">&quot; (set JAX_PLATFORMS=&#39;&#39; to automatically choose an available backend)&quot;</span>
+          <span class="k">else</span><span class="p">:</span>
+            <span class="n">err_msg</span> <span class="o">+=</span> <span class="s2">&quot; (you may need to uninstall the failing plugin package, or set JAX_PLATFORMS=cpu to skip this backend.)&quot;</span>
+          <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">_default_backend</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">config</span><span class="o">.</span><span class="n">jax_platforms</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+      <span class="n">_suggest_missing_backends</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">_backends</span>
+
+<span class="c1"># Code to suggest plugins that should be installed.</span>
+<span class="c1">#</span>
+<span class="c1"># Plugin vendors are welcome to add code to this list, assuming there&#39;s a</span>
+<span class="c1"># lightweight way to determine if hardware is present without requiring</span>
+<span class="c1"># the relevant plugin be installed.</span>
+
+<span class="k">def</span> <span class="nf">_suggest_missing_backends</span><span class="p">():</span>
+  <span class="k">if</span> <span class="n">py_platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">&quot;Linux&quot;</span><span class="p">:</span>
+    <span class="c1"># If you&#39;re not using Linux (or WSL2), we don&#39;t have any suggestions at the</span>
+    <span class="c1"># moment.</span>
+    <span class="k">return</span>
+
+  <span class="k">assert</span> <span class="n">_default_backend</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+  <span class="n">default_platform</span> <span class="o">=</span> <span class="n">_default_backend</span><span class="o">.</span><span class="n">platform</span>
+  <span class="n">nvidia_gpu_devices</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;/dev/nvidia0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;/dev/dxg&quot;</span><span class="p">,</span>  <span class="c1"># WSL2</span>
+  <span class="p">]</span>
+  <span class="k">if</span> <span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_backends</span> <span class="ow">and</span>
+      <span class="nb">any</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">nvidia_gpu_devices</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">xla_extension</span><span class="p">,</span> <span class="s2">&quot;GpuAllocatorConfig&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="s2">&quot;cuda&quot;</span> <span class="ow">in</span> <span class="n">_backend_errors</span><span class="p">:</span>
+      <span class="n">err</span> <span class="o">=</span> <span class="n">_backend_errors</span><span class="p">[</span><span class="s2">&quot;cuda&quot;</span><span class="p">]</span>
+      <span class="n">warning_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;CUDA backend failed to initialize: </span><span class="si">{</span><span class="n">err</span><span class="si">}</span><span class="s2">.&quot;</span>
+      <span class="k">if</span> <span class="s2">&quot;no supported devices found for platform CUDA.&quot;</span> <span class="ow">in</span> <span class="n">err</span><span class="p">:</span>
+        <span class="n">warning_msg</span> <span class="o">+=</span> <span class="p">(</span>
+          <span class="s2">&quot;This may be due to JAX pre-allocating too much device &quot;</span>
+          <span class="s2">&quot;memory, leaving too little for CUDA library initialization. See &quot;</span>
+          <span class="s2">&quot;https://jax.readthedocs.io/en/latest/gpu_memory_allocation.html &quot;</span>
+          <span class="s2">&quot;for more details and potential workarounds.&quot;</span>
+        <span class="p">)</span>
+      <span class="n">warning_msg</span> <span class="o">+=</span> <span class="s2">&quot;(Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)&quot;</span>
+
+      <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">warning_msg</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;An NVIDIA GPU may be present on this machine, but a &quot;</span>
+                     <span class="s2">&quot;CUDA-enabled jaxlib is not installed. Falling back to &quot;</span>
+                     <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">default_platform</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+  <span class="k">elif</span> <span class="s2">&quot;tpu&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_backends</span> <span class="ow">and</span> <span class="n">hardware_utils</span><span class="o">.</span><span class="n">num_available_tpu_chips_and_device_id</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;A Google TPU may be present on this machine, but either a &quot;</span>
+                    <span class="s2">&quot;TPU-enabled jaxlib or libtpu is not installed. Falling &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;back to </span><span class="si">{</span><span class="n">default_platform</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_clear_backends</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="k">global</span> <span class="n">_backends</span>
+  <span class="k">global</span> <span class="n">_backend_errors</span>
+  <span class="k">global</span> <span class="n">_default_backend</span>
+
+  <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Clearing JAX backend caches.&quot;</span><span class="p">)</span>
+  <span class="k">with</span> <span class="n">_backend_lock</span><span class="p">:</span>
+    <span class="n">_backends</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">_backend_errors</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">_default_backend</span> <span class="o">=</span> <span class="kc">None</span>
+
+  <span class="n">get_backend</span><span class="o">.</span><span class="n">cache_clear</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">_init_backend</span><span class="p">(</span><span class="n">platform</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">Client</span><span class="p">:</span>
+  <span class="n">registration</span> <span class="o">=</span> <span class="n">_backend_factories</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">platform</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">registration</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Backend &#39;</span><span class="si">{</span><span class="n">platform</span><span class="si">}</span><span class="s2">&#39; is not in the list of known backends: &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">_backend_factories</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">registration</span><span class="o">.</span><span class="n">experimental</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Platform &#39;</span><span class="si">{</span><span class="n">platform</span><span class="si">}</span><span class="s2">&#39; is experimental and not all JAX &quot;</span>
+                   <span class="s2">&quot;functionality may be correctly supported!&quot;</span><span class="p">)</span>
+  <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Initializing backend &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span> <span class="n">platform</span><span class="p">)</span>
+  <span class="n">backend</span> <span class="o">=</span> <span class="n">registration</span><span class="o">.</span><span class="n">factory</span><span class="p">()</span>
+  <span class="c1"># TODO(skye): consider raising more descriptive errors directly from backend</span>
+  <span class="c1"># factories instead of returning None.</span>
+  <span class="k">if</span> <span class="n">backend</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not initialize backend &#39;</span><span class="si">{</span><span class="n">platform</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">backend</span><span class="o">.</span><span class="n">device_count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Backend &#39;</span><span class="si">{</span><span class="n">platform</span><span class="si">}</span><span class="s2">&#39; provides no devices.&quot;</span><span class="p">)</span>
+  <span class="n">util</span><span class="o">.</span><span class="n">distributed_debug_log</span><span class="p">((</span><span class="s2">&quot;Initialized backend&quot;</span><span class="p">,</span> <span class="n">backend</span><span class="o">.</span><span class="n">platform</span><span class="p">),</span>
+                             <span class="p">(</span><span class="s2">&quot;process_index&quot;</span><span class="p">,</span> <span class="n">backend</span><span class="o">.</span><span class="n">process_index</span><span class="p">()),</span>
+                             <span class="p">(</span><span class="s2">&quot;device_count&quot;</span><span class="p">,</span> <span class="n">backend</span><span class="o">.</span><span class="n">device_count</span><span class="p">()),</span>
+                             <span class="p">(</span><span class="s2">&quot;local_devices&quot;</span><span class="p">,</span> <span class="n">backend</span><span class="o">.</span><span class="n">local_devices</span><span class="p">()))</span>
+  <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Backend &#39;</span><span class="si">%s</span><span class="s2">&#39; initialized&quot;</span><span class="p">,</span> <span class="n">platform</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">backend</span>
+
+
+<span class="k">def</span> <span class="nf">_get_backend_uncached</span><span class="p">(</span>
+    <span class="n">platform</span><span class="p">:</span> <span class="kc">None</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">Client</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">Client</span><span class="p">:</span>
+  <span class="c1"># TODO(mattjj,skyewm): remove this input polymorphism after we clean up how</span>
+  <span class="c1"># &#39;backend&#39; values are handled</span>
+  <span class="k">if</span> <span class="n">platform</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">platform</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">platform</span>
+
+  <span class="n">platform</span> <span class="o">=</span> <span class="p">(</span><span class="n">platform</span> <span class="ow">or</span> <span class="n">_XLA_BACKEND</span><span class="o">.</span><span class="n">value</span> <span class="ow">or</span> <span class="n">_PLATFORM_NAME</span><span class="o">.</span><span class="n">value</span> <span class="ow">or</span> <span class="kc">None</span><span class="p">)</span>
+
+  <span class="n">bs</span> <span class="o">=</span> <span class="n">backends</span><span class="p">()</span>
+  <span class="k">if</span> <span class="n">platform</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">platform</span> <span class="o">=</span> <span class="n">canonicalize_platform</span><span class="p">(</span><span class="n">platform</span><span class="p">)</span>
+    <span class="n">backend</span> <span class="o">=</span> <span class="n">bs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">platform</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">backend</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">platform</span> <span class="ow">in</span> <span class="n">_backend_errors</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Backend &#39;</span><span class="si">{</span><span class="n">platform</span><span class="si">}</span><span class="s2">&#39; failed to initialize: &quot;</span>
+                           <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_backend_errors</span><span class="p">[</span><span class="n">platform</span><span class="p">]</span><span class="si">}</span><span class="s2">. &quot;</span>
+                           <span class="sa">f</span><span class="s1">&#39;Available backends are </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">bs</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+      <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+          <span class="sa">f</span><span class="s2">&quot;Unknown backend </span><span class="si">{</span><span class="n">platform</span><span class="si">}</span><span class="s2">. Available backends are </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">bs</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">backend</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">assert</span> <span class="n">_default_backend</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">_default_backend</span>
+
+
+<div class="viewcode-block" id="get_backend">
+<a class="viewcode-back" href="../../../_autosummary/jax.lib.xla_bridge.get_backend.html#jax.get_backend">[docs]</a>
+<span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>  <span class="c1"># don&#39;t use util.memoize because there is no X64 dependence.</span>
+<span class="k">def</span> <span class="nf">get_backend</span><span class="p">(</span>
+    <span class="n">platform</span><span class="p">:</span> <span class="kc">None</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">Client</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">Client</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">_get_backend_uncached</span><span class="p">(</span><span class="n">platform</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">get_device_backend</span><span class="p">(</span>
+    <span class="n">device</span><span class="p">:</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">Device</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">Client</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns the Backend associated with `device`, or the default Backend.&quot;&quot;&quot;</span>
+  <span class="k">if</span> <span class="n">device</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">device</span><span class="o">.</span><span class="n">client</span>
+  <span class="k">return</span> <span class="n">get_backend</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="device_count">
+<a class="viewcode-back" href="../../../_autosummary/jax.device_count.html#jax.device_count">[docs]</a>
+<span class="k">def</span> <span class="nf">device_count</span><span class="p">(</span>
+    <span class="n">backend</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">Client</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns the total number of devices.</span>
+
+<span class="sd">  On most platforms, this is the same as :py:func:`jax.local_device_count`.</span>
+<span class="sd">  However, on multi-process platforms where different devices are associated</span>
+<span class="sd">  with different processes, this will return the total number of devices across</span>
+<span class="sd">  all processes.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    backend: This is an experimental feature and the API is likely to change.</span>
+<span class="sd">      Optional, a string representing the xla backend: ``&#39;cpu&#39;``, ``&#39;gpu&#39;``, or</span>
+<span class="sd">      ``&#39;tpu&#39;``.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    Number of devices.</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">get_backend</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span><span class="o">.</span><span class="n">device_count</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="local_device_count">
+<a class="viewcode-back" href="../../../_autosummary/jax.local_device_count.html#jax.local_device_count">[docs]</a>
+<span class="k">def</span> <span class="nf">local_device_count</span><span class="p">(</span>
+    <span class="n">backend</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">Client</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns the number of devices addressable by this process.&quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">get_backend</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span><span class="o">.</span><span class="n">local_device_count</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="devices">
+<a class="viewcode-back" href="../../../_autosummary/jax.devices.html#jax.devices">[docs]</a>
+<span class="k">def</span> <span class="nf">devices</span><span class="p">(</span>
+    <span class="n">backend</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">Client</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">xla_client</span><span class="o">.</span><span class="n">Device</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns a list of all devices for a given backend.</span>
+
+<span class="sd">  .. currentmodule:: jaxlib.xla_extension</span>
+
+<span class="sd">  Each device is represented by a subclass of :class:`Device` (e.g.</span>
+<span class="sd">  :class:`CpuDevice`, :class:`GpuDevice`). The length of the returned list is</span>
+<span class="sd">  equal to ``device_count(backend)``. Local devices can be identified by</span>
+<span class="sd">  comparing :attr:`Device.process_index` to the value returned by</span>
+<span class="sd">  :py:func:`jax.process_index`.</span>
+
+<span class="sd">  If ``backend`` is ``None``, returns all the devices from the default backend.</span>
+<span class="sd">  The default backend is generally ``&#39;gpu&#39;`` or ``&#39;tpu&#39;`` if available,</span>
+<span class="sd">  otherwise ``&#39;cpu&#39;``.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    backend: This is an experimental feature and the API is likely to change.</span>
+<span class="sd">      Optional, a string representing the xla backend: ``&#39;cpu&#39;``, ``&#39;gpu&#39;``, or</span>
+<span class="sd">      ``&#39;tpu&#39;``.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    List of Device subclasses.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">get_backend</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span><span class="o">.</span><span class="n">devices</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="default_backend">
+<a class="viewcode-back" href="../../../_autosummary/jax.default_backend.html#jax.default_backend">[docs]</a>
+<span class="k">def</span> <span class="nf">default_backend</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns the platform name of the default XLA backend.&quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">get_backend</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">platform</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">backend_pjrt_c_api_version</span><span class="p">(</span><span class="n">platform</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns the PJRT C API version of the backend.</span>
+
+<span class="sd">  Returns None if the backend does not use PJRT C API.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">backend</span> <span class="o">=</span> <span class="n">get_backend</span><span class="p">(</span><span class="n">platform</span><span class="p">)</span>
+  <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">backend</span><span class="p">,</span> <span class="s2">&quot;pjrt_c_api_major_version&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span>
+      <span class="n">backend</span><span class="p">,</span> <span class="s2">&quot;pjrt_c_api_minor_version&quot;</span>
+  <span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">backend</span><span class="o">.</span><span class="n">pjrt_c_api_major_version</span><span class="p">,</span> <span class="n">backend</span><span class="o">.</span><span class="n">pjrt_c_api_minor_version</span><span class="p">)</span>
+  <span class="k">return</span> <span class="kc">None</span>
+
+
+<span class="k">def</span> <span class="nf">backend_xla_version</span><span class="p">(</span><span class="n">platform</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns the XLA version of the backend.</span>
+
+<span class="sd">  Returns None if the backend does not use PJRT C API or does not have</span>
+<span class="sd">  xla_version in the plugin attributes. This methon can be used to skip features</span>
+<span class="sd">  that are not available before certain xla_version if the backend is a</span>
+<span class="sd">  plugin and uses xla_version.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">backend</span> <span class="o">=</span> <span class="n">get_backend</span><span class="p">(</span><span class="n">platform</span><span class="p">)</span>
+  <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">backend</span><span class="p">,</span> <span class="s2">&quot;xla_version&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="local_devices">
+<a class="viewcode-back" href="../../../_autosummary/jax.local_devices.html#jax.local_devices">[docs]</a>
+<span class="nd">@lru_cache</span>
+<span class="k">def</span> <span class="nf">local_devices</span><span class="p">(</span><span class="n">process_index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                  <span class="n">backend</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">Client</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                  <span class="n">host_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">xla_client</span><span class="o">.</span><span class="n">Device</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Like :py:func:`jax.devices`, but only returns devices local to a given process.</span>
+
+<span class="sd">  If ``process_index`` is ``None``, returns devices local to this process.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    process_index: the integer index of the process. Process indices can be</span>
+<span class="sd">      retrieved via ``len(jax.process_count())``.</span>
+<span class="sd">    backend: This is an experimental feature and the API is likely to change.</span>
+<span class="sd">      Optional, a string representing the xla backend: ``&#39;cpu&#39;``, ``&#39;gpu&#39;``, or</span>
+<span class="sd">      ``&#39;tpu&#39;``.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    List of Device subclasses.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">if</span> <span class="n">host_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+        <span class="s2">&quot;The argument to jax.local_devices has been renamed from `host_id` to &quot;</span>
+        <span class="s2">&quot;`process_index`. This alias will eventually be removed; please update &quot;</span>
+        <span class="s2">&quot;your code.&quot;</span><span class="p">)</span>
+    <span class="n">process_index</span> <span class="o">=</span> <span class="n">host_id</span>
+  <span class="k">if</span> <span class="n">process_index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">process_index</span> <span class="o">=</span> <span class="n">get_backend</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span><span class="o">.</span><span class="n">process_index</span><span class="p">()</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">process_index</span> <span class="o">&lt;</span> <span class="n">process_count</span><span class="p">(</span><span class="n">backend</span><span class="p">)):</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown process_index </span><span class="si">{</span><span class="n">process_index</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">devices</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span> <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">process_index</span> <span class="o">==</span> <span class="n">process_index</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="process_index">
+<a class="viewcode-back" href="../../../_autosummary/jax.process_index.html#jax.process_index">[docs]</a>
+<span class="k">def</span> <span class="nf">process_index</span><span class="p">(</span>
+    <span class="n">backend</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">Client</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns the integer process index of this process.</span>
+
+<span class="sd">  On most platforms, this will always be 0. This will vary on multi-process</span>
+<span class="sd">  platforms though.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    backend: This is an experimental feature and the API is likely to change.</span>
+<span class="sd">      Optional, a string representing the xla backend: ``&#39;cpu&#39;``, ``&#39;gpu&#39;``, or</span>
+<span class="sd">      ``&#39;tpu&#39;``.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    Integer process index.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">get_backend</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span><span class="o">.</span><span class="n">process_index</span><span class="p">()</span></div>
+
+
+
+<span class="c1"># TODO: remove this sometime after jax 0.2.13 is released</span>
+<span class="k">def</span> <span class="nf">host_id</span><span class="p">(</span><span class="n">backend</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">Client</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+  <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+      <span class="s2">&quot;jax.host_id has been renamed to jax.process_index. This alias &quot;</span>
+      <span class="s2">&quot;will eventually be removed; please update your code.&quot;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">process_index</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="process_count">
+<a class="viewcode-back" href="../../../_autosummary/jax.process_count.html#jax.process_count">[docs]</a>
+<span class="nd">@lru_cache</span>
+<span class="k">def</span> <span class="nf">process_count</span><span class="p">(</span>
+    <span class="n">backend</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">Client</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns the number of JAX processes associated with the backend.&quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">process_index</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">devices</span><span class="p">(</span><span class="n">backend</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span></div>
+
+
+
+<span class="c1"># TODO: remove this sometime after jax 0.2.13 is released</span>
+<span class="k">def</span> <span class="nf">host_count</span><span class="p">(</span><span class="n">backend</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">Client</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+  <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+      <span class="s2">&quot;jax.host_count has been renamed to jax.process_count. This alias &quot;</span>
+      <span class="s2">&quot;will eventually be removed; please update your code.&quot;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">process_count</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span>
+
+
+<span class="c1"># TODO: remove this sometime after jax 0.2.13 is released</span>
+<span class="k">def</span> <span class="nf">host_ids</span><span class="p">(</span>
+    <span class="n">backend</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">Client</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+  <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+      <span class="s2">&quot;jax.host_ids has been deprecated; please use range(jax.process_count()) &quot;</span>
+      <span class="s2">&quot;instead. jax.host_ids will eventually be removed; please update your &quot;</span>
+      <span class="s2">&quot;code.&quot;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">process_count</span><span class="p">(</span><span class="n">backend</span><span class="p">)))</span>
+
+
+<span class="k">def</span> <span class="nf">using_pjrt_c_api</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+  <span class="k">return</span> <span class="s2">&quot;PJRT C API&quot;</span> <span class="ow">in</span> <span class="n">get_backend</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span><span class="o">.</span><span class="n">platform_version</span>
+
+<span class="k">def</span> <span class="nf">make_pjrt_topology</span><span class="p">(</span><span class="n">platform</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">topology_name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+  <span class="n">_discover_and_register_pjrt_plugins</span><span class="p">()</span>
+  <span class="n">actual_platform</span> <span class="o">=</span> <span class="n">canonicalize_platform</span><span class="p">(</span><span class="n">platform</span><span class="p">)</span>
+  <span class="k">with</span> <span class="n">_backend_lock</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">actual_platform</span> <span class="ow">in</span> <span class="n">_topology_factories</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">_topology_factories</span><span class="p">[</span><span class="n">actual_platform</span><span class="p">](</span><span class="n">topology_name</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+  <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;topology not implemented for </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">platform</span><span class="p">)</span>
+
+
+<span class="c1"># TODO(parkers): Get rid of this in favor of a generic way to get topologies.</span>
+<span class="k">def</span> <span class="nf">make_pjrt_tpu_topology</span><span class="p">(</span><span class="n">topology_name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">pjrt_plugin_loaded</span><span class="p">(</span><span class="s2">&quot;tpu&quot;</span><span class="p">):</span>
+    <span class="n">library_path</span> <span class="o">=</span> <span class="n">_get_tpu_library_path</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">library_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+          <span class="s2">&quot;JAX TPU support not installed; cannot generate TPU topology. See&quot;</span>
+          <span class="s2">&quot; https://github.com/google/jax#installation&quot;</span><span class="p">)</span>
+    <span class="n">xla_client</span><span class="o">.</span><span class="n">load_pjrt_plugin_dynamically</span><span class="p">(</span><span class="s2">&quot;tpu&quot;</span><span class="p">,</span> <span class="n">library_path</span><span class="p">)</span>
+  <span class="k">assert</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">pjrt_plugin_loaded</span><span class="p">(</span><span class="s2">&quot;tpu&quot;</span><span class="p">)</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">pjrt_plugin_initialized</span><span class="p">(</span><span class="s2">&quot;tpu&quot;</span><span class="p">):</span>
+    <span class="n">xla_client</span><span class="o">.</span><span class="n">initialize_pjrt_plugin</span><span class="p">(</span><span class="s2">&quot;tpu&quot;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">xla_client</span><span class="o">.</span><span class="n">make_tfrt_tpu_c_api_device_topology</span><span class="p">(</span>
+      <span class="n">topology_name</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+  <span class="p">)</span>
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The JAX authors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, The JAX Authors. NumPy and SciPy documentation are copyright the respective authors..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

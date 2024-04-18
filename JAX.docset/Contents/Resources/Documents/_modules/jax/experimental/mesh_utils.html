@@ -1,0 +1,1297 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>jax.experimental.mesh_utils &#8212; JAX  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/style.css?v=02ed413a" />
+    <link rel="stylesheet" href="../../../_static/style.css" type="text/css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../../../_static/design-tabs.js?v=36754332"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/jax/experimental/mesh_utils';</script>
+    <link rel="icon" href="../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/jax_logo_250px.png" class="logo__image only-light" alt="JAX  documentation - Home"/>
+    <script>document.write(`<img src="../../../_static/jax_logo_250px.png" class="logo__image only-dark" alt="JAX  documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installing JAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/quickstart.html">JAX Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/thinking_in_jax.html">How to Think in JAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/Common_Gotchas_in_JAX.html">🔪 JAX - The Sharp Bits 🔪</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq.html">JAX Frequently Asked Questions (FAQ)</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../jax-101/index.html">Tutorial: JAX 101</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/01-jax-basics.html">JAX As Accelerated NumPy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/02-jitting.html">Just In Time Compilation with JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/03-vectorization.html">Automatic Vectorization in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/04-advanced-autodiff.html">Advanced Automatic Differentiation in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/05-random-numbers.html">Pseudo Random Numbers in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/05.1-pytrees.html">Working with Pytrees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/06-parallelism.html">Parallel Evaluation in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/07-state.html">Stateful Computations in JAX</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Further Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../user_guides.html">User Guides</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../profiling.html">Profiling JAX programs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../device_memory_profiling.html">Device Memory Profiling</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../debugging/index.html">Runtime value debugging in JAX</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../debugging/print_breakpoint.html"><code class="docutils literal notranslate"><span class="pre">jax.debug.print</span></code> and <code class="docutils literal notranslate"><span class="pre">jax.debug.breakpoint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../debugging/checkify_guide.html">The <code class="docutils literal notranslate"><span class="pre">checkify</span></code> transformation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../debugging/flags.html">JAX debugging flags</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../gpu_performance_tips.html">GPU performance tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../persistent_compilation_cache.html">Persistent Compilation Cache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jaxpr.html">Understanding Jaxprs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/external_callbacks.html">External Callbacks in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../type_promotion.html">Type promotion semantics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytrees.html">Pytrees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../aot.html">Ahead-of-time lowering and compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../errors.html">JAX Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../transfer_guard.html">Transfer guard</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../pallas/index.html">Pallas: a JAX kernel language</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../pallas/design.html">Pallas Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pallas/quickstart.html">Pallas Quickstart</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../pallas/tpu/index.html">Pallas TPU</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../pallas/tpu/details.html">Writing TPU kernels with Pallas</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../pallas/tpu/pipelining.html">Pipelining and <code class="docutils literal notranslate"><span class="pre">BlockSpec</span></code>s</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../advanced_guide.html">Advanced Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/neural_network_with_tfds_data.html">Training a Simple Neural Network, with tensorflow/datasets Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Neural_Network_and_Data_Loading.html">Training a Simple Neural Network, with PyTorch Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/vmapped_log_probs.html">Autobatching for Bayesian Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../multi_process.html">Using JAX in multi-host and multi-process environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Distributed_arrays_and_automatic_parallelization.html">Distributed arrays and automatic parallelization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/shard_map.html">SPMD multi-device parallelism with <code class="docutils literal notranslate"><span class="pre">shard_map</span></code></a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/xmap_tutorial.html">Named axes and easy-to-revise parallelism with <code class="docutils literal notranslate"><span class="pre">xmap</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/autodiff_cookbook.html">The Autodiff Cookbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Custom_derivative_rules_for_Python_code.html">Custom derivative rules for JAX-transformable Python functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/autodiff_remat.html">Control autodiff’s saved values with <code class="docutils literal notranslate"><span class="pre">jax.checkpoint</span></code> (aka <code class="docutils literal notranslate"><span class="pre">jax.remat</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/How_JAX_primitives_work.html">How JAX primitives work</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Writing_custom_interpreters_in_Jax.html">Writing custom Jaxpr interpreters in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Custom_Operation_for_GPUs.html">Custom operations for GPUs with C++ and CUDA</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/convolutions.html">Generalized Convolutions in JAX</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../contributor_guide.html">Developer Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html">Contributing to JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../developer.html">Building from source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax_internal_api.html">Internal APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autodidax.html">Autodidax: JAX core from scratch</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jep/index.html">JAX Enhancement Proposals (JEPs)</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/263-prng.html">263: JAX PRNG Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/2026-custom-derivatives.html">2026: Custom JVP/VJP rules for JAX-transformable functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/4008-custom-vjp-update.html">4008: Custom VJP and `nondiff_argnums` update</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/4410-omnistaging.html">4410: Omnistaging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/9263-typed-keys.html">9263: Typed keys &amp; pluggable RNGs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/9407-type-promotion.html">9407: Design of Type Promotion Semantics for JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/9419-jax-versioning.html">9419: Jax and Jaxlib versioning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/10657-sequencing-effects.html">10657: Sequencing side-effects in JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/11830-new-remat-checkpoint.html">11830: `jax.remat` / `jax.checkpoint` new implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/12049-type-annotations.html">12049: Type Annotation Roadmap for JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/14273-shard-map.html">14273: `shard_map` (`shmap`) for simple per-device code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/15856-jex.html">15856: `jax.extend`, an extensions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/17111-shmap-transpose.html">17111: Efficient transposition of `shard_map` (and other maps)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/18137-numpy-scipy-scope.html">18137: Scope of JAX NumPy &amp; SciPy Wrappers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../investigating_a_regression.html">Investigating a regression</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../building_on_jax.html">Building on JAX</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../notes.html">Notes</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_compatibility.html">API compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../deprecation.html">Python and NumPy version support policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax_array_migration.html">jax.Array migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../async_dispatch.html">Asynchronous dispatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../concurrency.html">Concurrency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../gpu_memory_allocation.html">GPU memory allocation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../rank_promotion_warning.html">Rank promotion warning</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../jax.html">Public API: jax package</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.numpy.html"><code class="docutils literal notranslate"><span class="pre">jax.numpy</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fft.html">jax.numpy.fft.fft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fft2.html">jax.numpy.fft.fft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fftfreq.html">jax.numpy.fft.fftfreq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fftn.html">jax.numpy.fft.fftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fftshift.html">jax.numpy.fft.fftshift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.hfft.html">jax.numpy.fft.hfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifft.html">jax.numpy.fft.ifft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifft2.html">jax.numpy.fft.ifft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifftn.html">jax.numpy.fft.ifftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifftshift.html">jax.numpy.fft.ifftshift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ihfft.html">jax.numpy.fft.ihfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.irfft.html">jax.numpy.fft.irfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.irfft2.html">jax.numpy.fft.irfft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.irfftn.html">jax.numpy.fft.irfftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfft.html">jax.numpy.fft.rfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfft2.html">jax.numpy.fft.rfft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfftfreq.html">jax.numpy.fft.rfftfreq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfftn.html">jax.numpy.fft.rfftn</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.scipy.html"><code class="docutils literal notranslate"><span class="pre">jax.scipy</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.logpmf.html">jax.scipy.stats.bernoulli.logpmf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.pmf.html">jax.scipy.stats.bernoulli.pmf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.cdf.html">jax.scipy.stats.bernoulli.cdf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.ppf.html">jax.scipy.stats.bernoulli.ppf</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.lax.html"><code class="docutils literal notranslate"><span class="pre">jax.lax</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.random.html"><code class="docutils literal notranslate"><span class="pre">jax.random</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.sharding.html"><code class="docutils literal notranslate"><span class="pre">jax.sharding</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.debug.html"><code class="docutils literal notranslate"><span class="pre">jax.debug</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.dlpack.html"><code class="docutils literal notranslate"><span class="pre">jax.dlpack</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.distributed.html"><code class="docutils literal notranslate"><span class="pre">jax.distributed</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.dtypes.html"><code class="docutils literal notranslate"><span class="pre">jax.dtypes</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.flatten_util.html"><code class="docutils literal notranslate"><span class="pre">jax.flatten_util</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.image.html"><code class="docutils literal notranslate"><span class="pre">jax.image</span></code> module</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.nn.html"><code class="docutils literal notranslate"><span class="pre">jax.nn</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-13"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.nn.initializers.html"><code class="docutils literal notranslate"><span class="pre">jax.nn.initializers</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.ops.html"><code class="docutils literal notranslate"><span class="pre">jax.ops</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.profiler.html"><code class="docutils literal notranslate"><span class="pre">jax.profiler</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.stages.html"><code class="docutils literal notranslate"><span class="pre">jax.stages</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.tree.html"><code class="docutils literal notranslate"><span class="pre">jax.tree</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.tree_util.html"><code class="docutils literal notranslate"><span class="pre">jax.tree_util</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.typing.html"><code class="docutils literal notranslate"><span class="pre">jax.typing</span></code> module</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.extend.html"><code class="docutils literal notranslate"><span class="pre">jax.extend</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.extend.linear_util.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.linear_util</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.extend.mlir.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.mlir</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.extend.random.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.random</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.example_libraries.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-15"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.example_libraries.optimizers.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries.optimizers</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.example_libraries.stax.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries.stax</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.experimental.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.array_api.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.array_api</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.checkify.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.checkify</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.host_callback.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.host_callback</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.maps.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.maps</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.pjit.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.pjit</span></code> module</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../jax.experimental.sparse.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.sparse</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.BCOO.html">jax.experimental.sparse.BCOO</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_broadcast_in_dim.html">jax.experimental.sparse.bcoo_broadcast_in_dim</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_concatenate.html">jax.experimental.sparse.bcoo_concatenate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_dot_general.html">jax.experimental.sparse.bcoo_dot_general</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_dot_general_sampled.html">jax.experimental.sparse.bcoo_dot_general_sampled</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_dynamic_slice.html">jax.experimental.sparse.bcoo_dynamic_slice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_extract.html">jax.experimental.sparse.bcoo_extract</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_fromdense.html">jax.experimental.sparse.bcoo_fromdense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_gather.html">jax.experimental.sparse.bcoo_gather</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_multiply_dense.html">jax.experimental.sparse.bcoo_multiply_dense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_multiply_sparse.html">jax.experimental.sparse.bcoo_multiply_sparse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_update_layout.html">jax.experimental.sparse.bcoo_update_layout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_reduce_sum.html">jax.experimental.sparse.bcoo_reduce_sum</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_reshape.html">jax.experimental.sparse.bcoo_reshape</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_slice.html">jax.experimental.sparse.bcoo_slice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_sort_indices.html">jax.experimental.sparse.bcoo_sort_indices</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_squeeze.html">jax.experimental.sparse.bcoo_squeeze</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_sum_duplicates.html">jax.experimental.sparse.bcoo_sum_duplicates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_todense.html">jax.experimental.sparse.bcoo_todense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_transpose.html">jax.experimental.sparse.bcoo_transpose</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.jet.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.jet</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.custom_partitioning.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.custom_partitioning</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.multihost_utils.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.multihost_utils</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.compilation_cache.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.compilation_cache</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.key_reuse.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.key_reuse</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.mesh_utils.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.mesh_utils</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.lib.html"><code class="docutils literal notranslate"><span class="pre">jax.lib</span></code> module</a></li>
+</ul>
+</li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../glossary.html">JAX Glossary of Terms</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/google/jax" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for jax.experimental.mesh_utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2021 The TensorFlow Authors. All Rights Reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ==============================================================================</span>
+<span class="sd">&quot;&quot;&quot;Utils for building a device mesh.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Sequence</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">MutableMapping</span>
+
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">xla_bridge</span> <span class="k">as</span> <span class="n">xb</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">_TPU_V2</span> <span class="o">=</span> <span class="s1">&#39;TPU v2&#39;</span>
+<span class="n">_TPU_V3</span> <span class="o">=</span> <span class="s1">&#39;TPU v3&#39;</span>
+<span class="n">_TPU_V4</span> <span class="o">=</span> <span class="s1">&#39;TPU v4&#39;</span>
+
+<span class="c1"># Maps physical topology -&gt; mesh shape -&gt; transpose to use for jekbradbury&#39;s</span>
+<span class="c1"># famous contiguous mesh trick.</span>
+<span class="c1">#</span>
+<span class="c1"># The trick only works for certain topologies and mesh shapes. Trivial dims of</span>
+<span class="c1"># size 1 can be added to the shapes listed, and they are also supported.</span>
+<span class="n">_TRANSPOSE_TRICKS</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span>
+    <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]]</span>
+<span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span> <span class="p">{</span>
+        <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="p">},</span>
+    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span> <span class="p">{</span>
+        <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="p">},</span>
+    <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span> <span class="p">{</span>
+        <span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="p">},</span>
+    <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span> <span class="p">{</span>
+        <span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">64</span><span class="p">):</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="p">},</span>
+    <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span> <span class="p">{</span>
+        <span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="p">},</span>
+    <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">):</span> <span class="p">{</span>
+        <span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">8</span><span class="p">):</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">256</span><span class="p">):</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+
+<span class="c1"># Physical ordering of core IDs in a tray that creates a ring</span>
+<span class="n">_TRAY_RING_ORDER</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_tpu_v2_v3_create_device_mesh</span><span class="p">(</span>
+    <span class="n">mesh_shape</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">devices</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span>
+    <span class="o">**</span><span class="n">unused_kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">devices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">8</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="s1">&#39;Reordering mesh to physical ring order on single-tray TPU v2/v3.&#39;</span>
+    <span class="p">)</span>
+    <span class="n">device_mesh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">devices</span><span class="p">)</span>
+    <span class="n">device_mesh</span> <span class="o">=</span> <span class="n">device_mesh</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">_TRAY_RING_ORDER</span><span class="p">)]</span>
+    <span class="n">device_mesh</span> <span class="o">=</span> <span class="n">device_mesh</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">mesh_shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">device_mesh</span>
+  <span class="k">elif</span> <span class="n">mesh_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">8</span><span class="p">:</span>
+    <span class="n">device_mesh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">devices</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">mesh_shape</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+        <span class="s1">&#39;Reordering mesh to physical ring order on each TPU v2/v3 tray.&#39;</span>
+    <span class="p">)</span>
+    <span class="n">perm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">_TRAY_RING_ORDER</span><span class="p">)</span>
+    <span class="n">device_mesh</span> <span class="o">=</span> <span class="n">device_mesh</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">perm</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">device_mesh</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="c1"># TODO(skye): implement 2D mesh_shape logic here:</span>
+    <span class="c1"># https://github.com/tensorflow/lingvo/blob/0df40cf604dfcd14e28f7087d73687a0bd2fe5c6/lingvo/core/gshard_utils.py#L187</span>
+    <span class="c1"># (possibly replaces above mesh_shape[-1] == 8 case)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">devices</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">mesh_shape</span><span class="p">)</span>
+
+
+<span class="c1"># Registers functions to create device mesh for specific device kinds. Takes</span>
+<span class="c1"># precedence over the more general logic in create_device_mesh(). Handler may</span>
+<span class="c1"># return None; in that case, it will fall back to using the default logic.</span>
+<span class="n">device_kind_handler_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span>
+    <span class="nb">str</span><span class="p">,</span>
+    <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">|</span> <span class="kc">None</span><span class="p">],</span>
+<span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">_TPU_V2</span><span class="p">:</span> <span class="n">_tpu_v2_v3_create_device_mesh</span><span class="p">,</span>
+    <span class="n">_TPU_V3</span><span class="p">:</span> <span class="n">_tpu_v2_v3_create_device_mesh</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">_create_device_mesh_for_nd_torus</span><span class="p">(</span>
+    <span class="n">physical_mesh</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">mesh_shape</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">allow_split_physical_axes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Assigns logical parallelism axes to physical axes of an N-D torus network.</span>
+
+<span class="sd">  Given logical parallelism axes with sizes in `mesh_shape` and devices in an</span>
+<span class="sd">  N-dimensional torus network represented by `physical_mesh`, maps each logical</span>
+<span class="sd">  axis to one or more physical axes. Prefer to map more-performance-sensitive</span>
+<span class="sd">  logical axes to larger numbers of physical axes to maximize the bandwidth</span>
+<span class="sd">  available to them. Also prefer to assign logical axes to multiple physical</span>
+<span class="sd">  axes of the same size (e.g., a 2D square) rather than multiple physical axes</span>
+<span class="sd">  of different sizes when possible.</span>
+
+<span class="sd">  If allow_split_physical_axes = False (default), this routine will error out</span>
+<span class="sd">  instead of splitting a physical axis over more than one logical axis (which</span>
+<span class="sd">  would reduce total usable bandwidth).</span>
+
+<span class="sd">  Let&#39;s use a concrete example to explain the concepts and considerations.</span>
+
+<span class="sd">  As an example, suppose the logical mesh is [data, model], for data and model</span>
+<span class="sd">  parallelism respectively. Also suppose that data parallelism is less</span>
+<span class="sd">  performance sensitive than model parallelism. Consider a 3D TPU pod slice of</span>
+<span class="sd">  shape 4x4x16, represented by a physical mesh of shape (4, 4, 16).</span>
+
+<span class="sd">  A TPU pod slice has equal bandwidth along all axes with wraparound links, but</span>
+<span class="sd">  a 2D plane of size 4x4 may have faster XLA collective implementations than a</span>
+<span class="sd">  non-square plane or a 1D subgroup. If the mesh_shape is [16, 16], we may want</span>
+<span class="sd">  the more performance sensitive `model` axis to be mapped to the 4x4 XY plane.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    physical_mesh: a np.ndarray of devices in the shape of the N-D torus</span>
+<span class="sd">      physical topology.</span>
+<span class="sd">    mesh_shape: shape of the logical mesh (size of the various logical</span>
+<span class="sd">      parallelism axes), with axes ordered by increasing network intensity.</span>
+<span class="sd">    allow_split_physical_axes: If True, we would split physical axes if</span>
+<span class="sd">      necessary to fit the desired mesh shape.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    An np.ndarray of devices in the shape of the logical mesh (mesh_shape), with</span>
+<span class="sd">      each logical parallelism axis mapped to one or more physical mesh axes.</span>
+<span class="sd">    The axis assignment matrix, which is a 2-d array mapping from</span>
+<span class="sd">      (physical_axis, logical_axis) to the size assigned, with the invariant</span>
+<span class="sd">      np.prod(assignment, axis=1) = physical_mesh_shape, and</span>
+<span class="sd">      np.prod(assignment, axis=0) = mesh_shape.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="c1"># Remaining physical axes to be assigned to logical axes.</span>
+  <span class="n">assignable_physical_mesh</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">physical_mesh</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+  <span class="c1"># Map each logical axis to a subset of physical axes.</span>
+  <span class="n">assignment</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">mesh_shape</span><span class="p">]</span>
+
+  <span class="c1"># Assign logical axes from highest network intensity to lowest.</span>
+  <span class="c1"># `mesh_shape` is assumed to ordered by lowest network intensity first, so</span>
+  <span class="c1"># reverse it first.</span>
+  <span class="k">for</span> <span class="n">logical_axis_index</span><span class="p">,</span> <span class="n">logical_axis_size</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span>
+      <span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">mesh_shape</span><span class="p">))</span>
+  <span class="p">):</span>
+    <span class="c1"># Preferentially map to more physical axes first for higher bandwidth.</span>
+    <span class="k">for</span> <span class="n">num_axes</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+      <span class="c1"># Try assign to any subset of size num_axes. Generate all candidates.</span>
+      <span class="n">indices_and_axes</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span>
+          <span class="nb">enumerate</span><span class="p">(</span><span class="n">assignable_physical_mesh</span><span class="p">),</span> <span class="n">num_axes</span>
+      <span class="p">)</span>
+      <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">indices_and_axes</span><span class="p">:</span>
+        <span class="n">c_indices</span><span class="p">,</span> <span class="n">c_axes</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">elem</span><span class="p">)</span>
+        <span class="c1"># TODO(zhangqiaorjc): Due to limitations in XLA, 2D collectives only</span>
+        <span class="c1"># implemented for square 2D plane. Mapping a physical axis to two</span>
+        <span class="c1"># logical axes might be slower for non-square 2D plane, e.g., map 32 to</span>
+        <span class="c1"># 4x8 or a single axis. If XLA 2D collectives support non-square plane</span>
+        <span class="c1"># soon, we can continue to preferentially map to 2D plane in general,</span>
+        <span class="c1"># otherwise, we should treat non-square 2D plane and 1D submesh equally.</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">c_axes</span><span class="p">)</span> <span class="o">==</span> <span class="n">logical_axis_size</span><span class="p">:</span>
+          <span class="n">assignment</span><span class="p">[</span><span class="n">logical_axis_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">c_indices</span>
+          <span class="c1"># Zero the assigned physical axes.</span>
+          <span class="n">assignable_physical_mesh</span> <span class="o">=</span> <span class="p">[</span>
+              <span class="mi">0</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">c_indices</span> <span class="k">else</span> <span class="n">v</span>
+              <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">assignable_physical_mesh</span><span class="p">)</span>
+          <span class="p">]</span>
+          <span class="k">break</span>
+      <span class="k">if</span> <span class="n">assignment</span><span class="p">[</span><span class="n">logical_axis_index</span><span class="p">]:</span>
+        <span class="c1"># We already found an assignment from one candidate above.</span>
+        <span class="k">break</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="c1"># If the num_axes for loop did not break, i.e. none of the candidates work</span>
+      <span class="c1"># goto here with this while-else construct.</span>
+      <span class="k">if</span> <span class="n">logical_axis_size</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">allow_split_physical_axes</span><span class="p">:</span>
+          <span class="c1"># Although this is now implemented, there are downstream tasks</span>
+          <span class="c1"># counting on this being a NotImplementedError.</span>
+          <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+              <span class="s1">&#39;Failed to find assignment for logical_axis_index&#39;</span>
+              <span class="sa">f</span><span class="s1">&#39; </span><span class="si">{</span><span class="n">logical_axis_index</span><span class="si">}</span><span class="s1"> of size </span><span class="si">{</span><span class="n">logical_axis_size</span><span class="si">}</span><span class="s1"> with&#39;</span>
+              <span class="sa">f</span><span class="s1">&#39; remaining assignable mesh </span><span class="si">{</span><span class="n">assignable_physical_mesh</span><span class="si">}</span><span class="s1">. The size&#39;</span>
+              <span class="s1">&#39; of each axis in your logical mesh must be equal to the product&#39;</span>
+              <span class="s1">&#39; of some subset of the physical mesh axis sizes. E.g. logical&#39;</span>
+              <span class="s1">&#39; mesh (4, 16) is compatible with physical mesh 4x4x4 since 4=4&#39;</span>
+              <span class="s1">&#39; and 16=4x4. If you want to split physical axes, set &#39;</span>
+              <span class="s1">&#39; allow_split_physical_axes to True.&#39;</span>
+          <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="c1"># We will try finding an assignment, even if that means splitting the</span>
+          <span class="c1"># physical axes, which requires a more sophisticated implementation.</span>
+          <span class="k">return</span> <span class="n">_create_device_mesh_for_nd_torus_splitting_axes</span><span class="p">(</span>
+              <span class="n">physical_mesh</span><span class="p">,</span> <span class="n">mesh_shape</span>
+          <span class="p">)</span>
+
+  <span class="c1"># Flatten the assignment, e.g., [(), (2,), (0, 1)] -&gt; (2, 0, 1).</span>
+  <span class="n">transpose</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">assignment_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span>
+      <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">physical_mesh</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">mesh_shape</span><span class="p">)],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span>
+  <span class="p">)</span>
+  <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">assignment</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
+      <span class="n">physical_mesh_axis</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+      <span class="n">assignment_array</span><span class="p">[</span><span class="n">physical_mesh_axis</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">physical_mesh</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span>
+          <span class="n">physical_mesh_axis</span>
+      <span class="p">]</span>
+      <span class="n">transpose</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">physical_mesh_axis</span><span class="p">)</span>
+  <span class="k">return</span> <span class="p">(</span>
+      <span class="n">physical_mesh</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">transpose</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">mesh_shape</span><span class="p">),</span>
+      <span class="n">assignment_array</span><span class="p">,</span>
+  <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_create_device_mesh_for_nd_torus_splitting_axes</span><span class="p">(</span>
+    <span class="n">physical_mesh</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">mesh_shape</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Assigns logical parallelism axes to physical axes of an N-D torus network.</span>
+
+<span class="sd">  This implementation allows creating meshes that requires splitting physical</span>
+<span class="sd">  axes, and thus one could produce logical mesh of any shape, as long as the</span>
+<span class="sd">  number of devices matches, e.g.,</span>
+
+<span class="sd">  - Creating 2x2x4 from 4x4;</span>
+
+<span class="sd">  - Creating 2x2x16 from 8x8;</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    physical_mesh: a np.ndarray of devices in the shape of the N-D torus</span>
+<span class="sd">      physical topology.</span>
+<span class="sd">    mesh_shape: shape of the logical mesh (size of the various logical</span>
+<span class="sd">      parallelism axes), with axes ordered by increasing network intensity.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    An np.ndarray of devices in the shape of the logical mesh (mesh_shape), with</span>
+<span class="sd">      each logical parallelism axis mapped to one or more physical mesh axes.</span>
+<span class="sd">    The axis assignment matrix, which is a 2-d array mapping from</span>
+<span class="sd">      (physical_axis, logical_axis) to the size assigned, with the invariant</span>
+<span class="sd">      np.prod(assignment, axis=1) = physical_mesh_shape, and</span>
+<span class="sd">      np.prod(assignment, axis=0) = mesh_shape.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">physical_mesh</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">mesh_shape</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+        <span class="s1">&#39;The number of devices in physical mesh&#39;</span>
+        <span class="sa">f</span><span class="s1">&#39; </span><span class="si">{</span><span class="n">physical_mesh</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1"> does not match the number of devices&#39;</span>
+        <span class="sa">f</span><span class="s1">&#39; in logical mesh </span><span class="si">{</span><span class="n">mesh_shape</span><span class="si">}</span><span class="s1">.&#39;</span>
+    <span class="p">)</span>
+
+  <span class="n">physical_mesh_shape</span> <span class="o">=</span> <span class="n">physical_mesh</span><span class="o">.</span><span class="n">shape</span>
+  <span class="n">logical_mesh_shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">mesh_shape</span><span class="p">)</span>
+
+  <span class="c1"># (Partial) assignment map as an 2-d array [p_axis, l_axis] -&gt; size.</span>
+  <span class="n">assignment</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span>
+      <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">physical_mesh_shape</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">logical_mesh_shape</span><span class="p">)],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span>
+  <span class="p">)</span>
+
+  <span class="c1"># Process logical axes from highest network intensity to lowest.</span>
+  <span class="c1"># `mesh_shape` is assumed to ordered by lowest network intensity first, so</span>
+  <span class="c1"># reverse it.</span>
+  <span class="k">for</span> <span class="n">logical_axis</span><span class="p">,</span> <span class="n">logical_axis_size</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span>
+      <span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">logical_mesh_shape</span><span class="p">))</span>
+  <span class="p">):</span>
+    <span class="c1"># Go over all the possible assignment for the logical axis, including the</span>
+    <span class="c1"># one that splits multiple physical axes.</span>
+    <span class="n">best_logical_axis_assignment</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">logical_axis_assignment</span> <span class="ow">in</span> <span class="n">_enumerate_feasible_logical_axis_assignments</span><span class="p">(</span>
+        <span class="n">physical_mesh_shape</span><span class="p">,</span> <span class="n">assignment</span><span class="p">,</span> <span class="n">logical_axis_size</span>
+    <span class="p">):</span>
+      <span class="c1"># TODO(rosun): Instead of using heuristics, replace this with a proper</span>
+      <span class="c1"># scoring function reflecting the underlying hardware properties.</span>
+      <span class="k">if</span> <span class="p">(</span>
+          <span class="n">best_logical_axis_assignment</span> <span class="ow">is</span> <span class="kc">None</span>
+          <span class="ow">or</span> <span class="n">_prefer_first_logical_axis_assignment</span><span class="p">(</span>
+              <span class="n">logical_axis_assignment</span><span class="p">,</span>
+              <span class="n">best_logical_axis_assignment</span><span class="p">,</span>
+              <span class="n">physical_mesh_shape</span><span class="o">=</span><span class="n">physical_mesh_shape</span><span class="p">,</span>
+              <span class="n">assignment</span><span class="o">=</span><span class="n">assignment</span><span class="p">,</span>
+          <span class="p">)</span>
+      <span class="p">):</span>
+        <span class="n">best_logical_axis_assignment</span> <span class="o">=</span> <span class="n">logical_axis_assignment</span>
+    <span class="n">assignment</span><span class="p">[:,</span> <span class="n">logical_axis</span><span class="p">]</span> <span class="o">=</span> <span class="n">best_logical_axis_assignment</span>
+
+  <span class="c1"># Read out the assignment.</span>
+  <span class="n">logical_mesh</span> <span class="o">=</span> <span class="n">_generate_logical_mesh</span><span class="p">(</span>
+      <span class="n">physical_mesh</span><span class="p">,</span> <span class="n">logical_mesh_shape</span><span class="p">,</span> <span class="n">assignment</span>
+  <span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">logical_mesh</span><span class="p">,</span> <span class="n">assignment</span>
+
+
+<span class="k">def</span> <span class="nf">_get_prime_factors</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns a sorted list of prime factors for the given number.&quot;&quot;&quot;</span>
+  <span class="k">assert</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span>
+  <span class="n">factors</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">isqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="p">):</span>
+    <span class="k">while</span> <span class="n">x</span> <span class="o">%</span> <span class="n">p</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="n">factors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+      <span class="n">x</span> <span class="o">//=</span> <span class="n">p</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">factors</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span>  <span class="c1"># x is a prime number.</span>
+
+
+<span class="k">def</span> <span class="nf">_enumerate_feasible_logical_axis_assignments</span><span class="p">(</span>
+    <span class="n">physical_mesh_shape</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">assignment</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">logical_axis_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Yields feasible assignments for a single logical axis.</span>
+
+<span class="sd">  For a physical mesh of shape [x_1, ..., x_n], and the product of all previous</span>
+<span class="sd">  assignments on each physical axes [y_1, ..., y_n], this function yields all</span>
+<span class="sd">  possible assignments for the axis as 1-d arrays [z_1, ..., z_n], so that:</span>
+
+<span class="sd">  - prod(z_1, ..., z_n) = logical_axis_size</span>
+
+<span class="sd">  - x_i % (z_i * y_i) = 0</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    physical_mesh_shape: Physical mesh shape.</span>
+<span class="sd">    assignment: Existing assignment matrix.</span>
+<span class="sd">    logical_axis_size: Size of the logical axis to assign.</span>
+
+<span class="sd">  Yields:</span>
+<span class="sd">    All valid assignments for the logical axis. Each assignment is represented</span>
+<span class="sd">    as an integer array of length len(physical_mesh_shape).</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">logical_axis_factors</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">factor</span> <span class="ow">in</span> <span class="n">_get_prime_factors</span><span class="p">(</span><span class="n">logical_axis_size</span><span class="p">):</span>
+    <span class="n">logical_axis_factors</span><span class="p">[</span><span class="n">factor</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+  <span class="n">available_physical_mesh_shape</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">physical_mesh_shape</span><span class="p">)</span> <span class="o">//</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span>
+      <span class="n">assignment</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span>
+  <span class="p">)</span>
+
+  <span class="c1"># To enable efficient enumerations, we first index physical axes by their</span>
+  <span class="c1"># prime factors. Since we know the prime factorization of the logical axis</span>
+  <span class="c1"># size, we could simply enumerate by picking the correct count for each</span>
+  <span class="c1"># prime factor.</span>
+  <span class="n">physical_axes_by_factor</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span>
+      <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+  <span class="p">)</span>
+  <span class="k">for</span> <span class="n">physical_axis</span><span class="p">,</span> <span class="n">physical_axis_size</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
+      <span class="n">available_physical_mesh_shape</span>
+  <span class="p">):</span>
+    <span class="k">for</span> <span class="n">factor</span> <span class="ow">in</span> <span class="n">_get_prime_factors</span><span class="p">(</span><span class="n">physical_axis_size</span><span class="p">):</span>
+      <span class="k">if</span> <span class="n">factor</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">logical_axis_factors</span><span class="p">:</span>
+        <span class="k">continue</span>
+      <span class="n">physical_axes_by_factor</span><span class="p">[</span><span class="n">factor</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">physical_axis</span><span class="p">)</span>
+
+  <span class="n">factors</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">assignments_by_factor</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">factor</span><span class="p">,</span> <span class="n">multiplicity</span> <span class="ow">in</span> <span class="n">logical_axis_factors</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">factors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">factor</span><span class="p">)</span>
+    <span class="n">assignments_by_factor</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="nb">set</span><span class="p">(</span>
+            <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span>
+                <span class="n">physical_axes_by_factor</span><span class="p">[</span><span class="n">factor</span><span class="p">],</span> <span class="n">multiplicity</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+  <span class="k">for</span> <span class="n">axis_assignment</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">assignments_by_factor</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">physical_mesh_shape</span><span class="p">)],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">factor_index</span><span class="p">,</span> <span class="n">per_factor_assignment</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axis_assignment</span><span class="p">):</span>
+      <span class="k">for</span> <span class="n">physical_axis</span> <span class="ow">in</span> <span class="n">per_factor_assignment</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">physical_axis</span><span class="p">]</span> <span class="o">*=</span> <span class="n">factors</span><span class="p">[</span><span class="n">factor_index</span><span class="p">]</span>
+    <span class="k">yield</span> <span class="n">result</span>
+
+
+<span class="k">def</span> <span class="nf">_prefer_first_logical_axis_assignment</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">physical_mesh_shape</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">assignment</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns True if the first axis assignment is preferred over the second.</span>
+
+<span class="sd">  For now, this is implemented with some very simple heuristics. However,</span>
+<span class="sd">  it is possible to introduce e.g., a value function here based on a more</span>
+<span class="sd">  precise model of the underlying hardware.</span>
+
+<span class="sd">  TODO(rosun): Use a proxy of network capacity to select the partitions.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    x: Logical axis assignment as [len(physical_mesh_shape)] array.</span>
+<span class="sd">    y: Logical axis assignment as [len(physical_mesh_shape)] array.</span>
+<span class="sd">    physical_mesh_shape: Physical mesh shape.</span>
+<span class="sd">    assignment: Assignment matrix.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    True if x is preferred over y.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="c1"># Prefer occupying complete physical axes. I don&#39;t have a good reason for</span>
+  <span class="c1"># this, except that it is compatible with the existing behavior.</span>
+  <span class="c1">#</span>
+  <span class="c1"># E.g., on 4 x 4 x 8, [4, 4, -] will be preferred over [4, -, 4], and then</span>
+  <span class="c1"># over [2, 2, 4].</span>
+  <span class="n">x_whole_axis_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span>
+      <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="n">physical_mesh_shape</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+  <span class="p">)</span>
+  <span class="n">y_whole_axis_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span>
+      <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="n">physical_mesh_shape</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+  <span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">x_whole_axis_size</span> <span class="o">!=</span> <span class="n">y_whole_axis_size</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">x_whole_axis_size</span> <span class="o">&gt;</span> <span class="n">y_whole_axis_size</span>
+
+  <span class="c1"># Prefer occupying more whole physical axes for better bandwidth.</span>
+  <span class="c1">#</span>
+  <span class="c1"># This is consistent with existing logic, i.e., 2 x 2 is preferred over 4.</span>
+  <span class="n">x_num_whole_axes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span>
+      <span class="p">[</span><span class="mi">1</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="n">physical_mesh_shape</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">and</span> <span class="n">s</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span>
+  <span class="p">)</span>
+  <span class="n">y_num_whole_axes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span>
+      <span class="p">[</span><span class="mi">1</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="k">if</span> <span class="n">s</span> <span class="o">==</span> <span class="n">physical_mesh_shape</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">and</span> <span class="n">s</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span>
+  <span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">x_num_whole_axes</span> <span class="o">!=</span> <span class="n">y_num_whole_axes</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">x_num_whole_axes</span> <span class="o">&gt;</span> <span class="n">y_num_whole_axes</span>
+
+  <span class="c1"># Prefer taking physical axes that are not taken by logical axes of higher</span>
+  <span class="c1"># network intensity. E.g., for a 4 x 4 x 4, suppose that the previous</span>
+  <span class="c1"># assignments are 1 x 2 x 4, and we want to place a new logical axis of size</span>
+  <span class="c1"># 2, we will go for [2, 1, 1] instead of [1, 2, 1], as the latter choice will</span>
+  <span class="c1"># tap into bandwidth already taken by the higher intensity axis.</span>
+  <span class="n">assigned_physical_mesh_shape</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">assignment</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+  <span class="n">x_non_overlapping_axis_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span>
+      <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="n">assigned_physical_mesh_shape</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span>
+  <span class="p">)</span>
+  <span class="n">y_non_overlapping_axis_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span>
+      <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="k">if</span> <span class="n">assigned_physical_mesh_shape</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span>
+  <span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">x_non_overlapping_axis_size</span> <span class="o">!=</span> <span class="n">y_non_overlapping_axis_size</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">x_non_overlapping_axis_size</span> <span class="o">&gt;</span> <span class="n">y_non_overlapping_axis_size</span>
+
+  <span class="c1"># Otherwise sort by reverse lexical graphical order, to be consistent with</span>
+  <span class="c1"># existing behavior.</span>
+  <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_generate_logical_mesh</span><span class="p">(</span>
+    <span class="n">physical_mesh</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">logical_mesh_shape</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">assignment</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute the logical mesh from assignment map.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    physical_mesh: Physical device mesh.</span>
+<span class="sd">    logical_mesh_shape: Logical mesh shape.</span>
+<span class="sd">    assignment: 2-d assignment matrix shape [physical_dims, logical_dims].</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    Logical mesh reshaped from physical mesh.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">physical_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">broadcast_to</span><span class="p">(</span>
+      <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span>
+          <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">physical_mesh</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">),</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span>
+      <span class="p">),</span>
+      <span class="n">assignment</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
+  <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+  <span class="n">logical_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">broadcast_to</span><span class="p">(</span>
+      <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span>
+          <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">logical_mesh_shape</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
+      <span class="p">),</span>
+      <span class="n">assignment</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
+  <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+  <span class="c1"># Axes of logical mesh is ordered by (physical_axis, logical_axis).</span>
+  <span class="c1">#</span>
+  <span class="c1"># Note that we sort for each physical_axis the logical_axis, so that higher</span>
+  <span class="c1"># intensity logical axes are replicated at inner (minor) dimensions.</span>
+  <span class="c1">#</span>
+  <span class="c1"># E.g., if a dimension size is 12 = 3x4, where 3 is higher intensity and 4</span>
+  <span class="c1"># is lower, we want to reshape so that it becomes 12 = 4x3. Imagine in the</span>
+  <span class="c1"># 1-d case, this will allow more connections between the higher intensity</span>
+  <span class="c1"># axes.</span>
+  <span class="n">logical_mesh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">physical_mesh</span><span class="p">,</span> <span class="n">assignment</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+
+  <span class="c1"># We will then group by l_axis as this is what is expected from output.</span>
+  <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">transpose_axes</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span>
+      <span class="o">*</span><span class="nb">sorted</span><span class="p">(</span>
+          <span class="nb">zip</span><span class="p">(</span><span class="n">logical_indices</span><span class="p">,</span> <span class="n">physical_indices</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">logical_indices</span><span class="p">)))</span>
+      <span class="p">)</span>
+  <span class="p">)</span>
+  <span class="n">logical_mesh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">logical_mesh</span><span class="p">,</span> <span class="n">transpose_axes</span><span class="p">)</span>
+
+  <span class="c1"># Reshape to add the trivial dimensions back.</span>
+  <span class="n">logical_mesh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">logical_mesh</span><span class="p">,</span> <span class="n">logical_mesh_shape</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">logical_mesh</span>
+
+
+<span class="k">def</span> <span class="nf">_bounds_from_last_device</span><span class="p">(</span><span class="n">last_device</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Gets the bound from the given last device.&quot;&quot;&quot;</span>
+  <span class="c1"># Must be passed the device at the highest-coordinate corner of the</span>
+  <span class="c1"># relevant mesh, which is a requirement we know is satisfied by the last</span>
+  <span class="c1"># device in jax.devices().</span>
+  <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">last_device</span><span class="p">,</span> <span class="s1">&#39;coords&#39;</span><span class="p">),</span> <span class="s1">&#39;Only TPU supported&#39;</span>
+  <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">last_device</span><span class="o">.</span><span class="n">coords</span>
+  <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">z</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">last_device</span><span class="o">.</span><span class="n">core_on_chip</span> <span class="o">+</span> <span class="mi">1</span>
+
+
+<span class="k">def</span> <span class="nf">_get_physical_tpu_mesh</span><span class="p">(</span><span class="n">jax_devices</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">  </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Rearrange TPU devices in a slice into a physical mesh.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    jax_devices: A list of JAX devices in a TPU slice in process-tiled z, y, x,</span>
+<span class="sd">      core order, e.g. from jax.devices().</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    A np.ndarray of JAX devices with shape [global_x, global_y, global_z]. On</span>
+<span class="sd">      v2 and v3, global_z is instead cores_per_chip (i.e., 2).</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">device_kind</span> <span class="o">=</span> <span class="n">jax_devices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">device_kind</span>
+  <span class="n">device_coords</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">coords</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">jax_devices</span><span class="p">]</span>
+  <span class="n">dims</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">d</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">max</span><span class="p">(</span><span class="n">device_coords</span><span class="p">))</span>
+  <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">dims</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="n">dims</span>
+  <span class="k">if</span> <span class="n">device_kind</span> <span class="ow">in</span> <span class="p">(</span><span class="n">_TPU_V2</span><span class="p">,</span> <span class="n">_TPU_V3</span><span class="p">):</span>
+    <span class="n">cores_per_chip</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">core_on_chip</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">jax_devices</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">dims</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">cores_per_chip</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">coords</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">device_coords</span><span class="p">,</span> <span class="n">jax_devices</span><span class="p">):</span>
+      <span class="k">assert</span> <span class="n">coords</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">d</span>
+      <span class="n">out</span><span class="p">[</span><span class="n">coords</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">coords</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">d</span><span class="o">.</span><span class="n">core_on_chip</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">dims</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">coords</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">device_coords</span><span class="p">,</span> <span class="n">jax_devices</span><span class="p">):</span>
+      <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">core_on_chip</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span>
+            <span class="s1">&#39;Creating meshes for TPU &gt;v3 requires one device per chip&#39;</span>
+            <span class="sa">f</span><span class="s1">&#39; (&quot;megacore&quot; mode). Got device id </span><span class="si">{</span><span class="n">d</span><span class="o">.</span><span class="n">core_on_chip</span><span class="si">}</span><span class="s1"> for a device&#39;</span>
+            <span class="sa">f</span><span class="s1">&#39; of kind </span><span class="si">{</span><span class="n">device_kind</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s1">.&#39;</span>
+        <span class="p">)</span>
+      <span class="n">out</span><span class="p">[</span><span class="n">coords</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">coords</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">coords</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span> <span class="o">=</span> <span class="n">d</span>
+  <span class="k">return</span> <span class="n">out</span>
+
+
+<span class="c1"># jekbradbury&#39;s famous trick for creating contiguous submeshes (where available)</span>
+<span class="k">def</span> <span class="nf">_transpose_trick</span><span class="p">(</span>
+    <span class="n">physical_mesh</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">mesh_shape</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+  <span class="n">mesh_shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">mesh_shape</span><span class="p">)</span>
+  <span class="n">topology</span> <span class="o">=</span> <span class="n">physical_mesh</span><span class="o">.</span><span class="n">shape</span>
+  <span class="k">if</span> <span class="n">topology</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_TRANSPOSE_TRICKS</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+        <span class="s1">&#39;create_device_mesh cannot create contiguous submeshes for &#39;</span>
+        <span class="sa">f</span><span class="s1">&#39;physical mesh topology </span><span class="si">{</span><span class="n">topology</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="p">)</span>
+
+  <span class="n">mesh_shape_no_trivial_dims</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">()</span>
+  <span class="k">for</span> <span class="n">dim_size</span> <span class="ow">in</span> <span class="n">mesh_shape</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">dim_size</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+      <span class="n">mesh_shape_no_trivial_dims</span> <span class="o">+=</span> <span class="p">(</span><span class="n">dim_size</span><span class="p">,)</span>
+
+  <span class="k">if</span> <span class="n">mesh_shape_no_trivial_dims</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_TRANSPOSE_TRICKS</span><span class="p">[</span><span class="n">topology</span><span class="p">]:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+        <span class="s1">&#39;create_device_mesh cannot create contiguous submeshes for &#39;</span>
+        <span class="sa">f</span><span class="s1">&#39;mesh_shape </span><span class="si">{</span><span class="n">mesh_shape</span><span class="si">}</span><span class="s1"> and physical mesh topology </span><span class="si">{</span><span class="n">topology</span><span class="si">}</span><span class="s1">. &#39;</span>
+        <span class="sa">f</span><span class="s1">&#39;Available mesh_shapes: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">_TRANSPOSE_TRICKS</span><span class="p">[</span><span class="n">topology</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">physical_mesh</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span>
+      <span class="o">*</span><span class="n">_TRANSPOSE_TRICKS</span><span class="p">[</span><span class="n">topology</span><span class="p">][</span><span class="n">mesh_shape_no_trivial_dims</span><span class="p">]</span>
+  <span class="p">)</span>
+
+
+<div class="viewcode-block" id="create_device_mesh">
+<a class="viewcode-back" href="../../../_autosummary/jax.experimental.mesh_utils.create_device_mesh.html#jax.experimental.mesh_utils.create_device_mesh">[docs]</a>
+<span class="k">def</span> <span class="nf">create_device_mesh</span><span class="p">(</span>
+    <span class="n">mesh_shape</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">devices</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">contiguous_submeshes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">allow_split_physical_axes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Creates a performant device mesh for jax.sharding.Mesh.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    mesh_shape: shape of logical mesh, ordered by increasing network-intensity</span>
+<span class="sd">      e.g. [replica, data, mdl] where mdl has the most network communication</span>
+<span class="sd">      requirements.</span>
+<span class="sd">    devices: optionally, the devices to construct a mesh for. Defaults to</span>
+<span class="sd">      jax.devices().</span>
+<span class="sd">    contiguous_submeshes: if True, this function will attempt to create a mesh</span>
+<span class="sd">      where each process&#39;s local devices form a contiguous submesh. A ValueError</span>
+<span class="sd">      will be raised if this function can&#39;t produce a suitable mesh. This</span>
+<span class="sd">      setting was sometimes necessary before the introduction of jax.Array to</span>
+<span class="sd">      ensure non-ragged local arrays; if using jax.Arrays, it&#39;s better to keep</span>
+<span class="sd">      this set to False.</span>
+<span class="sd">    allow_split_physical_axes: If True, we will split physical axes if necessary</span>
+<span class="sd">      to produce the desired device mesh.</span>
+
+<span class="sd">  Raises:</span>
+<span class="sd">    ValueError: if the number of devices doesn&#39;t equal the product of</span>
+<span class="sd">      `mesh_shape`.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    A np.ndarray of JAX devices with mesh_shape as its shape that can be fed</span>
+<span class="sd">    into jax.sharding.Mesh with good collective performance.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">if</span> <span class="n">devices</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">devices</span> <span class="o">=</span> <span class="n">xb</span><span class="o">.</span><span class="n">devices</span><span class="p">()</span>
+  <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">mesh_shape</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">devices</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s1">&#39;Number of devices </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">devices</span><span class="p">)</span><span class="si">}</span><span class="s1"> must equal the product &#39;</span>
+        <span class="sa">f</span><span class="s1">&#39;of mesh_shape </span><span class="si">{</span><span class="n">mesh_shape</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="p">)</span>
+  <span class="n">last_device</span> <span class="o">=</span> <span class="n">devices</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+  <span class="n">handler</span> <span class="o">=</span> <span class="n">device_kind_handler_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">last_device</span><span class="o">.</span><span class="n">device_kind</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">handler</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">handler</span><span class="p">(</span>
+        <span class="n">mesh_shape</span><span class="p">,</span> <span class="n">devices</span><span class="p">,</span> <span class="n">contiguous_submeshes</span><span class="o">=</span><span class="n">contiguous_submeshes</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">result</span>
+
+  <span class="k">if</span> <span class="n">last_device</span><span class="o">.</span><span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;tpu&#39;</span><span class="p">:</span>
+    <span class="n">physical_mesh</span> <span class="o">=</span> <span class="n">_get_physical_tpu_mesh</span><span class="p">(</span><span class="n">devices</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">contiguous_submeshes</span><span class="p">:</span>
+      <span class="n">physical_mesh</span> <span class="o">=</span> <span class="n">_transpose_trick</span><span class="p">(</span><span class="n">physical_mesh</span><span class="p">,</span> <span class="n">mesh_shape</span><span class="p">)</span>
+    <span class="n">device_mesh</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">_create_device_mesh_for_nd_torus</span><span class="p">(</span>
+        <span class="n">physical_mesh</span><span class="p">,</span>
+        <span class="n">mesh_shape</span><span class="p">,</span>
+        <span class="n">allow_split_physical_axes</span><span class="o">=</span><span class="n">allow_split_physical_axes</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">device_mesh</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">device_mesh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">devices</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">mesh_shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">device_mesh</span></div>
+
+
+
+<div class="viewcode-block" id="create_hybrid_device_mesh">
+<a class="viewcode-back" href="../../../_autosummary/jax.experimental.mesh_utils.create_hybrid_device_mesh.html#jax.experimental.mesh_utils.create_hybrid_device_mesh">[docs]</a>
+<span class="k">def</span> <span class="nf">create_hybrid_device_mesh</span><span class="p">(</span>
+    <span class="n">mesh_shape</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">dcn_mesh_shape</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">devices</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">process_is_granule</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">should_sort_granules_by_key</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">allow_split_physical_axes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Creates a device mesh for hybrid (e.g., ICI and DCN) parallelism.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    mesh_shape: shape of the logical mesh for the faster/inner network, ordered</span>
+<span class="sd">      by increasing network intensity, e.g. [replica, data, mdl] where mdl has</span>
+<span class="sd">      the most network communication requirements.</span>
+<span class="sd">    dcn_mesh_shape: shape of the logical mesh for the slower/outer network, in</span>
+<span class="sd">      the same order as mesh_shape.</span>
+<span class="sd">    devices: optionally, the devices to construct a mesh for. Defaults to</span>
+<span class="sd">      jax.devices().</span>
+<span class="sd">    process_is_granule: if True, this function will treat processes as the units</span>
+<span class="sd">      of the slower/outer network. Otherwise it will look for slice_index</span>
+<span class="sd">      attributes on devices and use slices as the units. Enabling this is meant</span>
+<span class="sd">      as a fallback for platforms that don&#39;t set slice_index.</span>
+<span class="sd">    should_sort_granules_by_key: Whether device granules should be sorted by the</span>
+<span class="sd">      granule key, either slice or process index, depending on</span>
+<span class="sd">      process_is_granule.</span>
+<span class="sd">    allow_split_physical_axes: If True, we will split physical axes if necessary</span>
+<span class="sd">      to produce the desired device mesh.</span>
+
+<span class="sd">  Raises:</span>
+<span class="sd">    ValueError: if the number of slices to which the `devices` belong doesn&#39;t</span>
+<span class="sd">      equal the product of `dcn_mesh_shape`, or if the number of devices</span>
+<span class="sd">      belonging to any single slice does not equal the product of `mesh_shape`.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    A np.ndarray of JAX devices with mesh_shape * dcn_mesh_shape as its shape</span>
+<span class="sd">    that can be fed into jax.sharding.Mesh for hybrid parallelism.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">if</span> <span class="n">devices</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">devices</span> <span class="o">=</span> <span class="n">xb</span><span class="o">.</span><span class="n">devices</span><span class="p">()</span>
+  <span class="n">attr</span> <span class="o">=</span> <span class="s1">&#39;process_index&#39;</span> <span class="k">if</span> <span class="n">process_is_granule</span> <span class="k">else</span> <span class="s1">&#39;slice_index&#39;</span>
+  <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">devices</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">attr</span><span class="p">)</span>
+  <span class="n">granule_dict</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">dev</span> <span class="ow">in</span> <span class="n">devices</span><span class="p">:</span>
+    <span class="n">granule_dict</span><span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">dev</span><span class="p">,</span> <span class="n">attr</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dev</span><span class="p">)</span>
+  <span class="n">granules</span> <span class="o">=</span> <span class="p">(</span>
+      <span class="p">[</span><span class="n">granule_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">granule_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())]</span>
+      <span class="k">if</span> <span class="n">should_sort_granules_by_key</span>
+      <span class="k">else</span> <span class="n">granule_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+  <span class="p">)</span>
+  <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">dcn_mesh_shape</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">granules</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s1">&#39;Number of slices </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">granules</span><span class="p">)</span><span class="si">}</span><span class="s1"> must equal the product of &#39;</span>
+        <span class="sa">f</span><span class="s1">&#39;dcn_mesh_shape </span><span class="si">{</span><span class="n">dcn_mesh_shape</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="p">)</span>
+  <span class="n">per_granule_meshes</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="n">create_device_mesh</span><span class="p">(</span>
+          <span class="n">mesh_shape</span><span class="p">,</span>
+          <span class="n">granule</span><span class="p">,</span>
+          <span class="n">allow_split_physical_axes</span><span class="o">=</span><span class="n">allow_split_physical_axes</span><span class="p">,</span>
+      <span class="p">)</span>
+      <span class="k">for</span> <span class="n">granule</span> <span class="ow">in</span> <span class="n">granules</span>
+  <span class="p">]</span>
+  <span class="c1"># TODO(jekbradbury): handle non-uniform DCN topologies</span>
+  <span class="n">granule_mesh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">granules</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">dcn_mesh_shape</span><span class="p">)</span>
+  <span class="n">blocks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">per_granule_meshes</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">otypes</span><span class="o">=</span><span class="p">[</span><span class="nb">object</span><span class="p">])(</span>
+      <span class="n">granule_mesh</span>
+  <span class="p">)</span>
+  <span class="n">device_mesh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">block</span><span class="p">(</span><span class="n">blocks</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+  <span class="k">return</span> <span class="n">device_mesh</span></div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The JAX authors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, The JAX Authors. NumPy and SciPy documentation are copyright the respective authors..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

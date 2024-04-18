@@ -1,0 +1,993 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>jax._src.linear_util &#8212; JAX  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/style.css?v=02ed413a" />
+    <link rel="stylesheet" href="../../../_static/style.css" type="text/css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../../../_static/design-tabs.js?v=36754332"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/jax/_src/linear_util';</script>
+    <link rel="icon" href="../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/jax_logo_250px.png" class="logo__image only-light" alt="JAX  documentation - Home"/>
+    <script>document.write(`<img src="../../../_static/jax_logo_250px.png" class="logo__image only-dark" alt="JAX  documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installing JAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/quickstart.html">JAX Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/thinking_in_jax.html">How to Think in JAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/Common_Gotchas_in_JAX.html">🔪 JAX - The Sharp Bits 🔪</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq.html">JAX Frequently Asked Questions (FAQ)</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../jax-101/index.html">Tutorial: JAX 101</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/01-jax-basics.html">JAX As Accelerated NumPy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/02-jitting.html">Just In Time Compilation with JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/03-vectorization.html">Automatic Vectorization in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/04-advanced-autodiff.html">Advanced Automatic Differentiation in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/05-random-numbers.html">Pseudo Random Numbers in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/05.1-pytrees.html">Working with Pytrees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/06-parallelism.html">Parallel Evaluation in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/07-state.html">Stateful Computations in JAX</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Further Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../user_guides.html">User Guides</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../profiling.html">Profiling JAX programs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../device_memory_profiling.html">Device Memory Profiling</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../debugging/index.html">Runtime value debugging in JAX</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../debugging/print_breakpoint.html"><code class="docutils literal notranslate"><span class="pre">jax.debug.print</span></code> and <code class="docutils literal notranslate"><span class="pre">jax.debug.breakpoint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../debugging/checkify_guide.html">The <code class="docutils literal notranslate"><span class="pre">checkify</span></code> transformation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../debugging/flags.html">JAX debugging flags</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../gpu_performance_tips.html">GPU performance tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../persistent_compilation_cache.html">Persistent Compilation Cache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jaxpr.html">Understanding Jaxprs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/external_callbacks.html">External Callbacks in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../type_promotion.html">Type promotion semantics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytrees.html">Pytrees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../aot.html">Ahead-of-time lowering and compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../errors.html">JAX Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../transfer_guard.html">Transfer guard</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../pallas/index.html">Pallas: a JAX kernel language</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../pallas/design.html">Pallas Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pallas/quickstart.html">Pallas Quickstart</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../pallas/tpu/index.html">Pallas TPU</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../pallas/tpu/details.html">Writing TPU kernels with Pallas</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../pallas/tpu/pipelining.html">Pipelining and <code class="docutils literal notranslate"><span class="pre">BlockSpec</span></code>s</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../advanced_guide.html">Advanced Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/neural_network_with_tfds_data.html">Training a Simple Neural Network, with tensorflow/datasets Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Neural_Network_and_Data_Loading.html">Training a Simple Neural Network, with PyTorch Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/vmapped_log_probs.html">Autobatching for Bayesian Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../multi_process.html">Using JAX in multi-host and multi-process environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Distributed_arrays_and_automatic_parallelization.html">Distributed arrays and automatic parallelization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/shard_map.html">SPMD multi-device parallelism with <code class="docutils literal notranslate"><span class="pre">shard_map</span></code></a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/xmap_tutorial.html">Named axes and easy-to-revise parallelism with <code class="docutils literal notranslate"><span class="pre">xmap</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/autodiff_cookbook.html">The Autodiff Cookbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Custom_derivative_rules_for_Python_code.html">Custom derivative rules for JAX-transformable Python functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/autodiff_remat.html">Control autodiff’s saved values with <code class="docutils literal notranslate"><span class="pre">jax.checkpoint</span></code> (aka <code class="docutils literal notranslate"><span class="pre">jax.remat</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/How_JAX_primitives_work.html">How JAX primitives work</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Writing_custom_interpreters_in_Jax.html">Writing custom Jaxpr interpreters in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Custom_Operation_for_GPUs.html">Custom operations for GPUs with C++ and CUDA</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/convolutions.html">Generalized Convolutions in JAX</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../contributor_guide.html">Developer Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html">Contributing to JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../developer.html">Building from source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax_internal_api.html">Internal APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autodidax.html">Autodidax: JAX core from scratch</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jep/index.html">JAX Enhancement Proposals (JEPs)</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/263-prng.html">263: JAX PRNG Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/2026-custom-derivatives.html">2026: Custom JVP/VJP rules for JAX-transformable functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/4008-custom-vjp-update.html">4008: Custom VJP and `nondiff_argnums` update</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/4410-omnistaging.html">4410: Omnistaging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/9263-typed-keys.html">9263: Typed keys &amp; pluggable RNGs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/9407-type-promotion.html">9407: Design of Type Promotion Semantics for JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/9419-jax-versioning.html">9419: Jax and Jaxlib versioning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/10657-sequencing-effects.html">10657: Sequencing side-effects in JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/11830-new-remat-checkpoint.html">11830: `jax.remat` / `jax.checkpoint` new implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/12049-type-annotations.html">12049: Type Annotation Roadmap for JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/14273-shard-map.html">14273: `shard_map` (`shmap`) for simple per-device code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/15856-jex.html">15856: `jax.extend`, an extensions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/17111-shmap-transpose.html">17111: Efficient transposition of `shard_map` (and other maps)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/18137-numpy-scipy-scope.html">18137: Scope of JAX NumPy &amp; SciPy Wrappers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../investigating_a_regression.html">Investigating a regression</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../building_on_jax.html">Building on JAX</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../notes.html">Notes</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_compatibility.html">API compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../deprecation.html">Python and NumPy version support policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax_array_migration.html">jax.Array migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../async_dispatch.html">Asynchronous dispatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../concurrency.html">Concurrency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../gpu_memory_allocation.html">GPU memory allocation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../rank_promotion_warning.html">Rank promotion warning</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../jax.html">Public API: jax package</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.numpy.html"><code class="docutils literal notranslate"><span class="pre">jax.numpy</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fft.html">jax.numpy.fft.fft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fft2.html">jax.numpy.fft.fft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fftfreq.html">jax.numpy.fft.fftfreq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fftn.html">jax.numpy.fft.fftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fftshift.html">jax.numpy.fft.fftshift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.hfft.html">jax.numpy.fft.hfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifft.html">jax.numpy.fft.ifft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifft2.html">jax.numpy.fft.ifft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifftn.html">jax.numpy.fft.ifftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifftshift.html">jax.numpy.fft.ifftshift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ihfft.html">jax.numpy.fft.ihfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.irfft.html">jax.numpy.fft.irfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.irfft2.html">jax.numpy.fft.irfft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.irfftn.html">jax.numpy.fft.irfftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfft.html">jax.numpy.fft.rfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfft2.html">jax.numpy.fft.rfft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfftfreq.html">jax.numpy.fft.rfftfreq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfftn.html">jax.numpy.fft.rfftn</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.scipy.html"><code class="docutils literal notranslate"><span class="pre">jax.scipy</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.logpmf.html">jax.scipy.stats.bernoulli.logpmf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.pmf.html">jax.scipy.stats.bernoulli.pmf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.cdf.html">jax.scipy.stats.bernoulli.cdf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.ppf.html">jax.scipy.stats.bernoulli.ppf</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.lax.html"><code class="docutils literal notranslate"><span class="pre">jax.lax</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.random.html"><code class="docutils literal notranslate"><span class="pre">jax.random</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.sharding.html"><code class="docutils literal notranslate"><span class="pre">jax.sharding</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.debug.html"><code class="docutils literal notranslate"><span class="pre">jax.debug</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.dlpack.html"><code class="docutils literal notranslate"><span class="pre">jax.dlpack</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.distributed.html"><code class="docutils literal notranslate"><span class="pre">jax.distributed</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.dtypes.html"><code class="docutils literal notranslate"><span class="pre">jax.dtypes</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.flatten_util.html"><code class="docutils literal notranslate"><span class="pre">jax.flatten_util</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.image.html"><code class="docutils literal notranslate"><span class="pre">jax.image</span></code> module</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.nn.html"><code class="docutils literal notranslate"><span class="pre">jax.nn</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-13"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.nn.initializers.html"><code class="docutils literal notranslate"><span class="pre">jax.nn.initializers</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.ops.html"><code class="docutils literal notranslate"><span class="pre">jax.ops</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.profiler.html"><code class="docutils literal notranslate"><span class="pre">jax.profiler</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.stages.html"><code class="docutils literal notranslate"><span class="pre">jax.stages</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.tree.html"><code class="docutils literal notranslate"><span class="pre">jax.tree</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.tree_util.html"><code class="docutils literal notranslate"><span class="pre">jax.tree_util</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.typing.html"><code class="docutils literal notranslate"><span class="pre">jax.typing</span></code> module</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.extend.html"><code class="docutils literal notranslate"><span class="pre">jax.extend</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.extend.linear_util.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.linear_util</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.extend.mlir.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.mlir</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.extend.random.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.random</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.example_libraries.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-15"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.example_libraries.optimizers.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries.optimizers</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.example_libraries.stax.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries.stax</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.experimental.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.array_api.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.array_api</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.checkify.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.checkify</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.host_callback.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.host_callback</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.maps.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.maps</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.pjit.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.pjit</span></code> module</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../jax.experimental.sparse.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.sparse</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.BCOO.html">jax.experimental.sparse.BCOO</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_broadcast_in_dim.html">jax.experimental.sparse.bcoo_broadcast_in_dim</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_concatenate.html">jax.experimental.sparse.bcoo_concatenate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_dot_general.html">jax.experimental.sparse.bcoo_dot_general</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_dot_general_sampled.html">jax.experimental.sparse.bcoo_dot_general_sampled</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_dynamic_slice.html">jax.experimental.sparse.bcoo_dynamic_slice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_extract.html">jax.experimental.sparse.bcoo_extract</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_fromdense.html">jax.experimental.sparse.bcoo_fromdense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_gather.html">jax.experimental.sparse.bcoo_gather</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_multiply_dense.html">jax.experimental.sparse.bcoo_multiply_dense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_multiply_sparse.html">jax.experimental.sparse.bcoo_multiply_sparse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_update_layout.html">jax.experimental.sparse.bcoo_update_layout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_reduce_sum.html">jax.experimental.sparse.bcoo_reduce_sum</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_reshape.html">jax.experimental.sparse.bcoo_reshape</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_slice.html">jax.experimental.sparse.bcoo_slice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_sort_indices.html">jax.experimental.sparse.bcoo_sort_indices</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_squeeze.html">jax.experimental.sparse.bcoo_squeeze</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_sum_duplicates.html">jax.experimental.sparse.bcoo_sum_duplicates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_todense.html">jax.experimental.sparse.bcoo_todense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_transpose.html">jax.experimental.sparse.bcoo_transpose</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.jet.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.jet</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.custom_partitioning.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.custom_partitioning</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.multihost_utils.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.multihost_utils</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.compilation_cache.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.compilation_cache</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.key_reuse.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.key_reuse</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.mesh_utils.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.mesh_utils</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.lib.html"><code class="docutils literal notranslate"><span class="pre">jax.lib</span></code> module</a></li>
+</ul>
+</li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../glossary.html">JAX Glossary of Terms</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/google/jax" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for jax._src.linear_util</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2018 The JAX Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     https://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Utilities for defining functions composed with transformations.</span>
+
+<span class="sd">For example,</span>
+
+<span class="sd">   from jax._src import linear_util as lu</span>
+
+<span class="sd">   wf = lu.wrap_init(f)  # Produce a WrappedFun for applying transformations on `f`</span>
+
+<span class="sd">A `WrappedFun` object represents a function `f`, together with a sequence of</span>
+<span class="sd">nested transformations that are to be applied to the positional and keyword</span>
+<span class="sd">arguments at call time and function return values at return time.</span>
+<span class="sd">A transformation can take some static positional arguments that are given</span>
+<span class="sd">at the wrapping time, and may also return some auxiliary output:</span>
+
+<span class="sd">    wf, aux_out_thunk = trans1(wf, static_arg)</span>
+
+<span class="sd">We can call the transformed function. First, the transformation is applied</span>
+<span class="sd">to the dynamic args and keyword args to produce new dynamic and keyword args.</span>
+<span class="sd">Then the underlying function is called and the transformation is applied to</span>
+<span class="sd">the results.</span>
+<span class="sd">If there are multiple transformations, they form a stack. The arguments are</span>
+<span class="sd">transformed first with the last applied transformation; the results are</span>
+<span class="sd">transformed first with the first applied transformation.</span>
+
+<span class="sd">    res = wf.call_wrapped(dynamic_args, kwargs)</span>
+<span class="sd">    # Now `aux_out_thunk()` is the auxiliary output.</span>
+
+<span class="sd">A transformation is written as a generator function that takes zero or more</span>
+<span class="sd">static positional arguments (given when the transformation is instantiated),</span>
+<span class="sd">along with positional and keyword arguments to be transformed.</span>
+<span class="sd">The generator will yield twice:</span>
+
+<span class="sd">    @lu.transformation_with_aux</span>
+<span class="sd">    def trans1(static_arg, *dynamic_args, **kwargs):</span>
+<span class="sd">      ...</span>
+<span class="sd">      # First yield: pair of transformed (args, kwargs). Get back the results.</span>
+<span class="sd">      results = yield (new_dynamic_args, new_kwargs)</span>
+<span class="sd">      ...</span>
+<span class="sd">      # Second yield: pair of (transformed results, and auxiliary output)</span>
+<span class="sd">      yield new_results, auxiliary_output</span>
+
+
+<span class="sd">`WrappedFun` objects explicitly represent the set of transformations so that</span>
+<span class="sd">they can be used as dictionary keys for memoization. `WrappedFun` objects</span>
+<span class="sd">compare as equal only if they compute the same function. The static and the</span>
+<span class="sd">dynamic positional arguments for the generators, and also the auxiliary output</span>
+<span class="sd">data must be immutable, because it will be stored in function memoization tables.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">NamedTuple</span>
+<span class="kn">import</span> <span class="nn">weakref</span>
+
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">config</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">core</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">traceback_util</span>
+<span class="kn">from</span> <span class="nn">jax._src.tree_util</span> <span class="kn">import</span> <span class="n">tree_map</span>
+<span class="kn">from</span> <span class="nn">jax._src.util</span> <span class="kn">import</span> <span class="n">curry</span>
+
+
+<span class="n">traceback_util</span><span class="o">.</span><span class="n">register_exclusion</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="StoreException">
+<a class="viewcode-back" href="../../../_autosummary/jax.extend.linear_util.StoreException.html#jax.extend.linear_util.StoreException">[docs]</a>
+<span class="k">class</span> <span class="nc">StoreException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span> <span class="k">pass</span></div>
+
+
+
+<span class="k">class</span> <span class="nc">EmptyStoreValue</span><span class="p">:</span> <span class="k">pass</span>
+<span class="n">_EMPTY_STORE_VALUE</span> <span class="o">=</span> <span class="n">EmptyStoreValue</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">Store</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Storage for a value, with checks for overwriting or reading empty store.&quot;&quot;&quot;</span>
+  <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;_val&quot;</span><span class="p">,)</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_val</span> <span class="o">=</span> <span class="n">_EMPTY_STORE_VALUE</span>
+
+  <span class="k">def</span> <span class="nf">store</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_val</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">_EMPTY_STORE_VALUE</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="n">StoreException</span><span class="p">(</span><span class="s2">&quot;Store occupied&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_val</span> <span class="o">=</span> <span class="n">val</span>
+
+  <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># This should only be called in exceptional circumstances (e.g. debugging).</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_val</span> <span class="o">=</span> <span class="n">_EMPTY_STORE_VALUE</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">val</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="n">StoreException</span><span class="p">(</span><span class="s2">&quot;Store empty&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_val</span>
+
+  <span class="k">def</span> <span class="nf">__nonzero__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_val</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">_EMPTY_STORE_VALUE</span>
+
+  <span class="fm">__bool__</span> <span class="o">=</span> <span class="n">__nonzero__</span>
+
+<span class="k">class</span> <span class="nc">EqualStore</span><span class="p">:</span>
+  <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;_store&#39;</span><span class="p">,)</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_store</span> <span class="o">=</span> <span class="n">Store</span><span class="p">()</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">val</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_store</span><span class="o">.</span><span class="n">val</span>
+
+  <span class="k">def</span> <span class="nf">store</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_store</span><span class="o">.</span><span class="n">store</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">StoreException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="n">okay</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_store</span><span class="o">.</span><span class="n">_val</span> <span class="o">==</span> <span class="n">val</span><span class="p">)</span>
+      <span class="k">except</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">e</span> <span class="kn">from</span> <span class="kc">None</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">okay</span><span class="p">:</span>
+          <span class="k">raise</span> <span class="n">StoreException</span><span class="p">(</span><span class="s2">&quot;Store occupied with not-equal value&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="kc">None</span>
+
+  <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_store</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="WrappedFun">
+<a class="viewcode-back" href="../../../_autosummary/jax.extend.linear_util.WrappedFun.html#jax.extend.linear_util.WrappedFun">[docs]</a>
+<span class="k">class</span> <span class="nc">WrappedFun</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Represents a function `f` to which `transforms` are to be applied.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    f: the function to be transformed.</span>
+<span class="sd">    transforms: a list of `(gen, gen_static_args)` tuples representing</span>
+<span class="sd">      transformations to apply to `f.` Here `gen` is a generator function and</span>
+<span class="sd">      `gen_static_args` is a tuple of static arguments for the generator. See</span>
+<span class="sd">      description at the start of this module for the expected behavior of the</span>
+<span class="sd">      generator.</span>
+<span class="sd">    stores: a list of out_store for the auxiliary output of the `transforms`.</span>
+<span class="sd">    params: extra parameters to pass as keyword arguments to `f`, along with the</span>
+<span class="sd">      transformed keyword arguments.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="s2">&quot;transforms&quot;</span><span class="p">,</span> <span class="s2">&quot;stores&quot;</span><span class="p">,</span> <span class="s2">&quot;params&quot;</span><span class="p">,</span> <span class="s2">&quot;in_type&quot;</span><span class="p">,</span> <span class="s2">&quot;debug_info&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="WrappedFun.__init__">
+<a class="viewcode-back" href="../../../_autosummary/jax.extend.linear_util.WrappedFun.html#jax.extend.linear_util.WrappedFun.__init__">[docs]</a>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">transforms</span><span class="p">,</span> <span class="n">stores</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">in_type</span><span class="p">,</span> <span class="n">debug_info</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">f</span> <span class="o">=</span> <span class="n">f</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">transforms</span> <span class="o">=</span> <span class="n">transforms</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">stores</span> <span class="o">=</span> <span class="n">stores</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">in_type</span> <span class="o">=</span> <span class="n">in_type</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">debug_info</span> <span class="o">=</span> <span class="n">debug_info</span></div>
+
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">__name__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">,</span> <span class="s1">&#39;__name__&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;unnamed wrapped function&gt;&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">wrap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gen</span><span class="p">,</span> <span class="n">gen_static_args</span><span class="p">,</span> <span class="n">out_store</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WrappedFun</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add another transform and its store.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">WrappedFun</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">,</span> <span class="p">((</span><span class="n">gen</span><span class="p">,</span> <span class="n">gen_static_args</span><span class="p">),)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">transforms</span><span class="p">,</span>
+                      <span class="p">(</span><span class="n">out_store</span><span class="p">,)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">stores</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">populate_stores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stores</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Copy the values from the `stores` into `self.stores`.&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">self_store</span><span class="p">,</span> <span class="n">other_store</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stores</span><span class="p">,</span> <span class="n">stores</span><span class="p">):</span>
+      <span class="k">if</span> <span class="n">self_store</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">self_store</span><span class="o">.</span><span class="n">store</span><span class="p">(</span><span class="n">other_store</span><span class="o">.</span><span class="n">val</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">call_wrapped</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calls the underlying function, applying the transforms.</span>
+
+<span class="sd">    The positional `args` and keyword `kwargs` are passed to the first</span>
+<span class="sd">    transformation generator.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">gen</span><span class="p">,</span> <span class="n">gen_static_args</span><span class="p">),</span> <span class="n">out_store</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transforms</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stores</span><span class="p">):</span>
+      <span class="n">gen</span> <span class="o">=</span> <span class="n">gen</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">gen_static_args</span> <span class="o">+</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">args</span><span class="p">)),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>
+      <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">gen</span><span class="p">,</span> <span class="n">out_store</span><span class="p">))</span>
+    <span class="n">gen</span> <span class="o">=</span> <span class="n">gen_static_args</span> <span class="o">=</span> <span class="n">out_store</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">ans</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+    <span class="k">except</span><span class="p">:</span>
+      <span class="c1"># Some transformations yield from inside context managers, so we have to</span>
+      <span class="c1"># interrupt them before reraising the exception. Otherwise they will only</span>
+      <span class="c1"># get garbage-collected at some later time, running their cleanup tasks</span>
+      <span class="c1"># only after this exception is handled, which can corrupt the global</span>
+      <span class="c1"># state.</span>
+      <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
+        <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+      <span class="k">raise</span>
+
+    <span class="n">args</span> <span class="o">=</span> <span class="n">kwargs</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
+      <span class="n">gen</span><span class="p">,</span> <span class="n">out_store</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="n">gen</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span>
+      <span class="k">except</span><span class="p">:</span>
+        <span class="c1"># As above does for the first half of the transformation, exceptions</span>
+        <span class="c1"># raised in the second half of the transformation also require us to</span>
+        <span class="c1"># clean up references here.</span>
+        <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
+          <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">raise</span>
+      <span class="k">if</span> <span class="n">out_store</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ans</span><span class="p">,</span> <span class="n">side</span> <span class="o">=</span> <span class="n">ans</span>
+        <span class="n">out_store</span><span class="o">.</span><span class="n">store</span><span class="p">(</span><span class="n">side</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ans</span>
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">transform_to_str</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+      <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">gen</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span> <span class="o">=</span> <span class="n">x</span>
+      <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">   : </span><span class="si">{</span><span class="n">fun_name</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span><span class="si">}</span><span class="s2">   </span><span class="si">{</span><span class="n">fun_name</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">transformation_stack</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">transform_to_str</span><span class="p">,</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transforms</span><span class="p">))</span>
+    <span class="k">return</span> <span class="s2">&quot;Wrapped function:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">transformation_stack</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Core: &#39;</span> <span class="o">+</span> <span class="n">fun_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+  <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">hash</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">transforms</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_type</span><span class="p">,</span>
+                 <span class="bp">self</span><span class="o">.</span><span class="n">debug_info</span><span class="p">))</span>
+
+  <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">f</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">f</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">transforms</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">transforms</span> <span class="ow">and</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">params</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_type</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">in_type</span> <span class="ow">and</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug_info</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">debug_info</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="transformation">
+<a class="viewcode-back" href="../../../_autosummary/jax.extend.linear_util.transformation.html#jax.extend.linear_util.transformation">[docs]</a>
+<span class="nd">@curry</span>
+<span class="k">def</span> <span class="nf">transformation</span><span class="p">(</span><span class="n">gen</span><span class="p">,</span> <span class="n">fun</span><span class="p">:</span> <span class="n">WrappedFun</span><span class="p">,</span> <span class="o">*</span><span class="n">gen_static_args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WrappedFun</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Adds one more transformation to a WrappedFun.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    gen: the transformation generator function</span>
+<span class="sd">    fun: a WrappedFun on which to apply the transformation</span>
+<span class="sd">    gen_static_args: static args for the generator function</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">fun</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">gen</span><span class="p">,</span> <span class="n">gen_static_args</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="transformation_with_aux">
+<a class="viewcode-back" href="../../../_autosummary/jax.extend.linear_util.transformation_with_aux.html#jax.extend.linear_util.transformation_with_aux">[docs]</a>
+<span class="nd">@curry</span>
+<span class="k">def</span> <span class="nf">transformation_with_aux</span><span class="p">(</span><span class="n">gen</span><span class="p">,</span> <span class="n">fun</span><span class="p">:</span> <span class="n">WrappedFun</span><span class="p">,</span> <span class="o">*</span><span class="n">gen_static_args</span><span class="p">,</span>
+                            <span class="n">use_eq_store</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">WrappedFun</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Adds one more transformation with auxiliary output to a WrappedFun.&quot;&quot;&quot;</span>
+  <span class="n">out_store</span> <span class="o">=</span> <span class="n">Store</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">use_eq_store</span> <span class="k">else</span> <span class="n">EqualStore</span><span class="p">()</span>
+  <span class="n">out_thunk</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">out_store</span><span class="o">.</span><span class="n">val</span>
+  <span class="k">return</span> <span class="n">fun</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">gen</span><span class="p">,</span> <span class="n">gen_static_args</span><span class="p">,</span> <span class="n">out_store</span><span class="p">),</span> <span class="n">out_thunk</span></div>
+
+
+<span class="k">def</span> <span class="nf">fun_name</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">f</span><span class="o">.</span><span class="vm">__name__</span>
+  <span class="k">except</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<div class="viewcode-block" id="wrap_init">
+<a class="viewcode-back" href="../../../_autosummary/jax.extend.linear_util.wrap_init.html#jax.extend.linear_util.wrap_init">[docs]</a>
+<span class="k">def</span> <span class="nf">wrap_init</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WrappedFun</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Wraps function `f` as a `WrappedFun`, suitable for transformation.&quot;&quot;&quot;</span>
+  <span class="n">params</span> <span class="o">=</span> <span class="p">()</span> <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+  <span class="k">return</span> <span class="n">WrappedFun</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="p">(),</span> <span class="p">(),</span> <span class="n">params</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">annotate</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="n">WrappedFun</span><span class="p">,</span> <span class="n">in_type</span><span class="p">:</span> <span class="n">core</span><span class="o">.</span><span class="n">InputType</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WrappedFun</span><span class="p">:</span>
+  <span class="k">assert</span> <span class="n">f</span><span class="o">.</span><span class="n">in_type</span> <span class="ow">is</span> <span class="kc">None</span>
+  <span class="k">if</span> <span class="n">in_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">f</span>
+  <span class="n">_check_input_type</span><span class="p">(</span><span class="n">in_type</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">WrappedFun</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">f</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">transforms</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">stores</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="n">in_type</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">debug_info</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_check_input_type</span><span class="p">(</span><span class="n">in_type</span><span class="p">:</span> <span class="n">core</span><span class="o">.</span><span class="n">InputType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="c1"># Check that in_type is syntactically well-formed</span>
+  <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">in_type</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">tuple</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">tuple</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">in_type</span><span class="p">)</span>
+  <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">AbstractValue</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">bool</span>
+             <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">ConcreteArray</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">in_type</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">valid_size</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">DBIdx</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">val</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">int</span> <span class="ow">and</span> <span class="n">d</span><span class="o">.</span><span class="n">val</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">DBIdx</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">DArray</span><span class="p">))</span> <span class="ow">and</span>
+            <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">DArray</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="ow">is</span> <span class="n">core</span><span class="o">.</span><span class="n">bint</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">d</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+  <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">valid_size</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">in_type</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="ow">is</span> <span class="n">core</span><span class="o">.</span><span class="n">DShapedArray</span>
+             <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+  <span class="c1"># Check that all DBIdx point to positions to the left of the input on which</span>
+  <span class="c1"># they appear.</span>
+  <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">val</span> <span class="o">&lt;</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">aval</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">in_type</span><span class="p">)</span>
+             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">aval</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">DShapedArray</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">aval</span><span class="o">.</span><span class="n">shape</span>
+             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">DBIdx</span><span class="p">))</span>
+
+  <span class="c1"># Check that all implicit arguments have at least one DBIdx pointing to them.</span>
+  <span class="n">provided</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">in_type</span><span class="p">]</span>
+  <span class="k">for</span> <span class="n">aval</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">in_type</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">aval</span><span class="p">)</span> <span class="ow">is</span> <span class="n">core</span><span class="o">.</span><span class="n">DShapedArray</span><span class="p">:</span>
+      <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">aval</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">DBIdx</span><span class="p">):</span>
+          <span class="n">provided</span><span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">val</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+  <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">provided</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">TracingDebugInfo</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+  <span class="c1"># Packages up trace/staging-time debug info about a func and its parameters,</span>
+  <span class="c1"># formed just before staging to a jaxpr and read in trace-time error messages.</span>
+  <span class="c1"># TODO(mattjj): delete partial_eval.DebugInfo, replace all uses with this cls</span>
+  <span class="n">traced_for</span><span class="p">:</span> <span class="nb">str</span>             <span class="c1"># e.g. &#39;jit&#39;, &#39;scan&#39;, etc</span>
+  <span class="n">func_src_info</span><span class="p">:</span> <span class="nb">str</span>          <span class="c1"># e.g. f&#39;{fun.__name__} at {filename}:{lineno}&#39;</span>
+  <span class="n">arg_names</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>  <span class="c1"># e.g. (&#39;args[0]&#39;, ... )</span>
+  <span class="n">result_paths</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span>
+
+<span class="k">def</span> <span class="nf">add_debug_info</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="n">WrappedFun</span><span class="p">,</span> <span class="n">debug_info</span><span class="p">:</span> <span class="n">TracingDebugInfo</span> <span class="o">|</span> <span class="kc">None</span>
+                   <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WrappedFun</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Produce a new WrappedFun with debug_info attached.&quot;&quot;&quot;</span>
+  <span class="k">assert</span> <span class="n">f</span><span class="o">.</span><span class="n">debug_info</span> <span class="ow">is</span> <span class="kc">None</span>
+  <span class="k">if</span> <span class="n">debug_info</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">f</span>
+  <span class="k">return</span> <span class="n">WrappedFun</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">f</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">transforms</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">stores</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">in_type</span><span class="p">,</span> <span class="n">debug_info</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="cache">
+<a class="viewcode-back" href="../../../_autosummary/jax.extend.linear_util.cache.html#jax.extend.linear_util.cache">[docs]</a>
+<span class="k">def</span> <span class="nf">cache</span><span class="p">(</span><span class="n">call</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">explain</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Memoization decorator for functions taking a WrappedFun as first argument.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    call: a Python callable that takes a WrappedFun as its first argument. The</span>
+<span class="sd">      underlying transforms and params on the WrappedFun are used as part of the</span>
+<span class="sd">      memoization cache key.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">     A memoized version of ``call``.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">fun_caches</span><span class="p">:</span> <span class="n">weakref</span><span class="o">.</span><span class="n">WeakKeyDictionary</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">WeakKeyDictionary</span><span class="p">()</span>
+
+  <span class="k">def</span> <span class="nf">memoized_fun</span><span class="p">(</span><span class="n">fun</span><span class="p">:</span> <span class="n">WrappedFun</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="n">cache</span> <span class="o">=</span> <span class="n">fun_caches</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">fun</span><span class="o">.</span><span class="n">f</span><span class="p">,</span> <span class="n">new_cache</span> <span class="o">:=</span> <span class="p">{})</span>  <span class="c1"># type: ignore</span>
+    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">check_tracer_leaks</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+      <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">_copy_main_traces</span><span class="p">(</span><span class="n">fun</span><span class="o">.</span><span class="n">transforms</span><span class="p">),</span> <span class="n">fun</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="n">fun</span><span class="o">.</span><span class="n">in_type</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span>
+             <span class="n">config</span><span class="o">.</span><span class="n">enable_x64</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">default_device</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+             <span class="n">config</span><span class="o">.</span><span class="n">trace_context</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">fun</span><span class="o">.</span><span class="n">transforms</span><span class="p">,</span> <span class="n">fun</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="n">fun</span><span class="o">.</span><span class="n">in_type</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">enable_x64</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+             <span class="n">config</span><span class="o">.</span><span class="n">default_device</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">trace_context</span><span class="p">())</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">ans</span><span class="p">,</span> <span class="n">stores</span> <span class="o">=</span> <span class="n">result</span>
+      <span class="n">fun</span><span class="o">.</span><span class="n">populate_stores</span><span class="p">(</span><span class="n">stores</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">ans</span> <span class="o">=</span> <span class="n">call</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">explain</span> <span class="ow">and</span> <span class="n">config</span><span class="o">.</span><span class="n">explain_cache_misses</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+        <span class="n">explain</span><span class="p">(</span><span class="n">fun</span><span class="o">.</span><span class="n">f</span><span class="p">,</span> <span class="n">cache</span> <span class="ow">is</span> <span class="n">new_cache</span><span class="p">,</span> <span class="n">cache</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">ans</span><span class="p">)</span>
+      <span class="n">cache</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">fun</span><span class="o">.</span><span class="n">stores</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ans</span>
+
+  <span class="k">def</span> <span class="nf">_evict_function</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="n">fun_caches</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+  <span class="n">memoized_fun</span><span class="o">.</span><span class="n">cache_clear</span> <span class="o">=</span> <span class="n">fun_caches</span><span class="o">.</span><span class="n">clear</span>  <span class="c1"># type: ignore</span>
+  <span class="n">memoized_fun</span><span class="o">.</span><span class="n">evict_function</span> <span class="o">=</span> <span class="n">_evict_function</span>  <span class="c1"># type: ignore</span>
+
+  <span class="n">cache_clearing_funs</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">memoized_fun</span><span class="o">.</span><span class="n">cache_clear</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">memoized_fun</span></div>
+
+
+<span class="n">cache_clearing_funs</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">WeakSet</span><span class="p">()</span>  <span class="c1"># type: ignore</span>
+
+<span class="k">def</span> <span class="nf">clear_all_caches</span><span class="p">():</span>
+  <span class="k">global</span> <span class="n">cache_clearing_funs</span>
+  <span class="k">for</span> <span class="n">clear</span> <span class="ow">in</span> <span class="n">cache_clearing_funs</span><span class="p">:</span>
+    <span class="n">clear</span><span class="p">()</span>
+
+<span class="nd">@partial</span><span class="p">(</span><span class="n">partial</span><span class="p">,</span> <span class="n">tree_map</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_copy_main_traces</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">MainTrace</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">core</span><span class="o">.</span><span class="n">MainTrace</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">level</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">trace_type</span><span class="p">,</span> <span class="o">**</span><span class="n">x</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">x</span>
+
+
+<span class="nd">@transformation</span>
+<span class="k">def</span> <span class="nf">hashable_partial</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+  <span class="k">yield</span> <span class="p">(</span><span class="k">yield</span> <span class="n">args</span><span class="p">,</span> <span class="p">{})</span>
+
+
+<div class="viewcode-block" id="merge_linear_aux">
+<a class="viewcode-back" href="../../../_autosummary/jax.extend.linear_util.merge_linear_aux.html#jax.extend.linear_util.merge_linear_aux">[docs]</a>
+<span class="k">def</span> <span class="nf">merge_linear_aux</span><span class="p">(</span><span class="n">aux1</span><span class="p">,</span> <span class="n">aux2</span><span class="p">):</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="n">out1</span> <span class="o">=</span> <span class="n">aux1</span><span class="p">()</span>
+  <span class="k">except</span> <span class="n">StoreException</span><span class="p">:</span>
+    <span class="c1"># store 1 was not occupied, so store 2 better be</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">out2</span> <span class="o">=</span> <span class="n">aux2</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">StoreException</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="n">StoreException</span><span class="p">(</span><span class="s2">&quot;neither store occupied&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">out2</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="c1"># store 1 was occupied, so let&#39;s check store 2 is not occupied</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">out2</span> <span class="o">=</span> <span class="n">aux2</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">StoreException</span><span class="p">:</span>
+      <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="n">out1</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="n">StoreException</span><span class="p">(</span><span class="s2">&quot;both stores occupied&quot;</span><span class="p">)</span></div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The JAX authors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, The JAX Authors. NumPy and SciPy documentation are copyright the respective authors..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

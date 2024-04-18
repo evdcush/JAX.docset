@@ -1,0 +1,1056 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Autobatching for Bayesian Inference &#8212; JAX  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/style.css?v=02ed413a" />
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/vmapped_log_probs';</script>
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Using JAX in multi-host and multi-process environments" href="../multi_process.html" />
+    <link rel="prev" title="Training a Simple Neural Network, with PyTorch Data Loading" href="Neural_Network_and_Data_Loading.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/jax_logo_250px.png" class="logo__image only-light" alt="JAX  documentation - Home"/>
+    <script>document.write(`<img src="../_static/jax_logo_250px.png" class="logo__image only-dark" alt="JAX  documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installing JAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">JAX Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="thinking_in_jax.html">How to Think in JAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Common_Gotchas_in_JAX.html">🔪 JAX - The Sharp Bits 🔪</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">JAX Frequently Asked Questions (FAQ)</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../jax-101/index.html">Tutorial: JAX 101</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../jax-101/01-jax-basics.html">JAX As Accelerated NumPy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax-101/02-jitting.html">Just In Time Compilation with JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax-101/03-vectorization.html">Automatic Vectorization in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax-101/04-advanced-autodiff.html">Advanced Automatic Differentiation in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax-101/05-random-numbers.html">Pseudo Random Numbers in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax-101/05.1-pytrees.html">Working with Pytrees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax-101/06-parallelism.html">Parallel Evaluation in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax-101/07-state.html">Stateful Computations in JAX</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Further Resources</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../user_guides.html">User Guides</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../profiling.html">Profiling JAX programs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../device_memory_profiling.html">Device Memory Profiling</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../debugging/index.html">Runtime value debugging in JAX</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../debugging/print_breakpoint.html"><code class="docutils literal notranslate"><span class="pre">jax.debug.print</span></code> and <code class="docutils literal notranslate"><span class="pre">jax.debug.breakpoint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../debugging/checkify_guide.html">The <code class="docutils literal notranslate"><span class="pre">checkify</span></code> transformation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../debugging/flags.html">JAX debugging flags</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../gpu_performance_tips.html">GPU performance tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../persistent_compilation_cache.html">Persistent Compilation Cache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jaxpr.html">Understanding Jaxprs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="external_callbacks.html">External Callbacks in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../type_promotion.html">Type promotion semantics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pytrees.html">Pytrees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../aot.html">Ahead-of-time lowering and compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../errors.html">JAX Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transfer_guard.html">Transfer guard</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../pallas/index.html">Pallas: a JAX kernel language</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../pallas/design.html">Pallas Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pallas/quickstart.html">Pallas Quickstart</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../pallas/tpu/index.html">Pallas TPU</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../pallas/tpu/details.html">Writing TPU kernels with Pallas</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../pallas/tpu/pipelining.html">Pipelining and <code class="docutils literal notranslate"><span class="pre">BlockSpec</span></code>s</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../advanced_guide.html">Advanced Tutorials</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="neural_network_with_tfds_data.html">Training a Simple Neural Network, with tensorflow/datasets Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Neural_Network_and_Data_Loading.html">Training a Simple Neural Network, with PyTorch Data Loading</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Autobatching for Bayesian Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../multi_process.html">Using JAX in multi-host and multi-process environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Distributed_arrays_and_automatic_parallelization.html">Distributed arrays and automatic parallelization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shard_map.html">SPMD multi-device parallelism with <code class="docutils literal notranslate"><span class="pre">shard_map</span></code></a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="xmap_tutorial.html">Named axes and easy-to-revise parallelism with <code class="docutils literal notranslate"><span class="pre">xmap</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="autodiff_cookbook.html">The Autodiff Cookbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Custom_derivative_rules_for_Python_code.html">Custom derivative rules for JAX-transformable Python functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autodiff_remat.html">Control autodiff’s saved values with <code class="docutils literal notranslate"><span class="pre">jax.checkpoint</span></code> (aka <code class="docutils literal notranslate"><span class="pre">jax.remat</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="How_JAX_primitives_work.html">How JAX primitives work</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Writing_custom_interpreters_in_Jax.html">Writing custom Jaxpr interpreters in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Custom_Operation_for_GPUs.html">Custom operations for GPUs with C++ and CUDA</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="convolutions.html">Generalized Convolutions in JAX</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../contributor_guide.html">Developer Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html">Contributing to JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../developer.html">Building from source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax_internal_api.html">Internal APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../autodidax.html">Autodidax: JAX core from scratch</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../jep/index.html">JAX Enhancement Proposals (JEPs)</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../jep/263-prng.html">263: JAX PRNG Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jep/2026-custom-derivatives.html">2026: Custom JVP/VJP rules for JAX-transformable functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jep/4008-custom-vjp-update.html">4008: Custom VJP and `nondiff_argnums` update</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jep/4410-omnistaging.html">4410: Omnistaging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jep/9263-typed-keys.html">9263: Typed keys &amp; pluggable RNGs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jep/9407-type-promotion.html">9407: Design of Type Promotion Semantics for JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jep/9419-jax-versioning.html">9419: Jax and Jaxlib versioning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jep/10657-sequencing-effects.html">10657: Sequencing side-effects in JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jep/11830-new-remat-checkpoint.html">11830: `jax.remat` / `jax.checkpoint` new implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jep/12049-type-annotations.html">12049: Type Annotation Roadmap for JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jep/14273-shard-map.html">14273: `shard_map` (`shmap`) for simple per-device code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jep/15856-jex.html">15856: `jax.extend`, an extensions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jep/17111-shmap-transpose.html">17111: Efficient transposition of `shard_map` (and other maps)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jep/18137-numpy-scipy-scope.html">18137: Scope of JAX NumPy &amp; SciPy Wrappers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../investigating_a_regression.html">Investigating a regression</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../building_on_jax.html">Building on JAX</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../notes.html">Notes</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api_compatibility.html">API compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../deprecation.html">Python and NumPy version support policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax_array_migration.html">jax.Array migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../async_dispatch.html">Asynchronous dispatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concurrency.html">Concurrency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gpu_memory_allocation.html">GPU memory allocation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rank_promotion_warning.html">Rank promotion warning</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../jax.html">Public API: jax package</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../jax.numpy.html"><code class="docutils literal notranslate"><span class="pre">jax.numpy</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.fft.html">jax.numpy.fft.fft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.fft2.html">jax.numpy.fft.fft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.fftfreq.html">jax.numpy.fft.fftfreq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.fftn.html">jax.numpy.fft.fftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.fftshift.html">jax.numpy.fft.fftshift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.hfft.html">jax.numpy.fft.hfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.ifft.html">jax.numpy.fft.ifft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.ifft2.html">jax.numpy.fft.ifft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.ifftn.html">jax.numpy.fft.ifftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.ifftshift.html">jax.numpy.fft.ifftshift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.ihfft.html">jax.numpy.fft.ihfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.irfft.html">jax.numpy.fft.irfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.irfft2.html">jax.numpy.fft.irfft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.irfftn.html">jax.numpy.fft.irfftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.rfft.html">jax.numpy.fft.rfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.rfft2.html">jax.numpy.fft.rfft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.rfftfreq.html">jax.numpy.fft.rfftfreq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.rfftn.html">jax.numpy.fft.rfftn</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../jax.scipy.html"><code class="docutils literal notranslate"><span class="pre">jax.scipy</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.scipy.stats.bernoulli.logpmf.html">jax.scipy.stats.bernoulli.logpmf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.scipy.stats.bernoulli.pmf.html">jax.scipy.stats.bernoulli.pmf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.scipy.stats.bernoulli.cdf.html">jax.scipy.stats.bernoulli.cdf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.scipy.stats.bernoulli.ppf.html">jax.scipy.stats.bernoulli.ppf</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.lax.html"><code class="docutils literal notranslate"><span class="pre">jax.lax</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.random.html"><code class="docutils literal notranslate"><span class="pre">jax.random</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.sharding.html"><code class="docutils literal notranslate"><span class="pre">jax.sharding</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.debug.html"><code class="docutils literal notranslate"><span class="pre">jax.debug</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.dlpack.html"><code class="docutils literal notranslate"><span class="pre">jax.dlpack</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.distributed.html"><code class="docutils literal notranslate"><span class="pre">jax.distributed</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.dtypes.html"><code class="docutils literal notranslate"><span class="pre">jax.dtypes</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.flatten_util.html"><code class="docutils literal notranslate"><span class="pre">jax.flatten_util</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.image.html"><code class="docutils literal notranslate"><span class="pre">jax.image</span></code> module</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../jax.nn.html"><code class="docutils literal notranslate"><span class="pre">jax.nn</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-13"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../jax.nn.initializers.html"><code class="docutils literal notranslate"><span class="pre">jax.nn.initializers</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.ops.html"><code class="docutils literal notranslate"><span class="pre">jax.ops</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.profiler.html"><code class="docutils literal notranslate"><span class="pre">jax.profiler</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.stages.html"><code class="docutils literal notranslate"><span class="pre">jax.stages</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.tree.html"><code class="docutils literal notranslate"><span class="pre">jax.tree</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.tree_util.html"><code class="docutils literal notranslate"><span class="pre">jax.tree_util</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.typing.html"><code class="docutils literal notranslate"><span class="pre">jax.typing</span></code> module</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../jax.extend.html"><code class="docutils literal notranslate"><span class="pre">jax.extend</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../jax.extend.linear_util.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.linear_util</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jax.extend.mlir.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.mlir</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jax.extend.random.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.random</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../jax.example_libraries.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-15"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../jax.example_libraries.optimizers.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries.optimizers</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jax.example_libraries.stax.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries.stax</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../jax.experimental.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../jax.experimental.array_api.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.array_api</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jax.experimental.checkify.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.checkify</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jax.experimental.host_callback.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.host_callback</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jax.experimental.maps.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.maps</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jax.experimental.pjit.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.pjit</span></code> module</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../jax.experimental.sparse.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.sparse</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.BCOO.html">jax.experimental.sparse.BCOO</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_broadcast_in_dim.html">jax.experimental.sparse.bcoo_broadcast_in_dim</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_concatenate.html">jax.experimental.sparse.bcoo_concatenate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_dot_general.html">jax.experimental.sparse.bcoo_dot_general</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_dot_general_sampled.html">jax.experimental.sparse.bcoo_dot_general_sampled</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_dynamic_slice.html">jax.experimental.sparse.bcoo_dynamic_slice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_extract.html">jax.experimental.sparse.bcoo_extract</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_fromdense.html">jax.experimental.sparse.bcoo_fromdense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_gather.html">jax.experimental.sparse.bcoo_gather</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_multiply_dense.html">jax.experimental.sparse.bcoo_multiply_dense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_multiply_sparse.html">jax.experimental.sparse.bcoo_multiply_sparse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_update_layout.html">jax.experimental.sparse.bcoo_update_layout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_reduce_sum.html">jax.experimental.sparse.bcoo_reduce_sum</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_reshape.html">jax.experimental.sparse.bcoo_reshape</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_slice.html">jax.experimental.sparse.bcoo_slice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_sort_indices.html">jax.experimental.sparse.bcoo_sort_indices</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_squeeze.html">jax.experimental.sparse.bcoo_squeeze</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_sum_duplicates.html">jax.experimental.sparse.bcoo_sum_duplicates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_todense.html">jax.experimental.sparse.bcoo_todense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_transpose.html">jax.experimental.sparse.bcoo_transpose</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../jax.experimental.jet.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.jet</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jax.experimental.custom_partitioning.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.custom_partitioning</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jax.experimental.multihost_utils.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.multihost_utils</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jax.experimental.compilation_cache.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.compilation_cache</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jax.experimental.key_reuse.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.key_reuse</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jax.experimental.mesh_utils.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.mesh_utils</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.lib.html"><code class="docutils literal notranslate"><span class="pre">jax.lib</span></code> module</a></li>
+</ul>
+</li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">JAX Glossary of Terms</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/google/jax" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/notebooks/vmapped_log_probs.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Autobatching for Bayesian Inference</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-a-fake-binary-classification-dataset">Generate a fake binary classification dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#write-the-log-joint-function-for-the-model">Write the log-joint function for the model</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-batched">Non-batched</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#manually-batched">Manually batched</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#autobatched-with-vmap">Autobatched with vmap</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#self-contained-variational-inference-example">Self-contained variational inference example</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-the-batched-log-joint-function">Set up the (batched) log-joint function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#define-the-elbo-and-its-gradient">Define the ELBO and its gradient</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimize-the-elbo-using-sgd">Optimize the ELBO using SGD</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#display-the-results">Display the results</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="autobatching-for-bayesian-inference">
+<h1>Autobatching for Bayesian Inference<a class="headerlink" href="#autobatching-for-bayesian-inference" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://colab.research.google.com/github/google/jax/blob/main/docs/notebooks/vmapped_log_probs.ipynb"><img alt="Open in Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a> <a class="reference external" href="https://kaggle.com/kernels/welcome?src=https://github.com/google/jax/blob/main/docs/notebooks/vmapped_log_probs.ipynb"><img alt="Open in Kaggle" src="https://kaggle.com/static/images/open-in-kaggle.svg" /></a></p>
+<p>This notebook demonstrates a simple Bayesian inference example where autobatching makes user code easier to write, easier to read, and less likely to include bugs.</p>
+<p>Inspired by a notebook by &#64;davmre.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">from</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="kn">import</span> <span class="nn">jax</span>
+
+<span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">lax</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+<span class="kn">import</span> <span class="nn">jax.scipy</span> <span class="k">as</span> <span class="nn">jsp</span>
+<span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">random</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy</span> <span class="k">as</span> <span class="nn">sp</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="generate-a-fake-binary-classification-dataset">
+<h2>Generate a fake binary classification dataset<a class="headerlink" href="#generate-a-fake-binary-classification-dataset" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">10009</span><span class="p">)</span>
+
+<span class="n">num_features</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">num_points</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="n">true_beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">num_features</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">all_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">num_points</span><span class="p">,</span> <span class="n">num_features</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">num_points</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">sp</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">expit</span><span class="p">(</span><span class="n">all_x</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">true_beta</span><span class="p">)))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Magenta">array</span><span class=" -Color -Color-Bold">([</span><span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>,
+       <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>,
+       <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>,
+       <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>,
+       <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">1</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">0</span><span class=" -Color -Color-Bold">]</span>, <span class=" -Color -Color-Yellow">dtype</span>=<span class=" -Color -Color-Magenta">int32</span><span class=" -Color -Color-Bold">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="write-the-log-joint-function-for-the-model">
+<h2>Write the log-joint function for the model<a class="headerlink" href="#write-the-log-joint-function-for-the-model" title="Link to this heading">#</a></h2>
+<p>We’ll write a non-batched version, a manually batched version, and an autobatched version.</p>
+<section id="non-batched">
+<h3>Non-batched<a class="headerlink" href="#non-batched" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">log_joint</span><span class="p">(</span><span class="n">beta</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="c1"># Note that no `axis` parameter is provided to `jnp.sum`.</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span> <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">jsp</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">logpdf</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.</span><span class="p">))</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span> <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">y</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">all_x</span><span class="p">,</span> <span class="n">beta</span><span class="p">))))</span>
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">log_joint</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">num_features</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+</pre></div>
+</div>
+<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Magenta">Array</span><span class=" -Color -Color-Bold">(</span><span class=" -Color -Color-Bold -Color-Bold-Cyan">-213.23558</span>, <span class=" -Color -Color-Yellow">dtype</span>=<span class=" -Color -Color-Magenta">float32</span><span class=" -Color -Color-Bold">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This doesn&#39;t work, because we didn&#39;t write `log_prob()` to handle batching.</span>
+<span class="k">try</span><span class="p">:</span>
+  <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">10</span>
+  <span class="n">batched_test_beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">num_features</span><span class="p">)</span>
+
+  <span class="n">log_joint</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">num_features</span><span class="p">))</span>
+<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Caught expected exception &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Caught expected exception Incompatible shapes for broadcasting: shapes=[(100,), (100, 10)]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="manually-batched">
+<h3>Manually batched<a class="headerlink" href="#manually-batched" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">batched_log_joint</span><span class="p">(</span><span class="n">beta</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="c1"># Here (and below) `sum` needs an `axis` parameter. At best, forgetting to set axis</span>
+    <span class="c1"># or setting it incorrectly yields an error; at worst, it silently changes the</span>
+    <span class="c1"># semantics of the model.</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span> <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">jsp</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">logpdf</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.</span><span class="p">),</span>
+                           <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># Note the multiple transposes. Getting this right is not rocket science,</span>
+    <span class="c1"># but it&#39;s also not totally mindless. (I didn&#39;t get it right on the first</span>
+    <span class="c1"># try.)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span> <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">y</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">all_x</span><span class="p">,</span> <span class="n">beta</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)),</span>
+                           <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">batched_test_beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">num_features</span><span class="p">)</span>
+
+<span class="n">batched_log_joint</span><span class="p">(</span><span class="n">batched_test_beta</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Magenta">Array</span><span class=" -Color -Color-Bold">([</span><span class=" -Color -Color-Bold -Color-Bold-Cyan">-147.84033</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">-207.02205</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">-109.26075</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">-243.80833</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">-163.0291</span> ,
+       <span class=" -Color -Color-Bold -Color-Bold-Cyan">-143.8485</span> , <span class=" -Color -Color-Bold -Color-Bold-Cyan">-160.28772</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">-113.7717</span> , <span class=" -Color -Color-Bold -Color-Bold-Cyan">-126.60544</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">-190.81992</span><span class=" -Color -Color-Bold">]</span>,      <span class=" -Color -Color-Yellow">dtype</span>=<span class=" -Color -Color-Magenta">float32</span><span class=" -Color -Color-Bold">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="autobatched-with-vmap">
+<h3>Autobatched with vmap<a class="headerlink" href="#autobatched-with-vmap" title="Link to this heading">#</a></h3>
+<p>It just works.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vmap_batched_log_joint</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">log_joint</span><span class="p">)</span>
+<span class="n">vmap_batched_log_joint</span><span class="p">(</span><span class="n">batched_test_beta</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold -Color-Bold-Magenta">Array</span><span class=" -Color -Color-Bold">([</span><span class=" -Color -Color-Bold -Color-Bold-Cyan">-147.84033</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">-207.02205</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">-109.26075</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">-243.80833</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">-163.0291</span> ,
+       <span class=" -Color -Color-Bold -Color-Bold-Cyan">-143.8485</span> , <span class=" -Color -Color-Bold -Color-Bold-Cyan">-160.28772</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">-113.7717</span> , <span class=" -Color -Color-Bold -Color-Bold-Cyan">-126.60544</span>, <span class=" -Color -Color-Bold -Color-Bold-Cyan">-190.81992</span><span class=" -Color -Color-Bold">]</span>,      <span class=" -Color -Color-Yellow">dtype</span>=<span class=" -Color -Color-Magenta">float32</span><span class=" -Color -Color-Bold">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="self-contained-variational-inference-example">
+<h2>Self-contained variational inference example<a class="headerlink" href="#self-contained-variational-inference-example" title="Link to this heading">#</a></h2>
+<p>A little code is copied from above.</p>
+<section id="set-up-the-batched-log-joint-function">
+<h3>Set up the (batched) log-joint function<a class="headerlink" href="#set-up-the-batched-log-joint-function" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@jax</span><span class="o">.</span><span class="n">jit</span>
+<span class="k">def</span> <span class="nf">log_joint</span><span class="p">(</span><span class="n">beta</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="mf">0.</span>
+    <span class="c1"># Note that no `axis` parameter is provided to `jnp.sum`.</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span> <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">jsp</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">logpdf</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">10.</span><span class="p">))</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">result</span> <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">y</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">all_x</span><span class="p">,</span> <span class="n">beta</span><span class="p">))))</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="n">batched_log_joint</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">log_joint</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="define-the-elbo-and-its-gradient">
+<h3>Define the ELBO and its gradient<a class="headerlink" href="#define-the-elbo-and-its-gradient" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">elbo</span><span class="p">(</span><span class="n">beta_loc</span><span class="p">,</span> <span class="n">beta_log_scale</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">):</span>
+    <span class="n">beta_sample</span> <span class="o">=</span> <span class="n">beta_loc</span> <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">beta_log_scale</span><span class="p">)</span> <span class="o">*</span> <span class="n">epsilon</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">batched_log_joint</span><span class="p">(</span><span class="n">beta_sample</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">beta_log_scale</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span>
+ 
+<span class="n">elbo</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">elbo</span><span class="p">)</span>
+<span class="n">elbo_val_and_grad</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">value_and_grad</span><span class="p">(</span><span class="n">elbo</span><span class="p">,</span> <span class="n">argnums</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="optimize-the-elbo-using-sgd">
+<h3>Optimize the ELBO using SGD<a class="headerlink" href="#optimize-the-elbo-using-sgd" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">normal_sample</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convenience function for quasi-stateful RNG.&quot;&quot;&quot;</span>
+    <span class="n">new_key</span><span class="p">,</span> <span class="n">sub_key</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_key</span><span class="p">,</span> <span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">sub_key</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span>
+
+<span class="n">normal_sample</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">normal_sample</span><span class="p">,</span> <span class="n">static_argnums</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
+
+<span class="n">key</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">key</span><span class="p">(</span><span class="mi">10003</span><span class="p">)</span>
+
+<span class="n">beta_loc</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_features</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">beta_log_scale</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_features</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+<span class="n">step_size</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">128</span>
+<span class="n">epsilon_shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">num_features</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="n">key</span><span class="p">,</span> <span class="n">epsilon</span> <span class="o">=</span> <span class="n">normal_sample</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">epsilon_shape</span><span class="p">)</span>
+    <span class="n">elbo_val</span><span class="p">,</span> <span class="p">(</span><span class="n">beta_loc_grad</span><span class="p">,</span> <span class="n">beta_log_scale_grad</span><span class="p">)</span> <span class="o">=</span> <span class="n">elbo_val_and_grad</span><span class="p">(</span>
+        <span class="n">beta_loc</span><span class="p">,</span> <span class="n">beta_log_scale</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">)</span>
+    <span class="n">beta_loc</span> <span class="o">+=</span> <span class="n">step_size</span> <span class="o">*</span> <span class="n">beta_loc_grad</span>
+    <span class="n">beta_log_scale</span> <span class="o">+=</span> <span class="n">step_size</span> <span class="o">*</span> <span class="n">beta_log_scale_grad</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="se">\t</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">elbo_val</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0	-180.85385131835938
+10	-113.06045532226562
+20	-102.73727416992188
+30	-99.787353515625
+40	-98.90898132324219
+50	-98.29745483398438
+60	-98.18632507324219
+70	-97.57972717285156
+80	-97.2860107421875
+90	-97.46996307373047
+100	-97.4771728515625
+110	-97.58067321777344
+120	-97.4943618774414
+130	-97.50271606445312
+140	-96.86396026611328
+150	-97.44197845458984
+160	-97.06941223144531
+170	-96.84028625488281
+180	-97.21337127685547
+190	-97.56503295898438
+200	-97.26397705078125
+210	-97.11979675292969
+220	-97.39595031738281
+230	-97.16831970214844
+240	-97.118408203125
+250	-97.24345397949219
+260	-97.29788970947266
+270	-96.69286346435547
+280	-96.96438598632812
+290	-97.30055236816406
+300	-96.63591766357422
+310	-97.03518676757812
+320	-97.52909088134766
+330	-97.28812408447266
+340	-97.0732192993164
+350	-97.15619659423828
+360	-97.25881958007812
+370	-97.19515228271484
+380	-97.13092041015625
+390	-97.11726379394531
+400	-96.938720703125
+410	-97.26676940917969
+420	-97.35322570800781
+430	-97.21006774902344
+440	-97.28434753417969
+450	-97.1630859375
+460	-97.2612533569336
+470	-97.21343994140625
+480	-97.23997497558594
+490	-97.14913940429688
+500	-97.23527526855469
+510	-96.93419647216797
+520	-97.21209716796875
+530	-96.82575988769531
+540	-97.01284790039062
+550	-96.94176483154297
+560	-97.16520690917969
+570	-97.29165649414062
+580	-97.42941284179688
+590	-97.24370574951172
+600	-97.15222930908203
+610	-97.4984359741211
+620	-96.9906997680664
+630	-96.88956451416016
+640	-96.89968872070312
+650	-97.13793182373047
+660	-97.43706512451172
+670	-96.99235534667969
+680	-97.15623474121094
+690	-97.1869125366211
+700	-97.11160278320312
+710	-97.78104400634766
+720	-97.23226928710938
+730	-97.16206359863281
+740	-96.99581909179688
+750	-96.6672134399414
+760	-97.16795349121094
+770	-97.51435089111328
+780	-97.28900146484375
+790	-96.91226196289062
+800	-97.17100524902344
+810	-97.29047393798828
+820	-97.16242980957031
+830	-97.19107055664062
+840	-97.56382751464844
+850	-97.00194549560547
+860	-96.86555480957031
+870	-96.76338195800781
+880	-96.83660888671875
+890	-97.12178039550781
+900	-97.09554290771484
+910	-97.0682373046875
+920	-97.11947631835938
+930	-96.87930297851562
+940	-97.45624542236328
+950	-96.69281005859375
+960	-97.29376220703125
+970	-97.3353042602539
+980	-97.34961700439453
+990	-97.09675598144531
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="display-the-results">
+<h3>Display the results<a class="headerlink" href="#display-the-results" title="Link to this heading">#</a></h3>
+<p>Coverage isn’t quite as good as we might like, but it’s not bad, and nobody said variational inference was exact.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">true_beta</span><span class="p">,</span> <span class="n">beta_loc</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Approximated Posterior Means&#39;</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">true_beta</span><span class="p">,</span> <span class="n">beta_loc</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">beta_log_scale</span><span class="p">),</span> <span class="s1">&#39;r.&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Approximated Posterior $2\sigma$ Error Bars&#39;</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">true_beta</span><span class="p">,</span> <span class="n">beta_loc</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">beta_log_scale</span><span class="p">),</span> <span class="s1">&#39;r.&#39;</span><span class="p">)</span>
+<span class="n">plot_scale</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">plot</span><span class="p">([</span><span class="o">-</span><span class="n">plot_scale</span><span class="p">,</span> <span class="n">plot_scale</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="n">plot_scale</span><span class="p">,</span> <span class="n">plot_scale</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;True beta&#39;</span><span class="p">)</span>
+<span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Estimated beta&#39;</span><span class="p">)</span>
+<span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">&lt;matplotlib.legend.Legend</span> object at <span class=" -Color -Color-Bold -Color-Bold-Cyan">0x709b70261950</span><span class=" -Color -Color-Bold">&gt;</span>
+</pre></div>
+</div>
+<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div><img alt="../_images/35c68e861c717b58be9bc16347aa3dcb2f272ac1cfa159a23214a7c2302a4aae.png" src="../_images/35c68e861c717b58be9bc16347aa3dcb2f272ac1cfa159a23214a7c2302a4aae.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Neural_Network_and_Data_Loading.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Training a Simple Neural Network, with PyTorch Data Loading</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../multi_process.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Using JAX in multi-host and multi-process environments</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-a-fake-binary-classification-dataset">Generate a fake binary classification dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#write-the-log-joint-function-for-the-model">Write the log-joint function for the model</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-batched">Non-batched</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#manually-batched">Manually batched</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#autobatched-with-vmap">Autobatched with vmap</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#self-contained-variational-inference-example">Self-contained variational inference example</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-the-batched-log-joint-function">Set up the (batched) log-joint function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#define-the-elbo-and-its-gradient">Define the ELBO and its gradient</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimize-the-elbo-using-sgd">Optimize the ELBO using SGD</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#display-the-results">Display the results</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The JAX authors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, The JAX Authors. NumPy and SciPy documentation are copyright the respective authors..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

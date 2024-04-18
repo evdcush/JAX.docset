@@ -1,0 +1,1128 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>jax.experimental.custom_partitioning &#8212; JAX  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/style.css?v=02ed413a" />
+    <link rel="stylesheet" href="../../../_static/style.css" type="text/css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../../../_static/design-tabs.js?v=36754332"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/jax/experimental/custom_partitioning';</script>
+    <link rel="icon" href="../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/jax_logo_250px.png" class="logo__image only-light" alt="JAX  documentation - Home"/>
+    <script>document.write(`<img src="../../../_static/jax_logo_250px.png" class="logo__image only-dark" alt="JAX  documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installing JAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/quickstart.html">JAX Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/thinking_in_jax.html">How to Think in JAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/Common_Gotchas_in_JAX.html">🔪 JAX - The Sharp Bits 🔪</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq.html">JAX Frequently Asked Questions (FAQ)</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../jax-101/index.html">Tutorial: JAX 101</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/01-jax-basics.html">JAX As Accelerated NumPy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/02-jitting.html">Just In Time Compilation with JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/03-vectorization.html">Automatic Vectorization in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/04-advanced-autodiff.html">Advanced Automatic Differentiation in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/05-random-numbers.html">Pseudo Random Numbers in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/05.1-pytrees.html">Working with Pytrees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/06-parallelism.html">Parallel Evaluation in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/07-state.html">Stateful Computations in JAX</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Further Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../user_guides.html">User Guides</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../profiling.html">Profiling JAX programs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../device_memory_profiling.html">Device Memory Profiling</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../debugging/index.html">Runtime value debugging in JAX</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../debugging/print_breakpoint.html"><code class="docutils literal notranslate"><span class="pre">jax.debug.print</span></code> and <code class="docutils literal notranslate"><span class="pre">jax.debug.breakpoint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../debugging/checkify_guide.html">The <code class="docutils literal notranslate"><span class="pre">checkify</span></code> transformation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../debugging/flags.html">JAX debugging flags</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../gpu_performance_tips.html">GPU performance tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../persistent_compilation_cache.html">Persistent Compilation Cache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jaxpr.html">Understanding Jaxprs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/external_callbacks.html">External Callbacks in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../type_promotion.html">Type promotion semantics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytrees.html">Pytrees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../aot.html">Ahead-of-time lowering and compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../errors.html">JAX Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../transfer_guard.html">Transfer guard</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../pallas/index.html">Pallas: a JAX kernel language</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../pallas/design.html">Pallas Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pallas/quickstart.html">Pallas Quickstart</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../pallas/tpu/index.html">Pallas TPU</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../pallas/tpu/details.html">Writing TPU kernels with Pallas</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../pallas/tpu/pipelining.html">Pipelining and <code class="docutils literal notranslate"><span class="pre">BlockSpec</span></code>s</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../advanced_guide.html">Advanced Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/neural_network_with_tfds_data.html">Training a Simple Neural Network, with tensorflow/datasets Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Neural_Network_and_Data_Loading.html">Training a Simple Neural Network, with PyTorch Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/vmapped_log_probs.html">Autobatching for Bayesian Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../multi_process.html">Using JAX in multi-host and multi-process environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Distributed_arrays_and_automatic_parallelization.html">Distributed arrays and automatic parallelization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/shard_map.html">SPMD multi-device parallelism with <code class="docutils literal notranslate"><span class="pre">shard_map</span></code></a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/xmap_tutorial.html">Named axes and easy-to-revise parallelism with <code class="docutils literal notranslate"><span class="pre">xmap</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/autodiff_cookbook.html">The Autodiff Cookbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Custom_derivative_rules_for_Python_code.html">Custom derivative rules for JAX-transformable Python functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/autodiff_remat.html">Control autodiff’s saved values with <code class="docutils literal notranslate"><span class="pre">jax.checkpoint</span></code> (aka <code class="docutils literal notranslate"><span class="pre">jax.remat</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/How_JAX_primitives_work.html">How JAX primitives work</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Writing_custom_interpreters_in_Jax.html">Writing custom Jaxpr interpreters in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Custom_Operation_for_GPUs.html">Custom operations for GPUs with C++ and CUDA</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/convolutions.html">Generalized Convolutions in JAX</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../contributor_guide.html">Developer Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html">Contributing to JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../developer.html">Building from source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax_internal_api.html">Internal APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autodidax.html">Autodidax: JAX core from scratch</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jep/index.html">JAX Enhancement Proposals (JEPs)</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/263-prng.html">263: JAX PRNG Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/2026-custom-derivatives.html">2026: Custom JVP/VJP rules for JAX-transformable functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/4008-custom-vjp-update.html">4008: Custom VJP and `nondiff_argnums` update</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/4410-omnistaging.html">4410: Omnistaging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/9263-typed-keys.html">9263: Typed keys &amp; pluggable RNGs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/9407-type-promotion.html">9407: Design of Type Promotion Semantics for JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/9419-jax-versioning.html">9419: Jax and Jaxlib versioning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/10657-sequencing-effects.html">10657: Sequencing side-effects in JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/11830-new-remat-checkpoint.html">11830: `jax.remat` / `jax.checkpoint` new implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/12049-type-annotations.html">12049: Type Annotation Roadmap for JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/14273-shard-map.html">14273: `shard_map` (`shmap`) for simple per-device code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/15856-jex.html">15856: `jax.extend`, an extensions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/17111-shmap-transpose.html">17111: Efficient transposition of `shard_map` (and other maps)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/18137-numpy-scipy-scope.html">18137: Scope of JAX NumPy &amp; SciPy Wrappers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../investigating_a_regression.html">Investigating a regression</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../building_on_jax.html">Building on JAX</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../notes.html">Notes</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_compatibility.html">API compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../deprecation.html">Python and NumPy version support policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax_array_migration.html">jax.Array migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../async_dispatch.html">Asynchronous dispatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../concurrency.html">Concurrency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../gpu_memory_allocation.html">GPU memory allocation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../rank_promotion_warning.html">Rank promotion warning</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../jax.html">Public API: jax package</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.numpy.html"><code class="docutils literal notranslate"><span class="pre">jax.numpy</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fft.html">jax.numpy.fft.fft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fft2.html">jax.numpy.fft.fft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fftfreq.html">jax.numpy.fft.fftfreq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fftn.html">jax.numpy.fft.fftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fftshift.html">jax.numpy.fft.fftshift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.hfft.html">jax.numpy.fft.hfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifft.html">jax.numpy.fft.ifft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifft2.html">jax.numpy.fft.ifft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifftn.html">jax.numpy.fft.ifftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifftshift.html">jax.numpy.fft.ifftshift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ihfft.html">jax.numpy.fft.ihfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.irfft.html">jax.numpy.fft.irfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.irfft2.html">jax.numpy.fft.irfft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.irfftn.html">jax.numpy.fft.irfftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfft.html">jax.numpy.fft.rfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfft2.html">jax.numpy.fft.rfft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfftfreq.html">jax.numpy.fft.rfftfreq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfftn.html">jax.numpy.fft.rfftn</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.scipy.html"><code class="docutils literal notranslate"><span class="pre">jax.scipy</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.logpmf.html">jax.scipy.stats.bernoulli.logpmf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.pmf.html">jax.scipy.stats.bernoulli.pmf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.cdf.html">jax.scipy.stats.bernoulli.cdf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.ppf.html">jax.scipy.stats.bernoulli.ppf</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.lax.html"><code class="docutils literal notranslate"><span class="pre">jax.lax</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.random.html"><code class="docutils literal notranslate"><span class="pre">jax.random</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.sharding.html"><code class="docutils literal notranslate"><span class="pre">jax.sharding</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.debug.html"><code class="docutils literal notranslate"><span class="pre">jax.debug</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.dlpack.html"><code class="docutils literal notranslate"><span class="pre">jax.dlpack</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.distributed.html"><code class="docutils literal notranslate"><span class="pre">jax.distributed</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.dtypes.html"><code class="docutils literal notranslate"><span class="pre">jax.dtypes</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.flatten_util.html"><code class="docutils literal notranslate"><span class="pre">jax.flatten_util</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.image.html"><code class="docutils literal notranslate"><span class="pre">jax.image</span></code> module</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.nn.html"><code class="docutils literal notranslate"><span class="pre">jax.nn</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-13"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.nn.initializers.html"><code class="docutils literal notranslate"><span class="pre">jax.nn.initializers</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.ops.html"><code class="docutils literal notranslate"><span class="pre">jax.ops</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.profiler.html"><code class="docutils literal notranslate"><span class="pre">jax.profiler</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.stages.html"><code class="docutils literal notranslate"><span class="pre">jax.stages</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.tree.html"><code class="docutils literal notranslate"><span class="pre">jax.tree</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.tree_util.html"><code class="docutils literal notranslate"><span class="pre">jax.tree_util</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.typing.html"><code class="docutils literal notranslate"><span class="pre">jax.typing</span></code> module</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.extend.html"><code class="docutils literal notranslate"><span class="pre">jax.extend</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.extend.linear_util.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.linear_util</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.extend.mlir.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.mlir</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.extend.random.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.random</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.example_libraries.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-15"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.example_libraries.optimizers.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries.optimizers</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.example_libraries.stax.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries.stax</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.experimental.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.array_api.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.array_api</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.checkify.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.checkify</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.host_callback.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.host_callback</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.maps.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.maps</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.pjit.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.pjit</span></code> module</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../jax.experimental.sparse.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.sparse</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.BCOO.html">jax.experimental.sparse.BCOO</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_broadcast_in_dim.html">jax.experimental.sparse.bcoo_broadcast_in_dim</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_concatenate.html">jax.experimental.sparse.bcoo_concatenate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_dot_general.html">jax.experimental.sparse.bcoo_dot_general</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_dot_general_sampled.html">jax.experimental.sparse.bcoo_dot_general_sampled</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_dynamic_slice.html">jax.experimental.sparse.bcoo_dynamic_slice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_extract.html">jax.experimental.sparse.bcoo_extract</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_fromdense.html">jax.experimental.sparse.bcoo_fromdense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_gather.html">jax.experimental.sparse.bcoo_gather</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_multiply_dense.html">jax.experimental.sparse.bcoo_multiply_dense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_multiply_sparse.html">jax.experimental.sparse.bcoo_multiply_sparse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_update_layout.html">jax.experimental.sparse.bcoo_update_layout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_reduce_sum.html">jax.experimental.sparse.bcoo_reduce_sum</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_reshape.html">jax.experimental.sparse.bcoo_reshape</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_slice.html">jax.experimental.sparse.bcoo_slice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_sort_indices.html">jax.experimental.sparse.bcoo_sort_indices</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_squeeze.html">jax.experimental.sparse.bcoo_squeeze</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_sum_duplicates.html">jax.experimental.sparse.bcoo_sum_duplicates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_todense.html">jax.experimental.sparse.bcoo_todense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_transpose.html">jax.experimental.sparse.bcoo_transpose</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.jet.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.jet</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.custom_partitioning.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.custom_partitioning</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.multihost_utils.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.multihost_utils</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.compilation_cache.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.compilation_cache</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.key_reuse.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.key_reuse</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.mesh_utils.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.mesh_utils</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.lib.html"><code class="docutils literal notranslate"><span class="pre">jax.lib</span></code> module</a></li>
+</ul>
+</li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../glossary.html">JAX Glossary of Terms</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/google/jax" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for jax.experimental.custom_partitioning</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2018 The JAX Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     https://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">import</span> <span class="nn">weakref</span>
+
+<span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">core</span>
+<span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">tree_util</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">linear_util</span> <span class="k">as</span> <span class="n">lu</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">sharding_impls</span>
+<span class="kn">from</span> <span class="nn">jax.errors</span> <span class="kn">import</span> <span class="n">UnexpectedTracerError</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">mesh</span> <span class="k">as</span> <span class="n">mesh_lib</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">dispatch</span>
+<span class="kn">from</span> <span class="nn">jax._src.lib.mlir.dialects</span> <span class="kn">import</span> <span class="n">hlo</span>
+<span class="kn">from</span> <span class="nn">jax._src.lib.mlir</span> <span class="kn">import</span> <span class="n">ir</span>
+<span class="kn">from</span> <span class="nn">jax._src.interpreters</span> <span class="kn">import</span> <span class="n">mlir</span>
+<span class="kn">from</span> <span class="nn">jax._src.interpreters</span> <span class="kn">import</span> <span class="n">partial_eval</span> <span class="k">as</span> <span class="n">pe</span>
+<span class="kn">from</span> <span class="nn">jax._src.sharding_impls</span> <span class="kn">import</span> <span class="n">_op_sharding_to_pos_sharding</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">custom_api_util</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">xla_bridge</span> <span class="k">as</span> <span class="n">xb</span>
+<span class="kn">from</span> <span class="nn">jax._src.lib</span> <span class="kn">import</span> <span class="n">xla_client</span> <span class="k">as</span> <span class="n">xc</span>
+<span class="kn">from</span> <span class="nn">jax._src.lib</span> <span class="kn">import</span> <span class="n">xla_extension_version</span>
+<span class="kn">from</span> <span class="nn">jax._src.api_util</span> <span class="kn">import</span> <span class="n">flatten_fun_nokwargs</span><span class="p">,</span> <span class="n">argnums_partial</span>
+
+
+<span class="k">def</span> <span class="nf">_resolve_kwargs</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+  <span class="n">ba</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">fun</span><span class="p">)</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+  <span class="n">ba</span><span class="o">.</span><span class="n">apply_defaults</span><span class="p">()</span>
+  <span class="k">if</span> <span class="n">ba</span><span class="o">.</span><span class="n">kwargs</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;keyword arguments could not be resolved to positions&quot;</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">ba</span><span class="o">.</span><span class="n">args</span>
+
+
+<span class="k">class</span> <span class="nc">_ShardingCallbackInfo</span><span class="p">:</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">propagate_user_sharding</span><span class="p">,</span> <span class="n">partition</span><span class="p">,</span> <span class="n">to_mesh_pspec_sharding</span><span class="p">,</span>
+      <span class="n">in_tree</span><span class="p">,</span> <span class="n">out_tree</span><span class="p">,</span> <span class="n">infer_sharding_from_operands</span><span class="p">,</span> <span class="n">module_context</span><span class="p">,</span> <span class="n">mesh</span><span class="p">,</span>
+      <span class="n">static_args</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">propagate_user_sharding</span> <span class="o">=</span> <span class="n">propagate_user_sharding</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">partition</span> <span class="o">=</span> <span class="n">partition</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">to_mesh_pspec_sharding</span> <span class="o">=</span> <span class="n">to_mesh_pspec_sharding</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">in_tree</span> <span class="o">=</span> <span class="n">in_tree</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">out_tree</span> <span class="o">=</span> <span class="n">out_tree</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">infer_sharding_from_operands</span> <span class="o">=</span> <span class="n">infer_sharding_from_operands</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">module_context</span> <span class="o">=</span> <span class="n">module_context</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">mesh</span> <span class="o">=</span> <span class="n">mesh</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">static_args</span> <span class="o">=</span> <span class="n">static_args</span>
+
+  <span class="k">def</span> <span class="nf">unflatten_arg_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">sharding</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_to_jax_sharded_shape</span><span class="p">(</span>
+        <span class="n">s</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_mesh_pspec_sharding</span><span class="p">(</span><span class="n">sharding</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">dimensions</span><span class="p">()))</span>
+    <span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">unflatten_arg_shapes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg_shapes</span><span class="p">,</span> <span class="n">arg_shardings</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_tree</span><span class="o">.</span><span class="n">unflatten</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">unflatten_arg_shape</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">sharding</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">sharding</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">arg_shapes</span><span class="p">,</span> <span class="n">arg_shardings</span><span class="p">)</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+
+
+<span class="n">_sharding_callbacks</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">WeakValueDictionary</span><span class="p">()</span>  <span class="c1"># type: ignore</span>
+
+<span class="n">_CUSTOM_PARTITIONING_CALL_NAME</span> <span class="o">=</span> <span class="s2">&quot;CustomSPMDPartitioning&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">_to_jax_shape</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">core</span><span class="o">.</span><span class="n">ShapedArray</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">dimensions</span><span class="p">(),</span> <span class="n">s</span><span class="o">.</span><span class="n">numpy_dtype</span><span class="p">())</span>
+
+
+<span class="k">def</span> <span class="nf">_to_jax_sharded_shape</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">sharding</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">ShapeDtypeStruct</span><span class="p">(</span>
+      <span class="n">s</span><span class="o">.</span><span class="n">dimensions</span><span class="p">(),</span> <span class="n">s</span><span class="o">.</span><span class="n">numpy_dtype</span><span class="p">(),</span> <span class="n">sharding</span><span class="o">=</span><span class="n">sharding</span>
+  <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_pack_result_sharding</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">result_shardings</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">shape</span><span class="o">.</span><span class="n">is_tuple</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">xc</span><span class="o">.</span><span class="n">HloSharding</span><span class="o">.</span><span class="n">tuple_sharding</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">result_shardings</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">result_shardings</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">_flatten_sharding</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">shardings</span><span class="p">,</span> <span class="n">shapes</span><span class="p">):</span>
+  <span class="k">return</span> <span class="p">[</span>
+      <span class="n">_to_hlo_sharding</span><span class="p">(</span><span class="n">sharding</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="o">.</span><span class="n">dimensions</span><span class="p">()))</span>
+      <span class="k">for</span> <span class="n">sharding</span><span class="p">,</span> <span class="n">shape</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+          <span class="n">tree</span><span class="o">.</span><span class="n">flatten_up_to</span><span class="p">(</span><span class="n">shardings</span><span class="p">),</span> <span class="n">shapes</span>
+      <span class="p">)</span>
+  <span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">_custom_partitioning_propagate_user_sharding</span><span class="p">(</span><span class="n">user_sharding</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span>
+                                                 <span class="n">backend_string</span><span class="p">):</span>
+  <span class="n">info</span> <span class="o">=</span> <span class="n">_sharding_callbacks</span><span class="p">[</span><span class="n">backend_string</span><span class="p">]</span>
+  <span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">propagate_user_sharding</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">user_sharding</span>
+  <span class="k">if</span> <span class="n">shape</span><span class="o">.</span><span class="n">is_tuple</span><span class="p">():</span>
+    <span class="n">user_shapes</span> <span class="o">=</span> <span class="n">shape</span><span class="o">.</span><span class="n">tuple_shapes</span><span class="p">()</span>
+    <span class="n">user_shardings</span> <span class="o">=</span> <span class="n">user_sharding</span><span class="o">.</span><span class="n">tuple_elements</span><span class="p">()</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">user_shapes</span> <span class="o">=</span> <span class="p">(</span><span class="n">shape</span><span class="p">,)</span>
+    <span class="n">user_shardings</span> <span class="o">=</span> <span class="p">(</span><span class="n">user_sharding</span><span class="p">,)</span>
+  <span class="n">user_shape</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">out_tree</span><span class="o">.</span><span class="n">unflatten</span><span class="p">(</span>
+      <span class="p">[</span>
+          <span class="n">info</span><span class="o">.</span><span class="n">unflatten_arg_shape</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">sharding</span><span class="p">)</span>
+          <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">sharding</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">user_shapes</span><span class="p">,</span> <span class="n">user_shardings</span><span class="p">)</span>
+      <span class="p">]</span>
+  <span class="p">)</span>
+  <span class="n">result_sharding</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">propagate_user_sharding</span><span class="p">(</span>
+      <span class="o">*</span><span class="n">info</span><span class="o">.</span><span class="n">static_args</span><span class="p">,</span> <span class="n">info</span><span class="o">.</span><span class="n">mesh</span><span class="p">,</span> <span class="n">user_shape</span>
+  <span class="p">)</span>
+  <span class="n">result_shardings</span> <span class="o">=</span> <span class="n">_flatten_sharding</span><span class="p">(</span>
+      <span class="n">info</span><span class="o">.</span><span class="n">out_tree</span><span class="p">,</span> <span class="n">result_sharding</span><span class="p">,</span> <span class="n">user_shapes</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">_pack_result_sharding</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">result_shardings</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_to_hlo_sharding</span><span class="p">(</span><span class="n">sharding</span><span class="p">,</span> <span class="n">num_dimensions</span><span class="p">):</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sharding</span><span class="p">,</span> <span class="n">jax</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">XLACompatibleSharding</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+        <span class="s2">&quot;Custom Partitioning rules must return XLACompatibleShardings.&quot;</span>
+    <span class="p">)</span>
+  <span class="k">return</span> <span class="n">sharding</span><span class="o">.</span><span class="n">_to_xla_hlo_sharding</span><span class="p">(</span><span class="n">num_dimensions</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_custom_partitioning_partition</span><span class="p">(</span><span class="n">arg_shapes</span><span class="p">,</span> <span class="n">arg_shardings</span><span class="p">,</span> <span class="n">result_shape</span><span class="p">,</span>
+                                   <span class="n">result_sharding</span><span class="p">,</span> <span class="n">backend_string</span><span class="p">):</span>
+  <span class="n">info</span> <span class="o">=</span> <span class="n">_sharding_callbacks</span><span class="p">[</span><span class="n">backend_string</span><span class="p">]</span>
+  <span class="k">if</span> <span class="n">result_shape</span><span class="o">.</span><span class="n">is_tuple</span><span class="p">():</span>
+    <span class="n">result_shapes</span> <span class="o">=</span> <span class="n">result_shape</span><span class="o">.</span><span class="n">tuple_shapes</span><span class="p">()</span>
+    <span class="n">result_shardings</span> <span class="o">=</span> <span class="n">result_sharding</span><span class="o">.</span><span class="n">tuple_elements</span><span class="p">()</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">result_shapes</span> <span class="o">=</span> <span class="p">(</span><span class="n">result_shape</span><span class="p">,)</span>
+    <span class="n">result_shardings</span> <span class="o">=</span> <span class="p">(</span><span class="n">result_sharding</span><span class="p">,)</span>
+  <span class="n">mesh</span><span class="p">,</span> <span class="n">lower_fn</span><span class="p">,</span> <span class="n">result_sharding</span><span class="p">,</span> <span class="n">arg_shardings</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span>
+      <span class="o">*</span><span class="n">info</span><span class="o">.</span><span class="n">static_args</span><span class="p">,</span>
+      <span class="n">info</span><span class="o">.</span><span class="n">mesh</span><span class="p">,</span>
+      <span class="n">info</span><span class="o">.</span><span class="n">unflatten_arg_shapes</span><span class="p">(</span><span class="n">arg_shapes</span><span class="p">,</span> <span class="n">arg_shardings</span><span class="p">),</span>
+      <span class="n">info</span><span class="o">.</span><span class="n">out_tree</span><span class="o">.</span><span class="n">unflatten</span><span class="p">(</span>
+          <span class="p">[</span>
+              <span class="n">info</span><span class="o">.</span><span class="n">unflatten_arg_shape</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">sharding</span><span class="p">)</span>
+              <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">sharding</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">result_shapes</span><span class="p">,</span> <span class="n">result_shardings</span><span class="p">)</span>
+          <span class="p">]</span>
+      <span class="p">),</span>
+  <span class="p">)</span>
+  <span class="n">module_context</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">module_context</span>
+
+  <span class="n">result_shardings</span> <span class="o">=</span> <span class="n">_flatten_sharding</span><span class="p">(</span>
+      <span class="n">info</span><span class="o">.</span><span class="n">out_tree</span><span class="p">,</span> <span class="n">result_sharding</span><span class="p">,</span> <span class="n">result_shapes</span><span class="p">)</span>
+  <span class="n">arg_shardings</span> <span class="o">=</span> <span class="n">_flatten_sharding</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">in_tree</span><span class="p">,</span> <span class="n">arg_shardings</span><span class="p">,</span> <span class="n">arg_shapes</span><span class="p">)</span>
+  <span class="n">tiled_args</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="n">_to_jax_shape</span><span class="p">(</span><span class="n">sharding</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+      <span class="k">for</span> <span class="n">sharding</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">arg_shardings</span><span class="p">,</span> <span class="n">arg_shapes</span><span class="p">)</span>
+  <span class="p">]</span>
+  <span class="n">tiled_results</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="n">_to_jax_shape</span><span class="p">(</span><span class="n">sharding</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+      <span class="k">for</span> <span class="n">sharding</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">result_shardings</span><span class="p">,</span> <span class="n">result_shapes</span><span class="p">)</span>
+  <span class="p">]</span>
+  <span class="n">closed_jaxpr</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">make_jaxpr</span><span class="p">(</span><span class="n">lower_fn</span><span class="p">,</span> <span class="n">axis_env</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">items</span><span class="p">()))(</span>
+      <span class="o">*</span><span class="n">tiled_args</span>
+  <span class="p">)</span>
+  <span class="k">if</span> <span class="n">closed_jaxpr</span><span class="o">.</span><span class="n">out_avals</span> <span class="o">!=</span> <span class="n">tiled_results</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+        <span class="s2">&quot;Mismatch in result shapes. </span><span class="si">%s</span><span class="s2"> vs </span><span class="si">%s</span><span class="s2">&quot;</span>
+        <span class="o">%</span> <span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">closed_jaxpr</span><span class="o">.</span><span class="n">out_avals</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">tiled_results</span><span class="p">))</span>
+    <span class="p">)</span>
+  <span class="n">axis_context</span> <span class="o">=</span> <span class="n">sharding_impls</span><span class="o">.</span><span class="n">SPMDAxisContext</span><span class="p">(</span><span class="n">mesh</span><span class="p">)</span>
+  <span class="n">module</span> <span class="o">=</span> <span class="n">mlir</span><span class="o">.</span><span class="n">build_mlir_module_helper</span><span class="p">(</span>
+      <span class="n">closed_jaxpr</span><span class="p">,</span>
+      <span class="n">name</span><span class="o">=</span><span class="s2">&quot;tmp_xla_computation&quot;</span><span class="p">,</span>
+      <span class="n">platforms</span><span class="o">=</span><span class="n">module_context</span><span class="o">.</span><span class="n">platforms</span><span class="p">,</span>
+      <span class="n">backend_or_name</span><span class="o">=</span><span class="n">module_context</span><span class="o">.</span><span class="n">backend_or_name</span><span class="p">,</span>
+      <span class="n">axis_context</span><span class="o">=</span><span class="n">axis_context</span><span class="o">.</span><span class="n">extend_manual</span><span class="p">(</span><span class="nb">frozenset</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">axis_names</span><span class="p">)),</span>
+  <span class="p">)</span>
+  <span class="n">result_sharding</span> <span class="o">=</span> <span class="n">_pack_result_sharding</span><span class="p">(</span><span class="n">result_shape</span><span class="p">,</span> <span class="n">result_shardings</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">xla_extension_version</span> <span class="o">&lt;</span> <span class="mi">232</span><span class="p">:</span>
+    <span class="n">built</span> <span class="o">=</span> <span class="n">xc</span><span class="o">.</span><span class="n">_xla</span><span class="o">.</span><span class="n">mlir</span><span class="o">.</span><span class="n">mlir_module_to_xla_computation</span><span class="p">(</span>
+        <span class="n">mlir</span><span class="o">.</span><span class="n">module_to_string</span><span class="p">(</span><span class="n">module</span><span class="p">),</span> <span class="n">use_tuple_args</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_tuple</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">built</span><span class="p">,</span> <span class="n">arg_shardings</span><span class="p">,</span> <span class="n">result_sharding</span>
+  <span class="k">return</span> <span class="n">mlir</span><span class="o">.</span><span class="n">module_to_bytecode</span><span class="p">(</span><span class="n">module</span><span class="p">),</span> <span class="n">arg_shardings</span><span class="p">,</span> <span class="n">result_sharding</span>
+
+
+<span class="k">def</span> <span class="nf">_custom_partitioning_infer_sharding_from_operands</span><span class="p">(</span><span class="n">arg_shapes</span><span class="p">,</span> <span class="n">arg_shardings</span><span class="p">,</span>
+                                                      <span class="n">result_shape</span><span class="p">,</span>
+                                                      <span class="n">backend_string</span><span class="p">):</span>
+  <span class="n">info</span> <span class="o">=</span> <span class="n">_sharding_callbacks</span><span class="p">[</span><span class="n">backend_string</span><span class="p">]</span>
+  <span class="k">if</span> <span class="n">result_shape</span><span class="o">.</span><span class="n">is_tuple</span><span class="p">():</span>
+    <span class="n">result_shapes</span> <span class="o">=</span> <span class="n">result_shape</span><span class="o">.</span><span class="n">tuple_shapes</span><span class="p">()</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">result_shapes</span> <span class="o">=</span> <span class="p">(</span><span class="n">result_shape</span><span class="p">,)</span>
+  <span class="n">result_sharding</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">infer_sharding_from_operands</span><span class="p">(</span>
+      <span class="o">*</span><span class="n">info</span><span class="o">.</span><span class="n">static_args</span><span class="p">,</span>
+      <span class="n">info</span><span class="o">.</span><span class="n">mesh</span><span class="p">,</span>
+      <span class="n">info</span><span class="o">.</span><span class="n">unflatten_arg_shapes</span><span class="p">(</span><span class="n">arg_shapes</span><span class="p">,</span> <span class="n">arg_shardings</span><span class="p">),</span>
+      <span class="n">info</span><span class="o">.</span><span class="n">out_tree</span><span class="o">.</span><span class="n">unflatten</span><span class="p">([</span><span class="n">_to_jax_shape</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">result_shapes</span><span class="p">]),</span>
+  <span class="p">)</span>
+  <span class="n">result_shardings</span> <span class="o">=</span> <span class="n">_flatten_sharding</span><span class="p">(</span>
+      <span class="n">info</span><span class="o">.</span><span class="n">out_tree</span><span class="p">,</span> <span class="n">result_sharding</span><span class="p">,</span> <span class="n">result_shapes</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">_pack_result_sharding</span><span class="p">(</span><span class="n">result_shape</span><span class="p">,</span> <span class="n">result_shardings</span><span class="p">)</span>
+
+
+<span class="n">custom_partitioning_p</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">Primitive</span><span class="p">(</span><span class="s2">&quot;custom_partitioning&quot;</span><span class="p">)</span>
+<span class="n">custom_partitioning_p</span><span class="o">.</span><span class="n">multiple_results</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">dispatch</span><span class="o">.</span><span class="n">prim_requires_devices_during_lowering</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">custom_partitioning_p</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_custom_partitioning_abstract_eval</span><span class="p">(</span><span class="o">*</span><span class="n">avals</span><span class="p">,</span> <span class="n">call</span><span class="p">,</span> <span class="n">in_tree</span><span class="p">,</span> <span class="n">out_tree</span><span class="p">,</span>
+                                       <span class="n">propagate_user_sharding</span><span class="p">,</span> <span class="n">partition</span><span class="p">,</span>
+                                       <span class="n">infer_sharding_from_operands</span><span class="p">,</span>
+                                       <span class="n">decode_shardings</span><span class="p">,</span>
+                                       <span class="n">static_args</span><span class="p">):</span>
+  <span class="k">del</span> <span class="n">in_tree</span><span class="p">,</span> <span class="n">out_tree</span><span class="p">,</span> <span class="n">propagate_user_sharding</span><span class="p">,</span> <span class="n">partition</span>
+  <span class="k">del</span> <span class="n">infer_sharding_from_operands</span><span class="p">,</span> <span class="n">decode_shardings</span><span class="p">,</span> <span class="n">static_args</span>
+  <span class="k">return</span> <span class="n">call</span><span class="o">.</span><span class="n">out_avals</span>
+
+
+<span class="k">def</span> <span class="nf">_custom_partitioning_impl</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">call</span><span class="p">,</span> <span class="n">in_tree</span><span class="p">,</span> <span class="n">out_tree</span><span class="p">,</span>
+                              <span class="n">propagate_user_sharding</span><span class="p">,</span>
+                              <span class="n">partition</span><span class="p">,</span> <span class="n">infer_sharding_from_operands</span><span class="p">,</span>
+                              <span class="n">decode_shardings</span><span class="p">,</span> <span class="n">static_args</span><span class="p">):</span>
+  <span class="k">del</span> <span class="n">in_tree</span><span class="p">,</span> <span class="n">out_tree</span><span class="p">,</span> <span class="n">propagate_user_sharding</span><span class="p">,</span> <span class="n">partition</span>
+  <span class="k">del</span> <span class="n">infer_sharding_from_operands</span><span class="p">,</span> <span class="n">decode_shardings</span><span class="p">,</span> <span class="n">static_args</span>
+  <span class="k">return</span> <span class="n">core</span><span class="o">.</span><span class="n">jaxpr_as_fun</span><span class="p">(</span><span class="n">call</span><span class="p">)(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+
+
+<span class="n">custom_partitioning_p</span><span class="o">.</span><span class="n">def_abstract_eval</span><span class="p">(</span><span class="n">_custom_partitioning_abstract_eval</span><span class="p">)</span>
+<span class="n">custom_partitioning_p</span><span class="o">.</span><span class="n">def_impl</span><span class="p">(</span><span class="n">_custom_partitioning_impl</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_check_for_tracers</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="n">tree_util</span><span class="o">.</span><span class="n">tree_leaves</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">Tracer</span><span class="p">):</span>
+      <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+          <span class="s2">&quot;Found a JAX Tracer object passed as an argument to a&quot;</span>
+          <span class="s2">&quot;custom_partitioning function in a position indicated as static by&quot;</span>
+          <span class="s2">&quot;static_argnums. &quot;</span>
+      <span class="p">)</span>
+      <span class="k">raise</span> <span class="n">UnexpectedTracerError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="custom_partitioning">
+<a class="viewcode-back" href="../../../jax.experimental.custom_partitioning.html#jax.experimental.custom_partitioning.custom_partitioning">[docs]</a>
+<span class="nd">@custom_api_util</span><span class="o">.</span><span class="n">register_custom_decorator_type</span>
+<span class="k">class</span> <span class="nc">custom_partitioning</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Inserts a CustomCallOp into the XLA graph with custom SPMD lowering rules.</span>
+
+<span class="sd">  .. code-block:: python</span>
+
+<span class="sd">    @custom_partitioning</span>
+<span class="sd">    def f(*args):</span>
+<span class="sd">      return ...</span>
+
+<span class="sd">    def propagate_user_sharding(mesh, user_shape):</span>
+<span class="sd">      &#39;&#39;&#39;Update the sharding of the op from a user&#39;s shape.sharding.&#39;&#39;&#39;</span>
+<span class="sd">      user_sharding = jax.tree.map(lambda x: x.sharding, user_shape)</span>
+
+<span class="sd">    def partition(mesh, arg_shapes, result_shape):</span>
+<span class="sd">      def lower_fn(*args):</span>
+<span class="sd">        ... builds computation on per-device shapes ...</span>
+<span class="sd">      result_shardings = jax.tree.map(lambda x: x.sharding, result_shape)</span>
+<span class="sd">      arg_shardings = jax.tree.map(lambda x: x.sharding, arg_shapes)</span>
+<span class="sd">      # result_sharding and arg_shardings may optionally be modified and the</span>
+<span class="sd">      # partitioner will insert collectives to reshape.</span>
+<span class="sd">      return mesh, lower_fn, result_sharding, arg_shardings</span>
+
+<span class="sd">    def infer_sharding_from_operands(mesh, arg_shapes, shape):</span>
+<span class="sd">      &#39;&#39;&#39;Compute the result sharding from the sharding of the operands.&#39;&#39;&#39;</span>
+<span class="sd">      arg_shardings = jax.tree.map(lambda x: x.sharding, arg_shapes)</span>
+
+
+<span class="sd">    f.def_partition(partition, propagate_user_sharding, infer_sharding_from_operands)</span>
+
+<span class="sd">  The args to ``def_partition`` are as follows:</span>
+
+<span class="sd">  * ``propagate_user_sharding``: Callable which takes the sharding of a user (in the dag)</span>
+<span class="sd">    and returns a suggestion for a new `NamedSharding`. The default</span>
+<span class="sd">    implementation is just to return the suggested sharding.</span>
+<span class="sd">  * ``partition``: Callable which takes the SPMD suggested partition shapes and</span>
+<span class="sd">    partition specs and returns the mesh, a per-shard lowering function, and the final</span>
+<span class="sd">    input and output sharding specs (the SPMD partitioner will repartition the</span>
+<span class="sd">    inputs to match). The mesh is returned to allow configuring axis_names for</span>
+<span class="sd">    collectives when no mesh is provided.</span>
+<span class="sd">  * ``infer_sharding_from_operands``: Callable which computes an output ``NamedSharding``</span>
+<span class="sd">    from the ``NamedSharding`` chosen for each argument.</span>
+<span class="sd">  * ``decode_shardings``: When set to True, convert input ``GSPMDSharding``s to</span>
+<span class="sd">    ``NamedSharding`` if possible. This may not be possible if the user does not</span>
+<span class="sd">    provide a contextual mesh.</span>
+
+<span class="sd">  Positional arguments can be specified as static using static_argnums. JAX uses</span>
+<span class="sd">  :code:`inspect.signature(fun)` to resolve these positional arguments.</span>
+
+<span class="sd">  Example:</span>
+
+<span class="sd">    As an example, assume we want to enhance the existing ``jax.numpy.fft.fft``. This function computes</span>
+<span class="sd">    the discrete Fourier transform of an N-dimensional input along the last dimension, and is batched</span>
+<span class="sd">    along the first N-1 dimensions.</span>
+<span class="sd">    By default, however, it will ignore the sharding of the input and gather the input on all devices.</span>
+<span class="sd">    However, since ``jax.numpy.fft.fft`` is batched along the first N-1 dimensions,</span>
+<span class="sd">    this is unnecessary. We will create a new ``my_fft`` op that, instead, does not alter the sharding</span>
+<span class="sd">    along the first `N-1` dimensions, and only gathers the input along the last dimension if needed.</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">      import jax</span>
+<span class="sd">      from jax.sharding import NamedSharding</span>
+<span class="sd">      from jax.experimental.custom_partitioning import custom_partitioning</span>
+<span class="sd">      from jax.experimental.pjit import pjit</span>
+<span class="sd">      from jax.sharding import PartitionSpec as P</span>
+<span class="sd">      from jax.sharding import Mesh</span>
+<span class="sd">      from jax.numpy.fft import fft</span>
+<span class="sd">      import regex as re</span>
+<span class="sd">      import numpy as np</span>
+
+<span class="sd">      # Pattern to detect all-gather or dynamic-slice in the generated HLO</span>
+<span class="sd">      _PATTERN = &#39;(dynamic-slice|all-gather)&#39;</span>
+
+<span class="sd">      # For an N-D input, keeps sharding along the first N-1 dimensions</span>
+<span class="sd">      # but replicate along the last dimension</span>
+<span class="sd">      def supported_sharding(sharding, shape):</span>
+<span class="sd">          rank = len(shape.shape)</span>
+<span class="sd">          max_shared_dims = min(len(sharding.spec), rank-1)</span>
+<span class="sd">          names = tuple(sharding.spec[:max_shared_dims]) + tuple(None for _ in range(rank - max_shared_dims))</span>
+<span class="sd">          return NamedSharding(sharding.mesh, P(*names))</span>
+
+<span class="sd">      def partition(mesh, arg_shapes, result_shape):</span>
+<span class="sd">          result_shardings = jax.tree.map(lambda x: x.sharding, result_shape)</span>
+<span class="sd">          arg_shardings = jax.tree.map(lambda x: x.sharding, arg_shapes)</span>
+<span class="sd">          return mesh, fft, \</span>
+<span class="sd">              supported_sharding(arg_shardings[0], arg_shapes[0]), \</span>
+<span class="sd">              (supported_sharding(arg_shardings[0], arg_shapes[0]),)</span>
+
+<span class="sd">      def infer_sharding_from_operands(mesh, arg_shapes, result_shape):</span>
+<span class="sd">          arg_shardings = jax.tree.map(lambda x: x.sharding, arg_shapes)</span>
+<span class="sd">          return supported_sharding(arg_shardings[0], arg_shapes[0])</span>
+
+<span class="sd">      @custom_partitioning</span>
+<span class="sd">      def my_fft(x):</span>
+<span class="sd">          return fft(x)</span>
+
+<span class="sd">      my_fft.def_partition(</span>
+<span class="sd">          infer_sharding_from_operands=infer_sharding_from_operands,</span>
+<span class="sd">          partition=partition)</span>
+
+<span class="sd">    Now create a 2D array sharded along the first axis, pass it through ``my_fft``</span>
+<span class="sd">    and notice how it is still sharded as expected, and identical to the output</span>
+<span class="sd">    of ``fft``. However, inspecting the HLO</span>
+<span class="sd">    (using ``lower(x).compile().runtime_executable().hlo_modules()``) reveals that</span>
+<span class="sd">    ``my_fft`` does not create any all-gather or dynamic-slice, while ``fft`` does.</span>
+
+<span class="sd">    .. code-block::</span>
+
+<span class="sd">      with Mesh(np.array(jax.devices()), (&#39;x&#39;,)):</span>
+<span class="sd">        x = np.asarray(np.random.randn(32*1024, 1024), dtype=np.complex64)</span>
+<span class="sd">        y = pjit(lambda x: x, in_shardings=None, out_shardings=P(&#39;x&#39;))(x)</span>
+<span class="sd">        pjit_my_fft = pjit(my_fft, in_shardings=P(&#39;x&#39;), out_shardings=P(&#39;x&#39;))</span>
+<span class="sd">        pjit_fft    = pjit(fft,    in_shardings=P(&#39;x&#39;), out_shardings=P(&#39;x&#39;))</span>
+<span class="sd">        print(pjit_my_fft(y))</span>
+<span class="sd">        print(pjit_fft(y))</span>
+<span class="sd">        # dynamic-slice or all-gather are not present in the HLO for my_fft, because x is a 2D array</span>
+<span class="sd">        assert(re.search(_PATTERN, pjit_my_fft.lower(x).compile().runtime_executable().hlo_modules()[0].to_string()) is None)</span>
+<span class="sd">        # dynamic-slice or all-gather are present in the HLO for fft</span>
+<span class="sd">        assert(re.search(_PATTERN, pjit_fft.lower(x).compile().runtime_executable().hlo_modules()[0].to_string())    is not None)</span>
+
+<span class="sd">    .. code-block::</span>
+
+<span class="sd">      # my_fft</span>
+<span class="sd">      [[-38.840824   +0.j        -40.649452  +11.845365j</span>
+<span class="sd">      ...</span>
+<span class="sd">        -1.6937828  +0.8402481j  15.999859   -4.0156755j]]</span>
+
+<span class="sd">      # jax.numpy.fft.fft</span>
+<span class="sd">      [[-38.840824   +0.j        -40.649452  +11.845365j</span>
+<span class="sd">        ...</span>
+<span class="sd">        -1.6937828  +0.8402481j  15.999859   -4.0156755j]]</span>
+
+<span class="sd">    Because of the logic in ``supported_sharding``, ``my_fft`` also works on 1-dimensional arrays.</span>
+<span class="sd">    However, in this case, the HLO of ``my_fft`` does show a dynamic-slice, since the last dimension</span>
+<span class="sd">    is the dimension along which FFTs are calculated and needs to be replicated on all devices before</span>
+<span class="sd">    the computation can be done.</span>
+
+<span class="sd">    .. code-block::</span>
+
+<span class="sd">      with Mesh(np.array(jax.devices()), (&#39;x&#39;,)):</span>
+<span class="sd">        x = np.asarray(np.random.randn(32*1024*1024), dtype=np.complex64)</span>
+<span class="sd">        y = pjit(lambda x: x, in_shardings=None, out_shardings=P(&#39;x&#39;))(x)</span>
+<span class="sd">        pjit_my_fft = pjit(my_fft, in_shardings=P(&#39;x&#39;), out_shardings=P(&#39;x&#39;))</span>
+<span class="sd">        pjit_fft    = pjit(fft,    in_shardings=P(&#39;x&#39;), out_shardings=P(&#39;x&#39;))</span>
+<span class="sd">        print(pjit_my_fft(y))</span>
+<span class="sd">        print(pjit_fft(y))</span>
+<span class="sd">        # dynamic-slice or all-gather are present in the HLO for my_fft, because x is a 1D array</span>
+<span class="sd">        assert(re.search(_PATTERN, pjit_my_fft.lower(x).compile().runtime_executable().hlo_modules()[0].to_string()) is None)</span>
+<span class="sd">        # dynamic-slice or all-gather are present in the HLO for fft</span>
+<span class="sd">        assert(re.search(_PATTERN, pjit_fft.lower(x).compile().runtime_executable().hlo_modules()[0].to_string())    is not None)</span>
+
+<span class="sd">    .. code-block::</span>
+
+<span class="sd">      # my_fft</span>
+<span class="sd">      [    7.217285   +0.j     -3012.4937  +4287.635j   -405.83594 +3042.984j</span>
+<span class="sd">      ...  1422.4502  +7271.4297j  -405.84033 -3042.983j</span>
+<span class="sd">      -3012.4963  -4287.6343j]</span>
+
+<span class="sd">      # jax.numpy.fft.fft</span>
+<span class="sd">      [    7.217285   +0.j     -3012.4937  +4287.635j   -405.83594 +3042.984j</span>
+<span class="sd">      ...  1422.4502  +7271.4297j  -405.84033 -3042.983j</span>
+<span class="sd">      -3012.4963  -4287.6343j]</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fun</span><span class="p">,</span> <span class="n">static_argnums</span><span class="o">=</span><span class="p">()):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">fun</span> <span class="o">=</span> <span class="n">fun</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">partition</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">static_argnums</span> <span class="o">=</span> <span class="n">static_argnums</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">propagate_user_sharding</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">infer_sharding_from_operands</span> <span class="o">=</span> <span class="kc">None</span>
+
+  <span class="fm">__getattr__</span> <span class="o">=</span> <span class="n">custom_api_util</span><span class="o">.</span><span class="n">forward_attr</span>
+
+  <span class="k">def</span> <span class="nf">def_partition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">partition</span><span class="p">,</span> <span class="n">infer_sharding_from_operands</span><span class="p">,</span>
+                    <span class="n">propagate_user_sharding</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">decode_shardings</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">partition</span> <span class="o">=</span> <span class="n">partition</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">propagate_user_sharding</span> <span class="o">=</span> <span class="n">propagate_user_sharding</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">infer_sharding_from_operands</span> <span class="o">=</span> <span class="n">infer_sharding_from_operands</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">decode_shardings</span> <span class="o">=</span> <span class="n">decode_shardings</span>
+    <span class="k">return</span> <span class="n">partition</span>
+
+  <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">_resolve_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">static_argnums</span><span class="p">:</span>
+      <span class="n">static_argnums</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">static_argnums</span><span class="p">)</span>
+      <span class="n">args</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">x</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">static_argnums</span> <span class="k">else</span> <span class="n">x</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+      <span class="n">dyn_argnums</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">))</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">static_argnums</span><span class="p">]</span>
+      <span class="n">f_</span><span class="p">,</span> <span class="n">dyn_args</span> <span class="o">=</span> <span class="n">argnums_partial</span><span class="p">(</span>
+          <span class="n">lu</span><span class="o">.</span><span class="n">wrap_init</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">),</span>
+          <span class="n">dyn_argnums</span><span class="p">,</span>
+          <span class="n">args</span><span class="p">,</span>
+          <span class="n">require_static_args_hashable</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+      <span class="p">)</span>
+      <span class="n">static_args</span> <span class="o">=</span> <span class="p">[</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">static_argnums</span><span class="p">]</span>
+      <span class="n">_check_for_tracers</span><span class="p">(</span><span class="n">static_args</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">static_args</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="n">f_</span><span class="p">,</span> <span class="n">dyn_args</span> <span class="o">=</span> <span class="n">lu</span><span class="o">.</span><span class="n">wrap_init</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">),</span> <span class="n">args</span>
+    <span class="n">args_flat</span><span class="p">,</span> <span class="n">in_tree</span> <span class="o">=</span> <span class="n">tree_util</span><span class="o">.</span><span class="n">tree_flatten</span><span class="p">(</span><span class="n">dyn_args</span><span class="p">)</span>
+    <span class="n">flat_fun</span><span class="p">,</span> <span class="n">out_tree</span> <span class="o">=</span> <span class="n">flatten_fun_nokwargs</span><span class="p">(</span><span class="n">f_</span><span class="p">,</span> <span class="n">in_tree</span><span class="p">)</span>
+    <span class="n">in_avals</span> <span class="o">=</span> <span class="p">[</span><span class="n">core</span><span class="o">.</span><span class="n">raise_to_shaped</span><span class="p">(</span><span class="n">core</span><span class="o">.</span><span class="n">get_aval</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">args_flat</span><span class="p">]</span>
+    <span class="n">debug</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">debug_info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">,</span> <span class="n">in_tree</span><span class="p">,</span> <span class="n">out_tree</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span>
+                          <span class="s2">&quot;custom_partitioning&quot;</span><span class="p">)</span>
+    <span class="n">jaxpr</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">consts</span><span class="p">,</span> <span class="p">()</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">trace_to_jaxpr_dynamic</span><span class="p">(</span><span class="n">flat_fun</span><span class="p">,</span> <span class="n">in_avals</span><span class="p">,</span> <span class="n">debug</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">consts</span><span class="p">)</span>
+    <span class="n">closed_call</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">ClosedJaxpr</span><span class="p">(</span><span class="n">pe</span><span class="o">.</span><span class="n">convert_constvars_jaxpr</span><span class="p">(</span><span class="n">jaxpr</span><span class="p">),</span> <span class="p">())</span>
+    <span class="n">out_flat</span> <span class="o">=</span> <span class="n">custom_partitioning_p</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span>
+        <span class="o">*</span><span class="n">consts</span><span class="p">,</span>
+        <span class="o">*</span><span class="n">args_flat</span><span class="p">,</span>
+        <span class="n">call</span><span class="o">=</span><span class="n">closed_call</span><span class="p">,</span>
+        <span class="n">partition</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">partition</span><span class="p">,</span>
+        <span class="n">propagate_user_sharding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">propagate_user_sharding</span><span class="p">,</span>
+        <span class="n">infer_sharding_from_operands</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">infer_sharding_from_operands</span><span class="p">,</span>
+        <span class="n">decode_shardings</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">decode_shardings</span><span class="p">,</span>
+        <span class="n">in_tree</span><span class="o">=</span><span class="n">in_tree</span><span class="p">,</span>
+        <span class="n">out_tree</span><span class="o">=</span><span class="n">out_tree</span><span class="p">(),</span>
+        <span class="n">static_args</span><span class="o">=</span><span class="n">static_args</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">tree_util</span><span class="o">.</span><span class="n">tree_unflatten</span><span class="p">(</span><span class="n">out_tree</span><span class="p">(),</span> <span class="n">out_flat</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">_custom_partitioning_lowering_rule</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">mlir</span><span class="o">.</span><span class="n">LoweringRuleContext</span><span class="p">,</span> <span class="o">*</span><span class="n">values</span><span class="p">,</span>
+                                       <span class="n">call</span><span class="p">,</span> <span class="n">in_tree</span><span class="p">,</span> <span class="n">out_tree</span><span class="p">,</span>
+                                       <span class="n">propagate_user_sharding</span><span class="p">,</span> <span class="n">partition</span><span class="p">,</span>
+                                       <span class="n">infer_sharding_from_operands</span><span class="p">,</span>
+                                       <span class="n">decode_shardings</span><span class="p">,</span>
+                                       <span class="n">static_args</span><span class="p">):</span>
+  <span class="n">mesh</span> <span class="o">=</span> <span class="n">mesh_lib</span><span class="o">.</span><span class="n">thread_resources</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">physical_mesh</span>
+  <span class="n">axis_context</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">module_context</span><span class="o">.</span><span class="n">axis_context</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">axis_context</span><span class="p">,</span> <span class="n">sharding_impls</span><span class="o">.</span><span class="n">SPMDAxisContext</span><span class="p">)</span> <span class="ow">and</span>
+      <span class="nb">set</span><span class="p">(</span><span class="n">axis_context</span><span class="o">.</span><span class="n">manual_axes</span><span class="p">)</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span><span class="n">axis_context</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">axis_names</span><span class="p">)):</span>
+    <span class="k">return</span> <span class="n">mlir</span><span class="o">.</span><span class="n">lower_fun</span><span class="p">(</span><span class="n">core</span><span class="o">.</span><span class="n">jaxpr_as_fun</span><span class="p">(</span><span class="n">call</span><span class="p">),</span> <span class="n">multiple_results</span><span class="o">=</span><span class="kc">True</span><span class="p">)(</span><span class="n">ctx</span><span class="p">,</span> <span class="o">*</span><span class="n">values</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">axis_context</span><span class="p">,</span> <span class="n">sharding_impls</span><span class="o">.</span><span class="n">ShardingContext</span><span class="p">):</span>
+    <span class="n">devices</span> <span class="o">=</span> <span class="n">axis_context</span><span class="o">.</span><span class="n">device_assignment</span>
+    <span class="k">if</span> <span class="n">devices</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span>
+          <span class="s1">&#39;Please file a bug at https://github.com/google/jax/issues&#39;</span><span class="p">)</span>
+  <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">axis_context</span><span class="p">,</span> <span class="n">sharding_impls</span><span class="o">.</span><span class="n">SPMDAxisContext</span><span class="p">):</span>
+    <span class="n">devices</span> <span class="o">=</span> <span class="n">axis_context</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">_flat_devices_tuple</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">devices</span> <span class="o">=</span> <span class="kc">None</span>
+
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">devices</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">devices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">mlir</span><span class="o">.</span><span class="n">lower_fun</span><span class="p">(</span>
+        <span class="n">core</span><span class="o">.</span><span class="n">jaxpr_as_fun</span><span class="p">(</span><span class="n">call</span><span class="p">),</span> <span class="n">multiple_results</span><span class="o">=</span><span class="kc">True</span><span class="p">)(</span><span class="n">ctx</span><span class="p">,</span> <span class="o">*</span><span class="n">values</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">to_mesh_pspec_sharding</span><span class="p">(</span><span class="n">hlo_sharding</span><span class="p">:</span> <span class="n">xc</span><span class="o">.</span><span class="n">HloSharding</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ndim</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">hlo_sharding</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">hlo_sharding</span>
+    <span class="k">if</span> <span class="n">mesh</span><span class="o">.</span><span class="n">empty</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">decode_shardings</span><span class="p">:</span>
+      <span class="k">assert</span> <span class="n">devices</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+      <span class="k">return</span> <span class="n">_op_sharding_to_pos_sharding</span><span class="p">(</span><span class="n">hlo_sharding</span><span class="p">,</span> <span class="n">devices</span><span class="p">)</span>
+    <span class="n">pspec</span> <span class="o">=</span> <span class="n">sharding_impls</span><span class="o">.</span><span class="n">parse_flatten_op_sharding</span><span class="p">(</span>
+        <span class="n">hlo_sharding</span><span class="p">,</span> <span class="n">mesh</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_partition_spec</span><span class="p">()</span>
+    <span class="n">pspec</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">PartitionSpec</span><span class="p">(</span><span class="o">*</span><span class="n">pspec</span><span class="p">,</span> <span class="o">*</span><span class="p">((</span><span class="kc">None</span><span class="p">,)</span> <span class="o">*</span> <span class="p">(</span><span class="n">ndim</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">pspec</span><span class="p">))))</span>
+    <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">NamedSharding</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">pspec</span><span class="p">)</span>
+
+  <span class="n">sharding_callback_info</span> <span class="o">=</span> <span class="n">_ShardingCallbackInfo</span><span class="p">(</span><span class="n">propagate_user_sharding</span><span class="p">,</span>
+      <span class="n">partition</span><span class="p">,</span> <span class="n">to_mesh_pspec_sharding</span><span class="p">,</span> <span class="n">in_tree</span><span class="p">,</span> <span class="n">out_tree</span><span class="p">,</span>
+      <span class="n">infer_sharding_from_operands</span><span class="p">,</span> <span class="n">ctx</span><span class="o">.</span><span class="n">module_context</span><span class="p">,</span> <span class="n">mesh</span><span class="p">,</span> <span class="n">static_args</span><span class="p">)</span>
+  <span class="n">key</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">sharding_callback_info</span><span class="p">))</span>
+  <span class="c1"># TODO(parkers): Remove bytes registration when xla_extension_version &gt; 211</span>
+  <span class="n">_sharding_callbacks</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">sharding_callback_info</span>
+  <span class="n">_sharding_callbacks</span><span class="p">[</span><span class="nb">bytes</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="s1">&#39;utf8&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="n">sharding_callback_info</span>
+  <span class="c1"># We need to make sure `sharding_callback_info` is still alive when the SPMD</span>
+  <span class="c1"># partitioner runs so we keep it alive by attaching it to the executable.</span>
+  <span class="n">ctx</span><span class="o">.</span><span class="n">module_context</span><span class="o">.</span><span class="n">add_keepalive</span><span class="p">(</span><span class="n">sharding_callback_info</span><span class="p">)</span>
+
+  <span class="n">result_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">mlir</span><span class="o">.</span><span class="n">aval_to_ir_type</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">call</span><span class="o">.</span><span class="n">out_avals</span><span class="p">]</span>
+  <span class="n">out</span> <span class="o">=</span> <span class="n">hlo</span><span class="o">.</span><span class="n">CustomCallOp</span><span class="p">(</span>
+      <span class="n">result_types</span><span class="p">,</span>
+      <span class="nb">list</span><span class="p">(</span><span class="n">values</span><span class="p">),</span>
+      <span class="n">call_target_name</span><span class="o">=</span><span class="n">ir</span><span class="o">.</span><span class="n">StringAttr</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">_CUSTOM_PARTITIONING_CALL_NAME</span><span class="p">),</span>
+      <span class="n">has_side_effect</span><span class="o">=</span><span class="n">ir</span><span class="o">.</span><span class="n">BoolAttr</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="kc">False</span><span class="p">),</span>
+      <span class="n">api_version</span><span class="o">=</span><span class="n">mlir</span><span class="o">.</span><span class="n">i32_attr</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+      <span class="n">called_computations</span><span class="o">=</span><span class="n">ir</span><span class="o">.</span><span class="n">ArrayAttr</span><span class="o">.</span><span class="n">get</span><span class="p">([]),</span>
+      <span class="n">backend_config</span><span class="o">=</span><span class="n">ir</span><span class="o">.</span><span class="n">StringAttr</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">),</span>
+      <span class="n">operand_layouts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+      <span class="n">result_layouts</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">out</span><span class="o">.</span><span class="n">results</span>
+
+<span class="n">mlir</span><span class="o">.</span><span class="n">register_lowering</span><span class="p">(</span><span class="n">custom_partitioning_p</span><span class="p">,</span>
+                       <span class="n">_custom_partitioning_lowering_rule</span><span class="p">)</span>
+
+<span class="n">xc</span><span class="o">.</span><span class="n">register_custom_call_partitioner</span><span class="p">(</span>  <span class="c1"># pytype: disable=module-attr</span>
+    <span class="n">_CUSTOM_PARTITIONING_CALL_NAME</span><span class="p">,</span>
+    <span class="n">_custom_partitioning_propagate_user_sharding</span><span class="p">,</span>
+    <span class="n">_custom_partitioning_partition</span><span class="p">,</span>
+    <span class="n">_custom_partitioning_infer_sharding_from_operands</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">xla_extension_version</span> <span class="o">&gt;=</span> <span class="mi">252</span><span class="p">:</span>
+  <span class="n">xb</span><span class="o">.</span><span class="n">register_plugin_callbacks</span><span class="p">(</span>
+      <span class="n">partial</span><span class="p">(</span>
+          <span class="n">xc</span><span class="o">.</span><span class="n">register_custom_call_partitioner</span><span class="p">,</span>
+          <span class="n">name</span><span class="o">=</span><span class="n">_CUSTOM_PARTITIONING_CALL_NAME</span><span class="p">,</span>
+          <span class="n">prop_user_sharding</span><span class="o">=</span><span class="n">_custom_partitioning_propagate_user_sharding</span><span class="p">,</span>
+          <span class="n">partition</span><span class="o">=</span><span class="n">_custom_partitioning_partition</span><span class="p">,</span>
+          <span class="n">infer_sharding_from_operands</span><span class="o">=</span><span class="n">_custom_partitioning_infer_sharding_from_operands</span><span class="p">,</span>
+          <span class="n">can_side_effecting_have_replicated_sharding</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+      <span class="p">)</span>
+  <span class="p">)</span>
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The JAX authors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, The JAX Authors. NumPy and SciPy documentation are copyright the respective authors..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

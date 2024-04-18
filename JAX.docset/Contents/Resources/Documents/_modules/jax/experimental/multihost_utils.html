@@ -1,0 +1,1050 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>jax.experimental.multihost_utils &#8212; JAX  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/style.css?v=02ed413a" />
+    <link rel="stylesheet" href="../../../_static/style.css" type="text/css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../../../_static/design-tabs.js?v=36754332"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/jax/experimental/multihost_utils';</script>
+    <link rel="icon" href="../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/jax_logo_250px.png" class="logo__image only-light" alt="JAX  documentation - Home"/>
+    <script>document.write(`<img src="../../../_static/jax_logo_250px.png" class="logo__image only-dark" alt="JAX  documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installing JAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/quickstart.html">JAX Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/thinking_in_jax.html">How to Think in JAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/Common_Gotchas_in_JAX.html">🔪 JAX - The Sharp Bits 🔪</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq.html">JAX Frequently Asked Questions (FAQ)</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../jax-101/index.html">Tutorial: JAX 101</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/01-jax-basics.html">JAX As Accelerated NumPy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/02-jitting.html">Just In Time Compilation with JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/03-vectorization.html">Automatic Vectorization in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/04-advanced-autodiff.html">Advanced Automatic Differentiation in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/05-random-numbers.html">Pseudo Random Numbers in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/05.1-pytrees.html">Working with Pytrees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/06-parallelism.html">Parallel Evaluation in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/07-state.html">Stateful Computations in JAX</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Further Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../user_guides.html">User Guides</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../profiling.html">Profiling JAX programs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../device_memory_profiling.html">Device Memory Profiling</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../debugging/index.html">Runtime value debugging in JAX</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../debugging/print_breakpoint.html"><code class="docutils literal notranslate"><span class="pre">jax.debug.print</span></code> and <code class="docutils literal notranslate"><span class="pre">jax.debug.breakpoint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../debugging/checkify_guide.html">The <code class="docutils literal notranslate"><span class="pre">checkify</span></code> transformation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../debugging/flags.html">JAX debugging flags</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../gpu_performance_tips.html">GPU performance tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../persistent_compilation_cache.html">Persistent Compilation Cache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jaxpr.html">Understanding Jaxprs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/external_callbacks.html">External Callbacks in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../type_promotion.html">Type promotion semantics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytrees.html">Pytrees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../aot.html">Ahead-of-time lowering and compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../errors.html">JAX Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../transfer_guard.html">Transfer guard</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../pallas/index.html">Pallas: a JAX kernel language</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../pallas/design.html">Pallas Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pallas/quickstart.html">Pallas Quickstart</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../pallas/tpu/index.html">Pallas TPU</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../pallas/tpu/details.html">Writing TPU kernels with Pallas</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../pallas/tpu/pipelining.html">Pipelining and <code class="docutils literal notranslate"><span class="pre">BlockSpec</span></code>s</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../advanced_guide.html">Advanced Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/neural_network_with_tfds_data.html">Training a Simple Neural Network, with tensorflow/datasets Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Neural_Network_and_Data_Loading.html">Training a Simple Neural Network, with PyTorch Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/vmapped_log_probs.html">Autobatching for Bayesian Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../multi_process.html">Using JAX in multi-host and multi-process environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Distributed_arrays_and_automatic_parallelization.html">Distributed arrays and automatic parallelization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/shard_map.html">SPMD multi-device parallelism with <code class="docutils literal notranslate"><span class="pre">shard_map</span></code></a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/xmap_tutorial.html">Named axes and easy-to-revise parallelism with <code class="docutils literal notranslate"><span class="pre">xmap</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/autodiff_cookbook.html">The Autodiff Cookbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Custom_derivative_rules_for_Python_code.html">Custom derivative rules for JAX-transformable Python functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/autodiff_remat.html">Control autodiff’s saved values with <code class="docutils literal notranslate"><span class="pre">jax.checkpoint</span></code> (aka <code class="docutils literal notranslate"><span class="pre">jax.remat</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/How_JAX_primitives_work.html">How JAX primitives work</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Writing_custom_interpreters_in_Jax.html">Writing custom Jaxpr interpreters in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Custom_Operation_for_GPUs.html">Custom operations for GPUs with C++ and CUDA</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/convolutions.html">Generalized Convolutions in JAX</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../contributor_guide.html">Developer Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html">Contributing to JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../developer.html">Building from source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax_internal_api.html">Internal APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autodidax.html">Autodidax: JAX core from scratch</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jep/index.html">JAX Enhancement Proposals (JEPs)</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/263-prng.html">263: JAX PRNG Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/2026-custom-derivatives.html">2026: Custom JVP/VJP rules for JAX-transformable functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/4008-custom-vjp-update.html">4008: Custom VJP and `nondiff_argnums` update</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/4410-omnistaging.html">4410: Omnistaging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/9263-typed-keys.html">9263: Typed keys &amp; pluggable RNGs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/9407-type-promotion.html">9407: Design of Type Promotion Semantics for JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/9419-jax-versioning.html">9419: Jax and Jaxlib versioning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/10657-sequencing-effects.html">10657: Sequencing side-effects in JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/11830-new-remat-checkpoint.html">11830: `jax.remat` / `jax.checkpoint` new implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/12049-type-annotations.html">12049: Type Annotation Roadmap for JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/14273-shard-map.html">14273: `shard_map` (`shmap`) for simple per-device code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/15856-jex.html">15856: `jax.extend`, an extensions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/17111-shmap-transpose.html">17111: Efficient transposition of `shard_map` (and other maps)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/18137-numpy-scipy-scope.html">18137: Scope of JAX NumPy &amp; SciPy Wrappers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../investigating_a_regression.html">Investigating a regression</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../building_on_jax.html">Building on JAX</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../notes.html">Notes</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_compatibility.html">API compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../deprecation.html">Python and NumPy version support policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax_array_migration.html">jax.Array migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../async_dispatch.html">Asynchronous dispatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../concurrency.html">Concurrency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../gpu_memory_allocation.html">GPU memory allocation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../rank_promotion_warning.html">Rank promotion warning</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../jax.html">Public API: jax package</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.numpy.html"><code class="docutils literal notranslate"><span class="pre">jax.numpy</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fft.html">jax.numpy.fft.fft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fft2.html">jax.numpy.fft.fft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fftfreq.html">jax.numpy.fft.fftfreq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fftn.html">jax.numpy.fft.fftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fftshift.html">jax.numpy.fft.fftshift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.hfft.html">jax.numpy.fft.hfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifft.html">jax.numpy.fft.ifft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifft2.html">jax.numpy.fft.ifft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifftn.html">jax.numpy.fft.ifftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifftshift.html">jax.numpy.fft.ifftshift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ihfft.html">jax.numpy.fft.ihfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.irfft.html">jax.numpy.fft.irfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.irfft2.html">jax.numpy.fft.irfft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.irfftn.html">jax.numpy.fft.irfftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfft.html">jax.numpy.fft.rfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfft2.html">jax.numpy.fft.rfft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfftfreq.html">jax.numpy.fft.rfftfreq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfftn.html">jax.numpy.fft.rfftn</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.scipy.html"><code class="docutils literal notranslate"><span class="pre">jax.scipy</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.logpmf.html">jax.scipy.stats.bernoulli.logpmf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.pmf.html">jax.scipy.stats.bernoulli.pmf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.cdf.html">jax.scipy.stats.bernoulli.cdf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.ppf.html">jax.scipy.stats.bernoulli.ppf</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.lax.html"><code class="docutils literal notranslate"><span class="pre">jax.lax</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.random.html"><code class="docutils literal notranslate"><span class="pre">jax.random</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.sharding.html"><code class="docutils literal notranslate"><span class="pre">jax.sharding</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.debug.html"><code class="docutils literal notranslate"><span class="pre">jax.debug</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.dlpack.html"><code class="docutils literal notranslate"><span class="pre">jax.dlpack</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.distributed.html"><code class="docutils literal notranslate"><span class="pre">jax.distributed</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.dtypes.html"><code class="docutils literal notranslate"><span class="pre">jax.dtypes</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.flatten_util.html"><code class="docutils literal notranslate"><span class="pre">jax.flatten_util</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.image.html"><code class="docutils literal notranslate"><span class="pre">jax.image</span></code> module</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.nn.html"><code class="docutils literal notranslate"><span class="pre">jax.nn</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-13"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.nn.initializers.html"><code class="docutils literal notranslate"><span class="pre">jax.nn.initializers</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.ops.html"><code class="docutils literal notranslate"><span class="pre">jax.ops</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.profiler.html"><code class="docutils literal notranslate"><span class="pre">jax.profiler</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.stages.html"><code class="docutils literal notranslate"><span class="pre">jax.stages</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.tree.html"><code class="docutils literal notranslate"><span class="pre">jax.tree</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.tree_util.html"><code class="docutils literal notranslate"><span class="pre">jax.tree_util</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.typing.html"><code class="docutils literal notranslate"><span class="pre">jax.typing</span></code> module</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.extend.html"><code class="docutils literal notranslate"><span class="pre">jax.extend</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.extend.linear_util.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.linear_util</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.extend.mlir.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.mlir</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.extend.random.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.random</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.example_libraries.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-15"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.example_libraries.optimizers.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries.optimizers</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.example_libraries.stax.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries.stax</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.experimental.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.array_api.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.array_api</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.checkify.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.checkify</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.host_callback.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.host_callback</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.maps.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.maps</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.pjit.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.pjit</span></code> module</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../jax.experimental.sparse.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.sparse</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.BCOO.html">jax.experimental.sparse.BCOO</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_broadcast_in_dim.html">jax.experimental.sparse.bcoo_broadcast_in_dim</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_concatenate.html">jax.experimental.sparse.bcoo_concatenate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_dot_general.html">jax.experimental.sparse.bcoo_dot_general</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_dot_general_sampled.html">jax.experimental.sparse.bcoo_dot_general_sampled</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_dynamic_slice.html">jax.experimental.sparse.bcoo_dynamic_slice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_extract.html">jax.experimental.sparse.bcoo_extract</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_fromdense.html">jax.experimental.sparse.bcoo_fromdense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_gather.html">jax.experimental.sparse.bcoo_gather</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_multiply_dense.html">jax.experimental.sparse.bcoo_multiply_dense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_multiply_sparse.html">jax.experimental.sparse.bcoo_multiply_sparse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_update_layout.html">jax.experimental.sparse.bcoo_update_layout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_reduce_sum.html">jax.experimental.sparse.bcoo_reduce_sum</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_reshape.html">jax.experimental.sparse.bcoo_reshape</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_slice.html">jax.experimental.sparse.bcoo_slice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_sort_indices.html">jax.experimental.sparse.bcoo_sort_indices</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_squeeze.html">jax.experimental.sparse.bcoo_squeeze</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_sum_duplicates.html">jax.experimental.sparse.bcoo_sum_duplicates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_todense.html">jax.experimental.sparse.bcoo_todense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_transpose.html">jax.experimental.sparse.bcoo_transpose</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.jet.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.jet</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.custom_partitioning.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.custom_partitioning</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.multihost_utils.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.multihost_utils</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.compilation_cache.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.compilation_cache</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.key_reuse.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.key_reuse</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.mesh_utils.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.mesh_utils</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.lib.html"><code class="docutils literal notranslate"><span class="pre">jax.lib</span></code> module</a></li>
+</ul>
+</li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../glossary.html">JAX Glossary of Terms</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/google/jax" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for jax.experimental.multihost_utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2021 The JAX Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     https://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="sd">&quot;&quot;&quot;Utilities for synchronizing and communication across multiple hosts.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span><span class="p">,</span> <span class="n">lru_cache</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">import</span> <span class="nn">zlib</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+<span class="kn">from</span> <span class="nn">jax.tree_util</span> <span class="kn">import</span> <span class="n">tree_flatten</span><span class="p">,</span> <span class="n">tree_map</span><span class="p">,</span> <span class="n">tree_unflatten</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">core</span>
+<span class="kn">from</span> <span class="nn">jax._src.interpreters</span> <span class="kn">import</span> <span class="n">ad</span>
+<span class="kn">from</span> <span class="nn">jax._src.interpreters</span> <span class="kn">import</span> <span class="n">batching</span>
+<span class="kn">from</span> <span class="nn">jax._src.interpreters</span> <span class="kn">import</span> <span class="n">mlir</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">array</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">sharding_impls</span>
+<span class="kn">from</span> <span class="nn">jax._src.interpreters</span> <span class="kn">import</span> <span class="n">pxla</span>
+<span class="kn">from</span> <span class="nn">jax.interpreters</span> <span class="kn">import</span> <span class="n">xla</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">pjit</span> <span class="k">as</span> <span class="n">pjit_lib</span>
+<span class="kn">from</span> <span class="nn">jax.experimental.pjit</span> <span class="kn">import</span> <span class="n">pjit</span>
+<span class="kn">from</span> <span class="nn">jax.sharding</span> <span class="kn">import</span> <span class="n">PartitionSpec</span> <span class="k">as</span> <span class="n">P</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">distributed</span>
+<span class="kn">from</span> <span class="nn">jax._src.util</span> <span class="kn">import</span> <span class="n">safe_zip</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<span class="k">def</span> <span class="nf">_psum</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+  <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">x</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="broadcast_one_to_all">
+<a class="viewcode-back" href="../../../_autosummary/jax.experimental.multihost_utils.broadcast_one_to_all.html#jax.experimental.multihost_utils.broadcast_one_to_all">[docs]</a>
+<span class="k">def</span> <span class="nf">broadcast_one_to_all</span><span class="p">(</span><span class="n">in_tree</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">is_source</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Broadcast data from a source host (host 0 by default) to all other hosts.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    in_tree: pytree of arrays - each array *must* have the same shape across the</span>
+<span class="sd">      hosts.</span>
+<span class="sd">    is_source: optional bool denoting whether the caller is the source. Only</span>
+<span class="sd">      &#39;source host&#39; will contribute the data for the broadcast. If None, then</span>
+<span class="sd">      host 0 is used.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    A pytree matching in_tree where the leaves now all contain the data from the</span>
+<span class="sd">    first host.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">if</span> <span class="n">is_source</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">is_source</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">process_index</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span>
+
+  <span class="n">devices</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+      <span class="n">jax</span><span class="o">.</span><span class="n">devices</span><span class="p">())</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">process_count</span><span class="p">(),</span> <span class="n">jax</span><span class="o">.</span><span class="n">local_device_count</span><span class="p">())</span>
+  <span class="n">global_mesh</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">Mesh</span><span class="p">(</span><span class="n">devices</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;processes&#39;</span><span class="p">,</span> <span class="s1">&#39;local_devices&#39;</span><span class="p">))</span>
+  <span class="n">pspec</span> <span class="o">=</span> <span class="n">P</span><span class="p">(</span><span class="s1">&#39;processes&#39;</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">pre_jit</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">is_source</span><span class="p">:</span>
+      <span class="n">inp</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">inp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">inp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">host_local_array_to_global_array</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">global_mesh</span><span class="p">,</span> <span class="n">pspec</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">post_jit</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">addressable_data</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+  <span class="n">in_tree</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">pre_jit</span><span class="p">,</span> <span class="n">in_tree</span><span class="p">)</span>
+  <span class="n">out_tree</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">_psum</span><span class="p">,</span> <span class="n">out_shardings</span><span class="o">=</span><span class="n">jax</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">NamedSharding</span><span class="p">(</span>
+      <span class="n">global_mesh</span><span class="p">,</span> <span class="n">P</span><span class="p">()))(</span><span class="n">in_tree</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">post_jit</span><span class="p">,</span> <span class="n">out_tree</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="sync_global_devices">
+<a class="viewcode-back" href="../../../_autosummary/jax.experimental.multihost_utils.sync_global_devices.html#jax.experimental.multihost_utils.sync_global_devices">[docs]</a>
+<span class="k">def</span> <span class="nf">sync_global_devices</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Creates a barrier across all hosts/devices.&quot;&quot;&quot;</span>
+  <span class="n">h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">(</span><span class="n">zlib</span><span class="o">.</span><span class="n">crc32</span><span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">encode</span><span class="p">()))</span>
+  <span class="n">assert_equal</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;sync_global_devices name mismatch (&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39;)&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># Identity function is at the top level so that `process_allgather` doesn&#39;t</span>
+<span class="c1"># recompile on every invocation.</span>
+<span class="k">def</span> <span class="nf">_identity_fn</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">x</span>
+
+
+<span class="k">def</span> <span class="nf">_handle_array_process_allgather</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">tiled</span><span class="p">):</span>
+  <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">array</span><span class="o">.</span><span class="n">ArrayImpl</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">inp</span><span class="o">.</span><span class="n">is_fully_addressable</span><span class="p">:</span>
+    <span class="n">reps</span> <span class="o">=</span> <span class="n">sharding_impls</span><span class="o">.</span><span class="n">GSPMDSharding</span><span class="o">.</span><span class="n">get_replicated</span><span class="p">(</span>
+        <span class="n">inp</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">_device_assignment</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">pjit</span><span class="p">(</span><span class="n">_identity_fn</span><span class="p">,</span> <span class="n">out_shardings</span><span class="o">=</span><span class="n">reps</span><span class="p">)(</span><span class="n">inp</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="c1"># All inputs here will be fully addressable.</span>
+    <span class="k">if</span> <span class="n">jax</span><span class="o">.</span><span class="n">process_count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span>
+
+    <span class="n">devices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">devices</span><span class="p">())</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">process_count</span><span class="p">(),</span>
+                                              <span class="n">jax</span><span class="o">.</span><span class="n">local_device_count</span><span class="p">())</span>
+    <span class="n">global_mesh</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">Mesh</span><span class="p">(</span><span class="n">devices</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;processes&#39;</span><span class="p">,</span> <span class="s1">&#39;local_devices&#39;</span><span class="p">))</span>
+    <span class="n">pspec</span> <span class="o">=</span> <span class="n">P</span><span class="p">(</span><span class="s1">&#39;processes&#39;</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">NamedSharding</span><span class="p">(</span><span class="n">global_mesh</span><span class="p">,</span> <span class="n">pspec</span><span class="p">)</span>
+
+    <span class="n">host_np_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">host_np_arr</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">tiled</span><span class="p">:</span>
+      <span class="n">host_np_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">host_np_arr</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">aval</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">ShapedArray</span><span class="p">(</span><span class="n">host_np_arr</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">host_np_arr</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="n">global_aval</span> <span class="o">=</span> <span class="n">pxla</span><span class="o">.</span><span class="n">mesh_local_to_global</span><span class="p">(</span>
+        <span class="n">global_mesh</span><span class="p">,</span> <span class="n">pxla</span><span class="o">.</span><span class="n">get_array_mapping</span><span class="p">(</span><span class="n">pspec</span><span class="p">),</span> <span class="n">aval</span><span class="p">)</span>
+
+    <span class="n">bufs</span> <span class="o">=</span> <span class="p">[</span><span class="n">jax</span><span class="o">.</span><span class="n">device_put</span><span class="p">(</span><span class="n">host_np_arr</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">jax</span><span class="o">.</span><span class="n">local_devices</span><span class="p">()]</span>
+    <span class="n">global_arr</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">make_array_from_single_device_arrays</span><span class="p">(</span>
+        <span class="n">global_aval</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">bufs</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">global_mesh</span><span class="p">:</span>
+      <span class="n">out</span> <span class="o">=</span> <span class="n">pjit</span><span class="p">(</span><span class="n">_identity_fn</span><span class="p">,</span> <span class="n">out_shardings</span><span class="o">=</span><span class="kc">None</span><span class="p">)(</span><span class="n">global_arr</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">addressable_data</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="process_allgather">
+<a class="viewcode-back" href="../../../_autosummary/jax.experimental.multihost_utils.process_allgather.html#jax.experimental.multihost_utils.process_allgather">[docs]</a>
+<span class="k">def</span> <span class="nf">process_allgather</span><span class="p">(</span><span class="n">in_tree</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">tiled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Gather data from across processes.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    in_tree: pytree of arrays - each array _must_ have the same shape across the</span>
+<span class="sd">      hosts.</span>
+<span class="sd">    tiled: Whether to stack or concat the output. Defaults to False i.e. stack</span>
+<span class="sd">      into a new positional axis at index 0.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    Pytrees of numpy arrays.</span>
+<span class="sd">      * If the input is a non-fully addressable jax.Array, then the data is</span>
+<span class="sd">        fully replicated.</span>
+<span class="sd">      * If the input is numpy array or fully addressable jax.Array, then the</span>
+<span class="sd">        output shape is dependent on the `tiled` argument.</span>
+<span class="sd">        If its False, then the output will be stacked else concatenated.</span>
+<span class="sd">      * If the input is a scalar, then the output will be stacked.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="k">def</span> <span class="nf">_pjit</span><span class="p">(</span><span class="n">inp</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_handle_array_process_allgather</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">tiled</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_pjit</span><span class="p">,</span> <span class="n">in_tree</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="assert_equal">
+<a class="viewcode-back" href="../../../_autosummary/jax.experimental.multihost_utils.assert_equal.html#jax.experimental.multihost_utils.assert_equal">[docs]</a>
+<span class="k">def</span> <span class="nf">assert_equal</span><span class="p">(</span><span class="n">in_tree</span><span class="p">,</span> <span class="n">fail_message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Verifies that all the hosts have the same tree of values.&quot;&quot;&quot;</span>
+  <span class="n">expected</span> <span class="o">=</span> <span class="n">broadcast_one_to_all</span><span class="p">(</span><span class="n">in_tree</span><span class="p">)</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">jax</span><span class="o">.</span><span class="n">tree_util</span><span class="o">.</span><span class="n">tree_all</span><span class="p">(</span>
+      <span class="n">jax</span><span class="o">.</span><span class="n">tree_util</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span><span class="k">lambda</span> <span class="o">*</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="o">*</span><span class="n">x</span><span class="p">)),</span> <span class="n">in_tree</span><span class="p">,</span> <span class="n">expected</span><span class="p">)):</span>
+    <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">fail_message</span><span class="si">}</span><span class="s1"> Expected: </span><span class="si">{</span><span class="n">expected</span><span class="si">}</span><span class="s1">; got: </span><span class="si">{</span><span class="n">in_tree</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">reached_preemption_sync_point</span><span class="p">(</span><span class="n">step_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Determine whether all hosts have reached a preemption sync step.</span>
+
+<span class="sd">  When any host receives a preemption notice, the notice is propagated to all</span>
+<span class="sd">  hosts and triggers a synchronization protocol in the background. The</span>
+<span class="sd">  synchronization protocol calculates the maximum step ids from all hosts, and</span>
+<span class="sd">  uses the next step id (i.e., max + 1) as the safe step to save a checkpoint.</span>
+<span class="sd">  All hosts should continue training more steps until this method returns True,</span>
+<span class="sd">  indicating that the `step_id` is equal to the safe step and the hosts should</span>
+<span class="sd">  start saving a checkpoint.</span>
+
+<span class="sd">  To use this API, all hosts must start training from the same step and call it</span>
+<span class="sd">  at every training step. Example usage:</span>
+
+<span class="sd">  ```</span>
+<span class="sd">  def should_save(step_id: int) -&gt; bool:</span>
+
+<span class="sd">    # Should save an on-demand checkpoint for preemption</span>
+<span class="sd">    if multihost_utils.reached_preemption_sync_point(step_id):</span>
+<span class="sd">      return True</span>
+
+<span class="sd">    # Should save a regular checkpoint</span>
+<span class="sd">    return step_id - last_saved_checkpoint_step &gt;= save_interval_steps</span>
+<span class="sd">  ```</span>
+
+<span class="sd">  Preemption notice is provided by the cluster scheduler to notify the</span>
+<span class="sd">  application in advance before it gets evicted. By default, we use SIGTERM as</span>
+<span class="sd">  the signal for preemption notice.</span>
+
+<span class="sd">  TODO(b/230630494): Add instructions for customized preemption notice.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    A boolean indicating whether all hosts have reached a synchronization step</span>
+<span class="sd">    after some hosts are preempted.</span>
+
+<span class="sd">  Raises:</span>
+<span class="sd">    RuntimeError: if preemption sync manager has not been inititialized.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">if</span> <span class="n">distributed</span><span class="o">.</span><span class="n">global_state</span><span class="o">.</span><span class="n">client</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">return</span> <span class="kc">False</span>
+  <span class="n">sync_manager</span> <span class="o">=</span> <span class="n">distributed</span><span class="o">.</span><span class="n">global_state</span><span class="o">.</span><span class="n">preemption_sync_manager</span>
+  <span class="k">if</span> <span class="n">sync_manager</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Preemption sync manager has not been initialized.&quot;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">sync_manager</span><span class="o">.</span><span class="n">reached_sync_point</span><span class="p">(</span><span class="n">step_id</span><span class="p">)</span>
+
+
+<span class="nd">@lru_cache</span>
+<span class="k">def</span> <span class="nf">_flatten_pspecs</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">in_tree</span><span class="p">,</span> <span class="n">pspecs_thunk</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">pjit_lib</span><span class="o">.</span><span class="n">flatten_axis_resources</span><span class="p">(</span>
+      <span class="n">name</span><span class="p">,</span> <span class="n">in_tree</span><span class="p">,</span> <span class="n">pspecs_thunk</span><span class="p">(),</span> <span class="n">tupled_args</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nd">@lru_cache</span>
+<span class="k">def</span> <span class="nf">_local_to_global_aval</span><span class="p">(</span><span class="n">local_aval</span><span class="p">,</span> <span class="n">mesh</span><span class="p">,</span> <span class="n">pspec</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">pxla</span><span class="o">.</span><span class="n">mesh_local_to_global</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">pxla</span><span class="o">.</span><span class="n">get_array_mapping</span><span class="p">(</span><span class="n">pspec</span><span class="p">),</span>
+                                   <span class="n">local_aval</span><span class="p">)</span>
+
+<span class="nd">@lru_cache</span>
+<span class="k">def</span> <span class="nf">_global_to_local_aval</span><span class="p">(</span><span class="n">global_aval</span><span class="p">,</span> <span class="n">mesh</span><span class="p">,</span> <span class="n">pspec</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">pxla</span><span class="o">.</span><span class="n">mesh_global_to_local</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">pxla</span><span class="o">.</span><span class="n">get_array_mapping</span><span class="p">(</span><span class="n">pspec</span><span class="p">),</span>
+                                   <span class="n">global_aval</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">host_local_array_to_global_array_impl</span><span class="p">(</span>
+    <span class="n">arr</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">global_mesh</span><span class="p">:</span> <span class="n">jax</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">Mesh</span><span class="p">,</span> <span class="n">pspec</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">pspec</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+        <span class="s1">&#39;`None` is not a valid input to the pspecs argument. Please use &#39;</span>
+        <span class="s1">&#39;jax.sharding.PartitionSpec() if you wanted to replicate your input.&#39;</span><span class="p">)</span>
+  <span class="c1"># If the Array is not fully addressable i.e. not host local, return it.</span>
+  <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">array</span><span class="o">.</span><span class="n">ArrayImpl</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">arr</span><span class="o">.</span><span class="n">is_fully_addressable</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">arr</span>
+  <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">array</span><span class="o">.</span><span class="n">ArrayImpl</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span>
+      <span class="n">arr</span><span class="o">.</span><span class="n">sharding</span><span class="p">,</span> <span class="n">jax</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">PmapSharding</span><span class="p">):</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+
+  <span class="n">local_sharding</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">NamedSharding</span><span class="p">(</span><span class="n">global_mesh</span><span class="o">.</span><span class="n">local_mesh</span><span class="p">,</span> <span class="n">pspec</span><span class="p">)</span>
+
+  <span class="c1"># If the input is a concrete jax.Array and the input array sharding</span>
+  <span class="c1"># matches the `local_sharding`, then there&#39;s no need to reshard and create</span>
+  <span class="c1"># copies.</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">array</span><span class="o">.</span><span class="n">ArrayImpl</span><span class="p">)</span> <span class="ow">and</span>
+      <span class="n">arr</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">is_equivalent_to</span><span class="p">(</span><span class="n">local_sharding</span><span class="p">,</span> <span class="n">arr</span><span class="o">.</span><span class="n">ndim</span><span class="p">)):</span>
+    <span class="n">arrays</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">data</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">arr</span><span class="o">.</span><span class="n">addressable_shards</span><span class="p">]</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="n">xla</span><span class="o">.</span><span class="n">canonicalize_dtype</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+    <span class="n">arrays</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">arr</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">local_sharding</span><span class="o">.</span><span class="n">devices_indices_map</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+
+  <span class="n">global_aval</span> <span class="o">=</span> <span class="n">_local_to_global_aval</span><span class="p">(</span>
+      <span class="n">core</span><span class="o">.</span><span class="n">ShapedArray</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">arr</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span> <span class="n">global_mesh</span><span class="p">,</span> <span class="n">pspec</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">pxla</span><span class="o">.</span><span class="n">batched_device_put</span><span class="p">(</span>
+      <span class="n">global_aval</span><span class="p">,</span> <span class="n">jax</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">NamedSharding</span><span class="p">(</span><span class="n">global_mesh</span><span class="p">,</span> <span class="n">pspec</span><span class="p">),</span>
+      <span class="n">arrays</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">global_mesh</span><span class="o">.</span><span class="n">local_mesh</span><span class="o">.</span><span class="n">devices</span><span class="o">.</span><span class="n">flat</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="host_local_array_to_global_array">
+<a class="viewcode-back" href="../../../_autosummary/jax.experimental.multihost_utils.host_local_array_to_global_array.html#jax.experimental.multihost_utils.host_local_array_to_global_array">[docs]</a>
+<span class="k">def</span> <span class="nf">host_local_array_to_global_array</span><span class="p">(</span>
+    <span class="n">local_inputs</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">global_mesh</span><span class="p">:</span> <span class="n">jax</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">Mesh</span><span class="p">,</span> <span class="n">pspecs</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+<span class="w">  </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Converts a host local value to a globally sharded jax.Array.</span>
+
+<span class="sd">  This function takes host-local data (which might be different</span>
+<span class="sd">  across hosts), and populates a global array with this data, where each</span>
+<span class="sd">  device on each host, get the appropriate slice of the data according to</span>
+<span class="sd">  sharding defined by the global_mesh/pspects.</span>
+
+<span class="sd">  For example:</span>
+
+<span class="sd">  &gt;&gt;&gt; global_mesh = jax.sharding.Mesh(jax.devices(), &#39;x&#39;)</span>
+<span class="sd">  &gt;&gt;&gt; pspecs = jax.sharding.PartitionSpec(&#39;x&#39;)</span>
+<span class="sd">  &gt;&gt;&gt; host_id = jax.process_index()</span>
+<span class="sd">  &gt;&gt;&gt; arr = host_local_array_to_global_array(np.arange(4) * host_id, mesh, pspecs)  # NB: assumes jax.local_device_count() divides 4.   # doctest: +SKIP</span>
+
+<span class="sd">  The resulting array will have the shape (4 * num_processes) and will</span>
+<span class="sd">  have distributed value of: (0, 1, 2, 3, 0, 2, 4, 6, 0, 3, 6, 9, ... ),</span>
+<span class="sd">  where each slice np.arange(4) * host_id will be partitioned across the</span>
+<span class="sd">  corresponding host&#39;s devices.</span>
+
+<span class="sd">  Similarly:</span>
+
+<span class="sd">  &gt;&gt;&gt; mesh = jax.sharding.Mesh(np.array(jax.devices()).reshape(jax.process_count(), jax.local_device_count()), [&#39;host&#39;, &#39;dev&#39;])</span>
+<span class="sd">  &gt;&gt;&gt; pspecs = jax.sharding.PartitionSpec(&#39;host&#39;)</span>
+<span class="sd">  &gt;&gt;&gt; host_id = jax.process_index()</span>
+<span class="sd">  &gt;&gt;&gt; arr = host_local_array_to_global_array(np.arange(4) * host_id, mesh, pspecs)  # doctest: +SKIP</span>
+
+<span class="sd">  will create the same distributed value (0, 1, 2, 3, 0, 2, 4, 6, ...),</span>
+<span class="sd">  however each slice np.arange(4) * i will be *replicated* across corresponding</span>
+<span class="sd">  host devices.</span>
+
+<span class="sd">  On the other hand, if pspecs = PartitionSpec(), which means</span>
+<span class="sd">  replication across all axes, then this snippet:</span>
+
+<span class="sd">  &gt;&gt;&gt; pspecs = jax.sharding.PartitionSpec()</span>
+<span class="sd">  &gt;&gt;&gt; arr = host_local_array_to_global_array(np.arange(4), mesh, pspecs)  # doctest: +SKIP</span>
+
+<span class="sd">  will have the shape (4,) and the value (0, 1, 2, 3) will be replicated</span>
+<span class="sd">  across all hosts and devices.</span>
+
+<span class="sd">  It is an undefined behavior to have not identical local_inputs with pspec</span>
+<span class="sd">  indicating data replication.</span>
+
+<span class="sd">  You can use this function to transition to jax.Array. Using jax.Array with</span>
+<span class="sd">  pjit has the same semantics of using GDA with pjit i.e. all jax.Array</span>
+<span class="sd">  inputs to pjit should be globally shaped.</span>
+
+<span class="sd">  If you are currently passing host local values to pjit, you can use this</span>
+<span class="sd">  function to convert your host local values to global Arrays and then pass that</span>
+<span class="sd">  to pjit.</span>
+
+
+<span class="sd">  Example usage.</span>
+
+<span class="sd">  &gt;&gt;&gt; from jax.experimental import multihost_utils # doctest: +SKIP</span>
+<span class="sd">  &gt;&gt;&gt;</span>
+<span class="sd">  &gt;&gt;&gt; global_inputs = multihost_utils.host_local_array_to_global_array(host_local_inputs, global_mesh, in_pspecs) # doctest: +SKIP</span>
+<span class="sd">  &gt;&gt;&gt;</span>
+<span class="sd">  &gt;&gt;&gt; with mesh: # doctest: +SKIP</span>
+<span class="sd">  &gt;&gt;&gt;   global_out = pjitted_fun(global_inputs) # doctest: +SKIP</span>
+<span class="sd">  &gt;&gt;&gt;</span>
+<span class="sd">  &gt;&gt;&gt; host_local_output = multihost_utils.global_array_to_host_local_array(global_out, mesh, out_pspecs) # doctest: +SKIP</span>
+
+<span class="sd">  Please note ths function requires global mesh to be a continuous mesh, meaning</span>
+<span class="sd">  that  devices that belong to each host should form a subcube in this mesh.</span>
+<span class="sd">  To move local data to global array with non-continuous mesh use</span>
+<span class="sd">  jax.make_array_from_callback or jax.make_array_from_single_device_arrays</span>
+<span class="sd">  instead.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    local_inputs: A Pytree of host local values.</span>
+<span class="sd">    global_mesh: A jax.sharding.Mesh object. The mesh must be a contiguous mesh,</span>
+<span class="sd">    that is all hosts&#39; devices must form a subcube in this mesh.</span>
+<span class="sd">    pspecs: A Pytree of jax.sharding.PartitionSpec&#39;s.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    A pytree of global arrays.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">flat_inps</span><span class="p">,</span> <span class="n">in_tree</span> <span class="o">=</span> <span class="n">tree_flatten</span><span class="p">(</span><span class="n">local_inputs</span><span class="p">)</span>
+  <span class="n">in_pspecs</span> <span class="o">=</span> <span class="n">_flatten_pspecs</span><span class="p">(</span><span class="s1">&#39;input pspecs&#39;</span><span class="p">,</span> <span class="n">in_tree</span><span class="p">,</span>
+                              <span class="n">pjit_lib</span><span class="o">.</span><span class="n">hashable_pytree</span><span class="p">(</span><span class="n">pspecs</span><span class="p">))</span>
+  <span class="n">out_flat</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="n">host_local_array_to_global_array_p</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">global_mesh</span><span class="o">=</span><span class="n">global_mesh</span><span class="p">,</span>
+                                              <span class="n">pspec</span><span class="o">=</span><span class="n">in_spec</span><span class="p">)</span>
+      <span class="k">for</span> <span class="n">inp</span><span class="p">,</span> <span class="n">in_spec</span> <span class="ow">in</span> <span class="n">safe_zip</span><span class="p">(</span><span class="n">flat_inps</span><span class="p">,</span> <span class="n">in_pspecs</span><span class="p">)</span>
+  <span class="p">]</span>
+  <span class="k">return</span> <span class="n">tree_unflatten</span><span class="p">(</span><span class="n">in_tree</span><span class="p">,</span> <span class="n">out_flat</span><span class="p">)</span></div>
+
+
+<span class="n">host_local_array_to_global_array_p</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">Primitive</span><span class="p">(</span><span class="s1">&#39;host_local_array_to_global_array&#39;</span><span class="p">)</span>
+<span class="n">host_local_array_to_global_array_p</span><span class="o">.</span><span class="n">def_impl</span><span class="p">(</span><span class="n">host_local_array_to_global_array_impl</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">ltg_abstract_eval</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">global_mesh</span><span class="p">,</span> <span class="n">pspec</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">_local_to_global_aval</span><span class="p">(</span>
+      <span class="n">core</span><span class="o">.</span><span class="n">ShapedArray</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">arr</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span> <span class="n">global_mesh</span><span class="p">,</span> <span class="n">pspec</span><span class="p">)</span>
+<span class="n">host_local_array_to_global_array_p</span><span class="o">.</span><span class="n">def_abstract_eval</span><span class="p">(</span><span class="n">ltg_abstract_eval</span><span class="p">)</span>
+
+<span class="n">ad</span><span class="o">.</span><span class="n">deflinear2</span><span class="p">(</span><span class="n">host_local_array_to_global_array_p</span><span class="p">,</span>
+              <span class="k">lambda</span> <span class="n">ct</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">:</span> <span class="p">(</span>
+                  <span class="n">host_local_array_to_global_array_p</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">ct</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">),))</span>
+
+<span class="k">def</span> <span class="nf">ltg_batcher</span><span class="p">(</span><span class="n">insert_axis</span><span class="p">,</span> <span class="n">spmd_axis_name</span><span class="p">,</span> <span class="n">axis_size</span><span class="p">,</span>
+                <span class="n">axis_name</span><span class="p">,</span> <span class="n">main_type</span><span class="p">,</span> <span class="n">vals_in</span><span class="p">,</span> <span class="n">dims_in</span><span class="p">,</span>
+                <span class="n">global_mesh</span><span class="p">,</span> <span class="n">pspec</span><span class="p">):</span>
+  <span class="n">x</span><span class="p">,</span> <span class="o">=</span> <span class="n">vals_in</span>
+  <span class="n">d</span><span class="p">,</span> <span class="o">=</span> <span class="n">dims_in</span>
+  <span class="n">new_parts</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">spmd_axis_name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">spmd_axis_name</span>
+  <span class="n">new_pspec</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">pspec</span><span class="p">)</span>
+  <span class="n">new_pspec</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">new_parts</span><span class="p">)</span>
+  <span class="n">new_pspec</span> <span class="o">=</span> <span class="n">P</span><span class="p">(</span><span class="o">*</span><span class="n">new_pspec</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="n">host_local_array_to_global_array_p</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span>
+      <span class="n">x</span><span class="p">,</span> <span class="n">global_mesh</span><span class="o">=</span><span class="n">global_mesh</span><span class="p">,</span> <span class="n">pspec</span><span class="o">=</span><span class="n">new_pspec</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">y</span><span class="p">,</span> <span class="n">d</span>
+<span class="n">batching</span><span class="o">.</span><span class="n">spmd_axis_primitive_batchers</span><span class="p">[</span><span class="n">host_local_array_to_global_array_p</span><span class="p">]</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
+    <span class="n">ltg_batcher</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+<span class="n">batching</span><span class="o">.</span><span class="n">axis_primitive_batchers</span><span class="p">[</span><span class="n">host_local_array_to_global_array_p</span><span class="p">]</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
+    <span class="n">ltg_batcher</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_ltg_lowering</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">global_mesh</span><span class="p">,</span> <span class="n">pspec</span><span class="p">):</span>
+  <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span>
+<span class="n">mlir</span><span class="o">.</span><span class="n">register_lowering</span><span class="p">(</span><span class="n">host_local_array_to_global_array_p</span><span class="p">,</span> <span class="n">_ltg_lowering</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">global_array_to_host_local_array_impl</span><span class="p">(</span>
+    <span class="n">arr</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">global_mesh</span><span class="p">:</span> <span class="n">jax</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">Mesh</span><span class="p">,</span> <span class="n">pspec</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">pspec</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+        <span class="s1">&#39;`None` is not a valid input to the pspecs argument. Please use &#39;</span>
+        <span class="s1">&#39;jax.sharding.PartitionSpec() if you wanted to replicate your input.&#39;</span><span class="p">)</span>
+  <span class="c1"># If the Array is already fully addressable i.e. host local, return it.</span>
+  <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">array</span><span class="o">.</span><span class="n">ArrayImpl</span><span class="p">)</span> <span class="ow">and</span> <span class="n">arr</span><span class="o">.</span><span class="n">is_fully_addressable</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">arr</span>
+
+  <span class="n">global_sharding</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">NamedSharding</span><span class="p">(</span><span class="n">global_mesh</span><span class="p">,</span> <span class="n">pspec</span><span class="p">)</span>
+  <span class="n">local_sharding</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">NamedSharding</span><span class="p">(</span><span class="n">global_mesh</span><span class="o">.</span><span class="n">local_mesh</span><span class="p">,</span> <span class="n">pspec</span><span class="p">)</span>
+  <span class="n">local_aval</span> <span class="o">=</span> <span class="n">_global_to_local_aval</span><span class="p">(</span>
+      <span class="n">core</span><span class="o">.</span><span class="n">ShapedArray</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">arr</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span> <span class="n">global_mesh</span><span class="p">,</span> <span class="n">pspec</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">array</span><span class="o">.</span><span class="n">ArrayImpl</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">arr</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">is_equivalent_to</span><span class="p">(</span><span class="n">global_sharding</span><span class="p">,</span> <span class="n">arr</span><span class="o">.</span><span class="n">ndim</span><span class="p">):</span>
+      <span class="n">arrays</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.</span><span class="n">_arrays</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">resharded_array</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">device_put</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">global_sharding</span><span class="p">)</span>
+      <span class="n">arrays</span> <span class="o">=</span> <span class="n">resharded_array</span><span class="o">.</span><span class="n">_arrays</span>
+    <span class="k">return</span> <span class="n">array</span><span class="o">.</span><span class="n">ArrayImpl</span><span class="p">(</span><span class="n">local_aval</span><span class="p">,</span> <span class="n">local_sharding</span><span class="p">,</span> <span class="n">arrays</span><span class="p">,</span> <span class="n">committed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="c1"># numpy array can show up here during AD.</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="n">xla</span><span class="o">.</span><span class="n">canonicalize_dtype</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+    <span class="n">arrays</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">arr</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">local_sharding</span><span class="o">.</span><span class="n">devices_indices_map</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+    <span class="k">return</span> <span class="n">pxla</span><span class="o">.</span><span class="n">batched_device_put</span><span class="p">(</span>
+        <span class="n">local_aval</span><span class="p">,</span> <span class="n">local_sharding</span><span class="p">,</span> <span class="n">arrays</span><span class="p">,</span>
+        <span class="nb">list</span><span class="p">(</span><span class="n">global_mesh</span><span class="o">.</span><span class="n">local_mesh</span><span class="o">.</span><span class="n">devices</span><span class="o">.</span><span class="n">flat</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="global_array_to_host_local_array">
+<a class="viewcode-back" href="../../../_autosummary/jax.experimental.multihost_utils.global_array_to_host_local_array.html#jax.experimental.multihost_utils.global_array_to_host_local_array">[docs]</a>
+<span class="k">def</span> <span class="nf">global_array_to_host_local_array</span><span class="p">(</span>
+    <span class="n">global_inputs</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">global_mesh</span><span class="p">:</span> <span class="n">jax</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">Mesh</span><span class="p">,</span> <span class="n">pspecs</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+<span class="w">  </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Converts a global `jax.Array` to a host local `jax.Array`.</span>
+
+<span class="sd">  You can use this function to transition to `jax.Array`. Using `jax.Array` with</span>
+<span class="sd">  pjit has the same semantics of using GDA with pjit i.e. all `jax.Array`</span>
+<span class="sd">  inputs to pjit should be globally shaped and the output from pjit will also</span>
+<span class="sd">  be globally shaped jax.Array&#39;s</span>
+
+<span class="sd">  You can use this function to convert the globally shaped `jax.Array` output</span>
+<span class="sd">  from pjit to host local values again so that the transition to jax.Array can</span>
+<span class="sd">  be a mechanical change. Example usage</span>
+
+<span class="sd">  &gt;&gt; from jax.experimental import multihost_utils # doctest: +SKIP</span>
+<span class="sd">  &gt;&gt;</span>
+<span class="sd">  &gt;&gt; global_inputs = multihost_utils.host_local_array_to_global_array(host_local_inputs, global_mesh, in_pspecs) # doctest: +SKIP</span>
+<span class="sd">  &gt;&gt;</span>
+<span class="sd">  &gt;&gt; with mesh: # doctest: +SKIP</span>
+<span class="sd">  &gt;&gt;   global_out = pjitted_fun(global_inputs) # doctest: +SKIP</span>
+<span class="sd">  &gt;&gt;</span>
+<span class="sd">  &gt;&gt; host_local_output = multihost_utils.global_array_to_host_local_array(global_out, mesh, out_pspecs) # doctest: +SKIP</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    global_inputs: A Pytree of global jax.Array&#39;s.</span>
+<span class="sd">    global_mesh: A jax.sharding.Mesh object.</span>
+<span class="sd">    pspecs: A Pytree of jax.sharding.PartitionSpec&#39;s.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">flat_inps</span><span class="p">,</span> <span class="n">out_tree</span> <span class="o">=</span> <span class="n">tree_flatten</span><span class="p">(</span><span class="n">global_inputs</span><span class="p">)</span>
+  <span class="n">out_pspecs</span> <span class="o">=</span> <span class="n">_flatten_pspecs</span><span class="p">(</span><span class="s1">&#39;output pspecs&#39;</span><span class="p">,</span> <span class="n">out_tree</span><span class="p">,</span>
+                               <span class="n">pjit_lib</span><span class="o">.</span><span class="n">hashable_pytree</span><span class="p">(</span><span class="n">pspecs</span><span class="p">))</span>
+  <span class="n">out_flat</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="n">global_array_to_host_local_array_p</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">global_mesh</span><span class="o">=</span><span class="n">global_mesh</span><span class="p">,</span>
+                                              <span class="n">pspec</span><span class="o">=</span><span class="n">o</span><span class="p">)</span>
+      <span class="k">for</span> <span class="n">inp</span><span class="p">,</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">safe_zip</span><span class="p">(</span><span class="n">flat_inps</span><span class="p">,</span> <span class="n">out_pspecs</span><span class="p">)</span>
+  <span class="p">]</span>
+  <span class="k">return</span> <span class="n">tree_unflatten</span><span class="p">(</span><span class="n">out_tree</span><span class="p">,</span> <span class="n">out_flat</span><span class="p">)</span></div>
+
+
+<span class="n">global_array_to_host_local_array_p</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">Primitive</span><span class="p">(</span><span class="s1">&#39;global_array_to_host_local_array&#39;</span><span class="p">)</span>
+<span class="n">global_array_to_host_local_array_p</span><span class="o">.</span><span class="n">def_impl</span><span class="p">(</span><span class="n">global_array_to_host_local_array_impl</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">gtl_abstract_eval</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">global_mesh</span><span class="p">,</span> <span class="n">pspec</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">_global_to_local_aval</span><span class="p">(</span>
+      <span class="n">core</span><span class="o">.</span><span class="n">ShapedArray</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">arr</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span> <span class="n">global_mesh</span><span class="p">,</span> <span class="n">pspec</span><span class="p">)</span>
+<span class="n">global_array_to_host_local_array_p</span><span class="o">.</span><span class="n">def_abstract_eval</span><span class="p">(</span><span class="n">gtl_abstract_eval</span><span class="p">)</span>
+
+<span class="n">ad</span><span class="o">.</span><span class="n">deflinear2</span><span class="p">(</span><span class="n">global_array_to_host_local_array_p</span><span class="p">,</span>
+              <span class="k">lambda</span> <span class="n">ct</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">:</span> <span class="p">(</span>
+                  <span class="n">global_array_to_host_local_array_p</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">ct</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">),))</span>
+<span class="n">batching</span><span class="o">.</span><span class="n">defvectorized</span><span class="p">(</span><span class="n">global_array_to_host_local_array_p</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_gtl_lowering</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">global_mesh</span><span class="p">,</span> <span class="n">pspec</span><span class="p">):</span>
+  <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span>
+<span class="n">mlir</span><span class="o">.</span><span class="n">register_lowering</span><span class="p">(</span><span class="n">global_array_to_host_local_array_p</span><span class="p">,</span> <span class="n">_gtl_lowering</span><span class="p">)</span>
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The JAX authors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, The JAX Authors. NumPy and SciPy documentation are copyright the respective authors..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

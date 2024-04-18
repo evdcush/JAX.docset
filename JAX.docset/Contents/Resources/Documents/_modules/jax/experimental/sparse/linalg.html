@@ -1,0 +1,1191 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>jax.experimental.sparse.linalg &#8212; JAX  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/style.css?v=02ed413a" />
+    <link rel="stylesheet" href="../../../../_static/style.css" type="text/css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../../../../_static/design-tabs.js?v=36754332"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/jax/experimental/sparse/linalg';</script>
+    <link rel="icon" href="../../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../../_static/jax_logo_250px.png" class="logo__image only-light" alt="JAX  documentation - Home"/>
+    <script>document.write(`<img src="../../../../_static/jax_logo_250px.png" class="logo__image only-dark" alt="JAX  documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installing JAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/quickstart.html">JAX Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/thinking_in_jax.html">How to Think in JAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notebooks/Common_Gotchas_in_JAX.html">🔪 JAX - The Sharp Bits 🔪</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../faq.html">JAX Frequently Asked Questions (FAQ)</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../jax-101/index.html">Tutorial: JAX 101</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../jax-101/01-jax-basics.html">JAX As Accelerated NumPy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../jax-101/02-jitting.html">Just In Time Compilation with JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../jax-101/03-vectorization.html">Automatic Vectorization in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../jax-101/04-advanced-autodiff.html">Advanced Automatic Differentiation in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../jax-101/05-random-numbers.html">Pseudo Random Numbers in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../jax-101/05.1-pytrees.html">Working with Pytrees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../jax-101/06-parallelism.html">Parallel Evaluation in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../jax-101/07-state.html">Stateful Computations in JAX</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Further Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../user_guides.html">User Guides</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../profiling.html">Profiling JAX programs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../device_memory_profiling.html">Device Memory Profiling</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../debugging/index.html">Runtime value debugging in JAX</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../debugging/print_breakpoint.html"><code class="docutils literal notranslate"><span class="pre">jax.debug.print</span></code> and <code class="docutils literal notranslate"><span class="pre">jax.debug.breakpoint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../debugging/checkify_guide.html">The <code class="docutils literal notranslate"><span class="pre">checkify</span></code> transformation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../debugging/flags.html">JAX debugging flags</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../gpu_performance_tips.html">GPU performance tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../persistent_compilation_cache.html">Persistent Compilation Cache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../jaxpr.html">Understanding Jaxprs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/external_callbacks.html">External Callbacks in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../type_promotion.html">Type promotion semantics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../pytrees.html">Pytrees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../aot.html">Ahead-of-time lowering and compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../errors.html">JAX Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../transfer_guard.html">Transfer guard</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../pallas/index.html">Pallas: a JAX kernel language</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pallas/design.html">Pallas Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../pallas/quickstart.html">Pallas Quickstart</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../pallas/tpu/index.html">Pallas TPU</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../pallas/tpu/details.html">Writing TPU kernels with Pallas</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../pallas/tpu/pipelining.html">Pipelining and <code class="docutils literal notranslate"><span class="pre">BlockSpec</span></code>s</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../advanced_guide.html">Advanced Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/neural_network_with_tfds_data.html">Training a Simple Neural Network, with tensorflow/datasets Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/Neural_Network_and_Data_Loading.html">Training a Simple Neural Network, with PyTorch Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/vmapped_log_probs.html">Autobatching for Bayesian Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../multi_process.html">Using JAX in multi-host and multi-process environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/Distributed_arrays_and_automatic_parallelization.html">Distributed arrays and automatic parallelization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/shard_map.html">SPMD multi-device parallelism with <code class="docutils literal notranslate"><span class="pre">shard_map</span></code></a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/xmap_tutorial.html">Named axes and easy-to-revise parallelism with <code class="docutils literal notranslate"><span class="pre">xmap</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/autodiff_cookbook.html">The Autodiff Cookbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/Custom_derivative_rules_for_Python_code.html">Custom derivative rules for JAX-transformable Python functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/autodiff_remat.html">Control autodiff’s saved values with <code class="docutils literal notranslate"><span class="pre">jax.checkpoint</span></code> (aka <code class="docutils literal notranslate"><span class="pre">jax.remat</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/How_JAX_primitives_work.html">How JAX primitives work</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/Writing_custom_interpreters_in_Jax.html">Writing custom Jaxpr interpreters in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../Custom_Operation_for_GPUs.html">Custom operations for GPUs with C++ and CUDA</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../../../notebooks/convolutions.html">Generalized Convolutions in JAX</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../contributor_guide.html">Developer Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../contributing.html">Contributing to JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../developer.html">Building from source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../jax_internal_api.html">Internal APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../autodidax.html">Autodidax: JAX core from scratch</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../jep/index.html">JAX Enhancement Proposals (JEPs)</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jep/263-prng.html">263: JAX PRNG Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jep/2026-custom-derivatives.html">2026: Custom JVP/VJP rules for JAX-transformable functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jep/4008-custom-vjp-update.html">4008: Custom VJP and `nondiff_argnums` update</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jep/4410-omnistaging.html">4410: Omnistaging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jep/9263-typed-keys.html">9263: Typed keys &amp; pluggable RNGs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jep/9407-type-promotion.html">9407: Design of Type Promotion Semantics for JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jep/9419-jax-versioning.html">9419: Jax and Jaxlib versioning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jep/10657-sequencing-effects.html">10657: Sequencing side-effects in JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jep/11830-new-remat-checkpoint.html">11830: `jax.remat` / `jax.checkpoint` new implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jep/12049-type-annotations.html">12049: Type Annotation Roadmap for JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jep/14273-shard-map.html">14273: `shard_map` (`shmap`) for simple per-device code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jep/15856-jex.html">15856: `jax.extend`, an extensions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jep/17111-shmap-transpose.html">17111: Efficient transposition of `shard_map` (and other maps)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jep/18137-numpy-scipy-scope.html">18137: Scope of JAX NumPy &amp; SciPy Wrappers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../investigating_a_regression.html">Investigating a regression</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../building_on_jax.html">Building on JAX</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../notes.html">Notes</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../api_compatibility.html">API compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../deprecation.html">Python and NumPy version support policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../jax_array_migration.html">jax.Array migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../async_dispatch.html">Asynchronous dispatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../concurrency.html">Concurrency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../gpu_memory_allocation.html">GPU memory allocation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../rank_promotion_warning.html">Rank promotion warning</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../jax.html">Public API: jax package</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../jax.numpy.html"><code class="docutils literal notranslate"><span class="pre">jax.numpy</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../_autosummary/jax.numpy.fft.fft.html">jax.numpy.fft.fft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../_autosummary/jax.numpy.fft.fft2.html">jax.numpy.fft.fft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../_autosummary/jax.numpy.fft.fftfreq.html">jax.numpy.fft.fftfreq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../_autosummary/jax.numpy.fft.fftn.html">jax.numpy.fft.fftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../_autosummary/jax.numpy.fft.fftshift.html">jax.numpy.fft.fftshift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../_autosummary/jax.numpy.fft.hfft.html">jax.numpy.fft.hfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../_autosummary/jax.numpy.fft.ifft.html">jax.numpy.fft.ifft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../_autosummary/jax.numpy.fft.ifft2.html">jax.numpy.fft.ifft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../_autosummary/jax.numpy.fft.ifftn.html">jax.numpy.fft.ifftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../_autosummary/jax.numpy.fft.ifftshift.html">jax.numpy.fft.ifftshift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../_autosummary/jax.numpy.fft.ihfft.html">jax.numpy.fft.ihfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../_autosummary/jax.numpy.fft.irfft.html">jax.numpy.fft.irfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../_autosummary/jax.numpy.fft.irfft2.html">jax.numpy.fft.irfft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../_autosummary/jax.numpy.fft.irfftn.html">jax.numpy.fft.irfftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../_autosummary/jax.numpy.fft.rfft.html">jax.numpy.fft.rfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../_autosummary/jax.numpy.fft.rfft2.html">jax.numpy.fft.rfft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../_autosummary/jax.numpy.fft.rfftfreq.html">jax.numpy.fft.rfftfreq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../_autosummary/jax.numpy.fft.rfftn.html">jax.numpy.fft.rfftn</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../jax.scipy.html"><code class="docutils literal notranslate"><span class="pre">jax.scipy</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../_autosummary/jax.scipy.stats.bernoulli.logpmf.html">jax.scipy.stats.bernoulli.logpmf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../_autosummary/jax.scipy.stats.bernoulli.pmf.html">jax.scipy.stats.bernoulli.pmf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../_autosummary/jax.scipy.stats.bernoulli.cdf.html">jax.scipy.stats.bernoulli.cdf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../_autosummary/jax.scipy.stats.bernoulli.ppf.html">jax.scipy.stats.bernoulli.ppf</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../jax.lax.html"><code class="docutils literal notranslate"><span class="pre">jax.lax</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../jax.random.html"><code class="docutils literal notranslate"><span class="pre">jax.random</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../jax.sharding.html"><code class="docutils literal notranslate"><span class="pre">jax.sharding</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../jax.debug.html"><code class="docutils literal notranslate"><span class="pre">jax.debug</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../jax.dlpack.html"><code class="docutils literal notranslate"><span class="pre">jax.dlpack</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../jax.distributed.html"><code class="docutils literal notranslate"><span class="pre">jax.distributed</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../jax.dtypes.html"><code class="docutils literal notranslate"><span class="pre">jax.dtypes</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../jax.flatten_util.html"><code class="docutils literal notranslate"><span class="pre">jax.flatten_util</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../jax.image.html"><code class="docutils literal notranslate"><span class="pre">jax.image</span></code> module</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../jax.nn.html"><code class="docutils literal notranslate"><span class="pre">jax.nn</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-13"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jax.nn.initializers.html"><code class="docutils literal notranslate"><span class="pre">jax.nn.initializers</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../jax.ops.html"><code class="docutils literal notranslate"><span class="pre">jax.ops</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../jax.profiler.html"><code class="docutils literal notranslate"><span class="pre">jax.profiler</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../jax.stages.html"><code class="docutils literal notranslate"><span class="pre">jax.stages</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../jax.tree.html"><code class="docutils literal notranslate"><span class="pre">jax.tree</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../jax.tree_util.html"><code class="docutils literal notranslate"><span class="pre">jax.tree_util</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../jax.typing.html"><code class="docutils literal notranslate"><span class="pre">jax.typing</span></code> module</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../jax.extend.html"><code class="docutils literal notranslate"><span class="pre">jax.extend</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jax.extend.linear_util.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.linear_util</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jax.extend.mlir.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.mlir</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jax.extend.random.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.random</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../jax.example_libraries.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-15"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jax.example_libraries.optimizers.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries.optimizers</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jax.example_libraries.stax.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries.stax</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../jax.experimental.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jax.experimental.array_api.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.array_api</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jax.experimental.checkify.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.checkify</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jax.experimental.host_callback.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.host_callback</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jax.experimental.maps.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.maps</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jax.experimental.pjit.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.pjit</span></code> module</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../jax.experimental.sparse.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.sparse</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../_autosummary/jax.experimental.sparse.BCOO.html">jax.experimental.sparse.BCOO</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../_autosummary/jax.experimental.sparse.bcoo_broadcast_in_dim.html">jax.experimental.sparse.bcoo_broadcast_in_dim</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../_autosummary/jax.experimental.sparse.bcoo_concatenate.html">jax.experimental.sparse.bcoo_concatenate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../_autosummary/jax.experimental.sparse.bcoo_dot_general.html">jax.experimental.sparse.bcoo_dot_general</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../_autosummary/jax.experimental.sparse.bcoo_dot_general_sampled.html">jax.experimental.sparse.bcoo_dot_general_sampled</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../_autosummary/jax.experimental.sparse.bcoo_dynamic_slice.html">jax.experimental.sparse.bcoo_dynamic_slice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../_autosummary/jax.experimental.sparse.bcoo_extract.html">jax.experimental.sparse.bcoo_extract</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../_autosummary/jax.experimental.sparse.bcoo_fromdense.html">jax.experimental.sparse.bcoo_fromdense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../_autosummary/jax.experimental.sparse.bcoo_gather.html">jax.experimental.sparse.bcoo_gather</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../_autosummary/jax.experimental.sparse.bcoo_multiply_dense.html">jax.experimental.sparse.bcoo_multiply_dense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../_autosummary/jax.experimental.sparse.bcoo_multiply_sparse.html">jax.experimental.sparse.bcoo_multiply_sparse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../_autosummary/jax.experimental.sparse.bcoo_update_layout.html">jax.experimental.sparse.bcoo_update_layout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../_autosummary/jax.experimental.sparse.bcoo_reduce_sum.html">jax.experimental.sparse.bcoo_reduce_sum</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../_autosummary/jax.experimental.sparse.bcoo_reshape.html">jax.experimental.sparse.bcoo_reshape</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../_autosummary/jax.experimental.sparse.bcoo_slice.html">jax.experimental.sparse.bcoo_slice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../_autosummary/jax.experimental.sparse.bcoo_sort_indices.html">jax.experimental.sparse.bcoo_sort_indices</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../_autosummary/jax.experimental.sparse.bcoo_squeeze.html">jax.experimental.sparse.bcoo_squeeze</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../_autosummary/jax.experimental.sparse.bcoo_sum_duplicates.html">jax.experimental.sparse.bcoo_sum_duplicates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../_autosummary/jax.experimental.sparse.bcoo_todense.html">jax.experimental.sparse.bcoo_todense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../_autosummary/jax.experimental.sparse.bcoo_transpose.html">jax.experimental.sparse.bcoo_transpose</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jax.experimental.jet.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.jet</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jax.experimental.custom_partitioning.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.custom_partitioning</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jax.experimental.multihost_utils.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.multihost_utils</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jax.experimental.compilation_cache.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.compilation_cache</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jax.experimental.key_reuse.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.key_reuse</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../jax.experimental.mesh_utils.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.mesh_utils</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../jax.lib.html"><code class="docutils literal notranslate"><span class="pre">jax.lib</span></code> module</a></li>
+</ul>
+</li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Change log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../glossary.html">JAX Glossary of Terms</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/google/jax" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for jax.experimental.sparse.linalg</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2022 The JAX Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     https://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+
+<span class="sd">&quot;&quot;&quot;Sparse linear algebra routines.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Callable</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+
+<span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+
+<span class="kn">from</span> <span class="nn">jax.experimental</span> <span class="kn">import</span> <span class="n">sparse</span>
+<span class="kn">from</span> <span class="nn">jax.interpreters</span> <span class="kn">import</span> <span class="n">mlir</span>
+<span class="kn">from</span> <span class="nn">jax.interpreters</span> <span class="kn">import</span> <span class="n">xla</span>
+
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">core</span>
+<span class="kn">from</span> <span class="nn">jax._src.interpreters</span> <span class="kn">import</span> <span class="n">ad</span>
+<span class="kn">from</span> <span class="nn">jax._src.lib</span> <span class="kn">import</span> <span class="n">gpu_solver</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="kn">import</span> <span class="n">csr_matrix</span><span class="p">,</span> <span class="n">linalg</span>
+
+
+<div class="viewcode-block" id="lobpcg_standard">
+<a class="viewcode-back" href="../../../../_autosummary/jax.experimental.sparse.linalg.lobpcg_standard.html#jax.experimental.sparse.linalg.lobpcg_standard">[docs]</a>
+<span class="k">def</span> <span class="nf">lobpcg_standard</span><span class="p">(</span>
+    <span class="n">A</span><span class="p">:</span> <span class="n">jax</span><span class="o">.</span><span class="n">Array</span> <span class="o">|</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">jax</span><span class="o">.</span><span class="n">Array</span><span class="p">],</span> <span class="n">jax</span><span class="o">.</span><span class="n">Array</span><span class="p">],</span>
+    <span class="n">X</span><span class="p">:</span> <span class="n">jax</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span>
+    <span class="n">m</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="n">tol</span><span class="p">:</span> <span class="n">jax</span><span class="o">.</span><span class="n">Array</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute the top-k standard eigenvalues using the LOBPCG routine.</span>
+
+<span class="sd">  LOBPCG [1] stands for Locally Optimal Block Preconditioned Conjugate Gradient.</span>
+<span class="sd">  The method enables finding top-k eigenvectors in an accelerator-friendly</span>
+<span class="sd">  manner.</span>
+
+<span class="sd">  This initial experimental version has several caveats.</span>
+
+<span class="sd">    - Only the standard eigenvalue problem `A U = lambda U` is supported,</span>
+<span class="sd">      general eigenvalues are not.</span>
+<span class="sd">    - Gradient code is not available.</span>
+<span class="sd">    - f64 will only work where jnp.linalg.eigh is supported for that type.</span>
+<span class="sd">    - Finding the smallest eigenvectors is not yet supported. As a result,</span>
+<span class="sd">      we don&#39;t yet support preconditioning, which is mostly needed for this</span>
+<span class="sd">      case.</span>
+
+<span class="sd">  The implementation is based on [2] and [3]; however, we deviate from these</span>
+<span class="sd">  sources in several ways to improve robustness or facilitate implementation:</span>
+
+<span class="sd">    - Despite increased iteration cost, we always maintain an orthonormal basis</span>
+<span class="sd">      for the block search directions.</span>
+<span class="sd">    - We change the convergence criterion; see the `tol` argument.</span>
+<span class="sd">    - Soft locking [4] is intentionally not implemented; it relies on</span>
+<span class="sd">      choosing an appropriate problem-specific tolerance to prevent</span>
+<span class="sd">      blow-up near convergence from catastrophic cancellation of</span>
+<span class="sd">      near-0 residuals. Instead, the approach implemented favors</span>
+<span class="sd">      truncating the iteration basis.</span>
+
+<span class="sd">  [1]: http://ccm.ucdenver.edu/reports/rep149.pdf</span>
+<span class="sd">  [2]: https://arxiv.org/abs/1704.07458</span>
+<span class="sd">  [3]: https://arxiv.org/abs/0705.2626</span>
+<span class="sd">  [4]: DOI 10.13140/RG.2.2.11794.48327</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    A : An `(n, n)` array representing a square Hermitian matrix or a</span>
+<span class="sd">        callable with its action.</span>
+<span class="sd">    X : An `(n, k)` array representing the initial search directions for the `k`</span>
+<span class="sd">        desired top eigenvectors. This need not be orthogonal, but must be</span>
+<span class="sd">        numerically linearly independent (`X` will be orthonormalized).</span>
+<span class="sd">        Note that we must have `0 &lt; k * 5 &lt; n`.</span>
+<span class="sd">    m : Maximum integer iteration count; LOBPCG will only ever explore (a</span>
+<span class="sd">        subspace of) the Krylov basis `{X, A X, A^2 X, ..., A^m X}`.</span>
+<span class="sd">    tol : A float convergence tolerance; an eigenpair `(lambda, v)` is converged</span>
+<span class="sd">          when its residual L2 norm `r = |A v - lambda v|` is below</span>
+<span class="sd">          `tol * 10 * n * (lambda + |A v|)`, which</span>
+<span class="sd">          roughly estimates the worst-case floating point error for an ideal</span>
+<span class="sd">          eigenvector. If all `k` eigenvectors satisfy the tolerance</span>
+<span class="sd">          comparison, then LOBPCG exits early. If left as None, then this is set</span>
+<span class="sd">          to the float epsilon of `A.dtype`.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    `theta, U, i`, where `theta` is a `(k,)` array</span>
+<span class="sd">    of eigenvalues, `U` is a `(n, k)` array of eigenvectors, `i` is the</span>
+<span class="sd">    number of iterations performed.</span>
+
+<span class="sd">  Raises:</span>
+<span class="sd">    ValueError : if `A,X` dtypes or `n` dimensions do not match, or `k` is too</span>
+<span class="sd">                 large (only `k * 5 &lt; n` supported), or `k == 0`.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="c1"># Jit-compile once per matrix shape if possible.</span>
+  <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)):</span>
+    <span class="k">return</span> <span class="n">_lobpcg_standard_matrix</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">tol</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">_lobpcg_standard_callable</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">tol</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<span class="nd">@functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">,</span> <span class="n">static_argnames</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;debug&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">_lobpcg_standard_matrix</span><span class="p">(</span>
+    <span class="n">A</span><span class="p">:</span> <span class="n">jax</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span>
+    <span class="n">X</span><span class="p">:</span> <span class="n">jax</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span>
+    <span class="n">m</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">tol</span><span class="p">:</span> <span class="n">jax</span><span class="o">.</span><span class="n">Array</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Computes lobpcg_standard(), possibly with debug diagnostics.&quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">_lobpcg_standard_callable</span><span class="p">(</span>
+      <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">_mm</span><span class="p">,</span> <span class="n">A</span><span class="p">),</span> <span class="n">X</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">tol</span><span class="p">,</span> <span class="n">debug</span><span class="p">)</span>
+
+<span class="nd">@functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">,</span> <span class="n">static_argnames</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;debug&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">_lobpcg_standard_callable</span><span class="p">(</span>
+    <span class="n">A</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">jax</span><span class="o">.</span><span class="n">Array</span><span class="p">],</span> <span class="n">jax</span><span class="o">.</span><span class="n">Array</span><span class="p">],</span>
+    <span class="n">X</span><span class="p">:</span> <span class="n">jax</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span>
+    <span class="n">m</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">tol</span><span class="p">:</span> <span class="n">jax</span><span class="o">.</span><span class="n">Array</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Supports generic lobpcg_standard() callable interface.&quot;&quot;&quot;</span>
+
+  <span class="c1"># TODO(vladf): support mixed_precision flag, which allows f64 Rayleigh-Ritz</span>
+  <span class="c1"># with f32 inputs.</span>
+
+  <span class="n">n</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+  <span class="n">dt</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">dtype</span>
+
+  <span class="n">_check_inputs</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">tol</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">tol</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span><span class="o">.</span><span class="n">eps</span>
+
+  <span class="n">X</span> <span class="o">=</span> <span class="n">_orthonormalize</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+  <span class="n">P</span> <span class="o">=</span> <span class="n">_extend_basis</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+  <span class="c1"># We maintain X, our current list of best eigenvectors,</span>
+  <span class="c1"># P, our search direction, and</span>
+  <span class="c1"># R, our residuals, in a large joint array XPR, column-stacked, so (n, 3*k).</span>
+
+  <span class="n">AX</span> <span class="o">=</span> <span class="n">A</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+  <span class="n">theta</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">X</span> <span class="o">*</span> <span class="n">AX</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">R</span> <span class="o">=</span> <span class="n">AX</span> <span class="o">-</span> <span class="n">theta</span> <span class="o">*</span> <span class="n">X</span>
+
+  <span class="k">def</span> <span class="nf">cond</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+    <span class="n">i</span><span class="p">,</span> <span class="n">_X</span><span class="p">,</span> <span class="n">_P</span><span class="p">,</span> <span class="n">_R</span><span class="p">,</span> <span class="n">converged</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">m</span><span class="p">,</span> <span class="n">converged</span> <span class="o">&lt;</span> <span class="n">k</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">body</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+    <span class="n">i</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">theta</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="c1"># Invariants: X, P, R kept orthonormal</span>
+    <span class="c1"># Some R, P columns may be 0 (due to basis truncation, as decided</span>
+    <span class="c1"># by orthogonalization routines), but not X.</span>
+
+    <span class="c1"># TODO(vladf): support preconditioning for bottom-k eigenvectors</span>
+    <span class="c1"># if M is not None:</span>
+    <span class="c1">#   R = M(R)</span>
+
+    <span class="c1"># Residual basis selection.</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="n">_project_out</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">X</span><span class="p">,</span> <span class="n">P</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">R</span><span class="p">)</span>
+    <span class="n">XPR</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">X</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">R</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Projected eigensolve.</span>
+    <span class="n">theta</span><span class="p">,</span> <span class="n">Q</span> <span class="o">=</span> <span class="n">_rayleigh_ritz_orth</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">XPR</span><span class="p">)</span>
+
+    <span class="c1"># Eigenvector X extraction</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="n">Q</span><span class="p">[:,</span> <span class="p">:</span><span class="n">k</span><span class="p">]</span>
+    <span class="n">normB</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">B</span> <span class="o">/=</span> <span class="n">normB</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">_mm</span><span class="p">(</span><span class="n">XPR</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+    <span class="n">normX</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">X</span> <span class="o">/=</span> <span class="n">normX</span>
+
+    <span class="c1"># Difference terms P extraction</span>
+    <span class="c1">#</span>
+    <span class="c1"># In next step of LOBPCG, naively, we&#39;d set</span>
+    <span class="c1"># P = S[:, k:] @ Q[k:, :k] to achieve span(X, P) == span(X, previous X)</span>
+    <span class="c1"># (this is not obvious, see section 4 of [1]).</span>
+    <span class="c1">#</span>
+    <span class="c1"># Instead we orthogonalize concat(0, Q[k:, :k]) against Q[:, :k]</span>
+    <span class="c1"># in the standard basis before mapping with XPR. Since XPR is itself</span>
+    <span class="c1"># orthonormal, the resulting directions are themselves orthonormalized.</span>
+    <span class="c1">#</span>
+    <span class="c1"># [2] leverages Q&#39;s existing orthogonality to derive</span>
+    <span class="c1"># an analytic expression for this value based on the quadrant Q[:k,k:]</span>
+    <span class="c1"># (see section 4.2 of [2]).</span>
+    <span class="n">q</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">qr</span><span class="p">(</span><span class="n">Q</span><span class="p">[:</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">:]</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">diff_rayleigh_ortho</span> <span class="o">=</span> <span class="n">_mm</span><span class="p">(</span><span class="n">Q</span><span class="p">[:,</span> <span class="n">k</span><span class="p">:],</span> <span class="n">q</span><span class="p">)</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="n">_mm</span><span class="p">(</span><span class="n">XPR</span><span class="p">,</span> <span class="n">diff_rayleigh_ortho</span><span class="p">)</span>
+    <span class="n">normP</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">P</span> <span class="o">/=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">normP</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">normP</span><span class="p">)</span>
+
+    <span class="c1"># Compute new residuals.</span>
+    <span class="n">AX</span> <span class="o">=</span> <span class="n">A</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="n">AX</span> <span class="o">-</span> <span class="n">theta</span><span class="p">[</span><span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:</span><span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="n">X</span>
+    <span class="n">resid_norms</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># I tried many variants of hard and soft locking [3]. All of them seemed</span>
+    <span class="c1"># to worsen performance relative to no locking.</span>
+    <span class="c1">#</span>
+    <span class="c1"># Further, I found a more experimental convergence formula compared to what</span>
+    <span class="c1"># is suggested in the literature, loosely based on floating-point</span>
+    <span class="c1"># expectations.</span>
+    <span class="c1">#</span>
+    <span class="c1"># [2] discusses various strategies for this in Sec 5.3. The solution</span>
+    <span class="c1"># they end up with, which estimates operator norm |A| via Gaussian</span>
+    <span class="c1"># products, was too crude in practice (and overly-lax). The Gaussian</span>
+    <span class="c1"># approximation seems like an estimate of the average eigenvalue.</span>
+    <span class="c1">#</span>
+    <span class="c1"># Instead, we test convergence via self-consistency of the eigenpair</span>
+    <span class="c1"># i.e., the residual norm |r| should be small, relative to the floating</span>
+    <span class="c1"># point error we&#39;d expect from computing just the residuals given</span>
+    <span class="c1"># candidate vectors.</span>
+    <span class="n">reltol</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">AX</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">theta</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+    <span class="n">reltol</span> <span class="o">*=</span> <span class="n">n</span>
+    <span class="c1"># Allow some margin for a few element-wise operations.</span>
+    <span class="n">reltol</span> <span class="o">*=</span> <span class="mi">10</span>
+    <span class="n">res_converged</span> <span class="o">=</span> <span class="n">resid_norms</span> <span class="o">&lt;</span> <span class="n">tol</span> <span class="o">*</span> <span class="n">reltol</span>
+    <span class="n">converged</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">res_converged</span><span class="p">)</span>
+
+    <span class="n">new_state</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">converged</span><span class="p">,</span> <span class="n">theta</span><span class="p">[</span><span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:</span><span class="n">k</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+      <span class="n">diagnostics</span> <span class="o">=</span> <span class="n">_generate_diagnostics</span><span class="p">(</span>
+          <span class="n">XPR</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">converged</span><span class="p">,</span> <span class="n">resid_norms</span> <span class="o">/</span> <span class="n">reltol</span><span class="p">)</span>
+      <span class="n">new_state</span> <span class="o">=</span> <span class="p">(</span><span class="n">new_state</span><span class="p">,</span> <span class="n">diagnostics</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_state</span>
+
+  <span class="n">converged</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">state</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">converged</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+    <span class="n">state</span><span class="p">,</span> <span class="n">diagnostics</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">state</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="n">body</span><span class="p">(</span><span class="n">state</span><span class="p">),</span> <span class="n">state</span><span class="p">,</span> <span class="n">xs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="n">m</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">while_loop</span><span class="p">(</span><span class="n">cond</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
+  <span class="n">i</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">_P</span><span class="p">,</span> <span class="n">_R</span><span class="p">,</span> <span class="n">_converged</span><span class="p">,</span> <span class="n">theta</span> <span class="o">=</span> <span class="n">state</span>
+
+  <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">theta</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">X</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">diagnostics</span>
+  <span class="k">return</span> <span class="n">theta</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">X</span><span class="p">,</span> <span class="n">i</span>
+
+
+<span class="k">def</span> <span class="nf">_check_inputs</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+  <span class="n">n</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+  <span class="n">dt</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">dtype</span>
+
+  <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;must have search dim &gt; 0, got </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">k</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">&gt;=</span> <span class="n">n</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;expected search dim * 5 &lt; matrix dim (got </span><span class="si">{</span><span class="n">k</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">5</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+
+  <span class="n">test_output</span> <span class="o">=</span> <span class="n">A</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">dtype</span><span class="p">))</span>
+
+  <span class="k">if</span> <span class="n">test_output</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">dt</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s1">&#39;A, X must have same dtypes (were </span><span class="si">{</span><span class="n">test_output</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">test_output</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">test_output</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;A must be (</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1">) matrix A, got output </span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_mm</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">Precision</span><span class="o">.</span><span class="n">HIGHEST</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="p">(</span><span class="n">precision</span><span class="p">,</span> <span class="n">precision</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">_generate_diagnostics</span><span class="p">(</span><span class="n">prev_XPR</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">converged</span><span class="p">,</span> <span class="n">adj_resid</span><span class="p">):</span>
+  <span class="n">k</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+  <span class="k">assert</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">P</span><span class="o">.</span><span class="n">shape</span>
+
+  <span class="n">diagdiag</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+  <span class="n">abserr</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="p">(</span><span class="n">k</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+  <span class="n">XTX</span> <span class="o">=</span> <span class="n">_mm</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+  <span class="n">DX</span> <span class="o">=</span> <span class="n">diagdiag</span><span class="p">(</span><span class="n">XTX</span><span class="p">)</span>
+  <span class="n">orthX</span> <span class="o">=</span> <span class="n">abserr</span><span class="p">(</span><span class="n">XTX</span> <span class="o">-</span> <span class="n">DX</span><span class="p">)</span>
+
+  <span class="n">PTP</span> <span class="o">=</span> <span class="n">_mm</span><span class="p">(</span><span class="n">P</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">P</span><span class="p">)</span>
+  <span class="n">DP</span> <span class="o">=</span> <span class="n">diagdiag</span><span class="p">(</span><span class="n">PTP</span><span class="p">)</span>
+  <span class="n">orthP</span> <span class="o">=</span> <span class="n">abserr</span><span class="p">(</span><span class="n">PTP</span> <span class="o">-</span> <span class="n">DP</span><span class="p">)</span>
+
+  <span class="n">PX</span> <span class="o">=</span> <span class="n">abserr</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">P</span><span class="p">)</span>
+
+  <span class="n">prev_basis</span> <span class="o">=</span> <span class="n">prev_XPR</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">prev_XPR</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+  <span class="k">return</span> <span class="p">{</span>
+      <span class="s1">&#39;basis rank&#39;</span><span class="p">:</span> <span class="n">prev_basis</span><span class="p">,</span>
+      <span class="s1">&#39;X zeros&#39;</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">X</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+      <span class="s1">&#39;P zeros&#39;</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">P</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+      <span class="s1">&#39;lambda history&#39;</span><span class="p">:</span> <span class="n">theta</span><span class="p">[:</span><span class="n">k</span><span class="p">],</span>
+      <span class="s1">&#39;residual history&#39;</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+      <span class="s1">&#39;converged&#39;</span><span class="p">:</span> <span class="n">converged</span><span class="p">,</span>
+      <span class="s1">&#39;adjusted residual max&#39;</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">adj_resid</span><span class="p">),</span>
+      <span class="s1">&#39;adjusted residual p50&#39;</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">adj_resid</span><span class="p">),</span>
+      <span class="s1">&#39;adjusted residual min&#39;</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">adj_resid</span><span class="p">),</span>
+      <span class="s1">&#39;X orth&#39;</span><span class="p">:</span> <span class="n">orthX</span><span class="p">,</span>
+      <span class="s1">&#39;P orth&#39;</span><span class="p">:</span> <span class="n">orthP</span><span class="p">,</span>
+      <span class="s1">&#39;P.X&#39;</span><span class="p">:</span> <span class="n">PX</span><span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">_eigh_ascending</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+  <span class="n">w</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">w</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">V</span><span class="p">[:,</span> <span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">_svqb</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Derives a truncated orthonormal basis for `X`.</span>
+
+<span class="sd">  SVQB [1] is an accelerator-friendly orthonormalization procedure, which</span>
+<span class="sd">  squares the matrix `C = X.T @ X` and computes an eigenbasis for a smaller</span>
+<span class="sd">  `(k, k)` system; this offloads most of the work in orthonormalization</span>
+<span class="sd">  to the first multiply when `n` is large.</span>
+
+<span class="sd">  Importantly, if diagonalizing the squared matrix `C` reveals rank deficiency</span>
+<span class="sd">  of X (which would be evidenced by near-0 then), eigenvalues corresponding</span>
+<span class="sd">  columns are zeroed out.</span>
+
+<span class="sd">  [1]: https://sdm.lbl.gov/~kewu/ps/45577.html</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    X : An `(n, k)` array which describes a linear subspace of R^n, possibly</span>
+<span class="sd">        numerically degenerate with some rank less than `k`.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    An orthonormal space `V` described by a `(n, k)` array, with trailing</span>
+<span class="sd">    columns possibly zeroed out if `X` is of low rank.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="c1"># In [1] diagonal conditioning is explicit, but by normalizing first</span>
+  <span class="c1"># we can simplify the formulas a bit, since then diagonal conditioning</span>
+  <span class="c1"># becomes a no-op.</span>
+  <span class="n">norms</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">X</span> <span class="o">/=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">norms</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">norms</span><span class="p">)</span>
+
+  <span class="n">inner</span> <span class="o">=</span> <span class="n">_mm</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+
+  <span class="n">w</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="n">_eigh_ascending</span><span class="p">(</span><span class="n">inner</span><span class="p">)</span>
+
+  <span class="c1"># All mask logic is used to avoid divide-by-zeros when input columns</span>
+  <span class="c1"># may have been zero or new zero columns introduced from truncation.</span>
+  <span class="c1">#</span>
+  <span class="c1"># If an eigenvalue is less than max eigvalue * eps, then consider</span>
+  <span class="c1"># that direction &quot;degenerate&quot;.</span>
+  <span class="n">tau</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">eps</span> <span class="o">*</span> <span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">padded</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">tau</span><span class="p">)</span>
+
+  <span class="c1"># Note the tau == 0 edge case where X was all zeros.</span>
+  <span class="n">sqrted</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">tau</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">padded</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">)</span>
+
+  <span class="c1"># X^T X = V diag(w) V^T, so</span>
+  <span class="c1"># W = X V diag(w)^(-1/2) will yield W^T W = I (excerpting zeros).</span>
+  <span class="n">scaledV</span> <span class="o">=</span> <span class="n">V</span> <span class="o">*</span> <span class="n">sqrted</span><span class="p">[</span><span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span>
+  <span class="n">orthoX</span> <span class="o">=</span> <span class="n">_mm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">scaledV</span><span class="p">)</span>
+
+  <span class="n">keep</span> <span class="o">=</span> <span class="p">((</span><span class="n">w</span> <span class="o">&gt;</span> <span class="n">tau</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">inner</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">))[</span><span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span>
+  <span class="n">orthoX</span> <span class="o">*=</span> <span class="n">keep</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">orthoX</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+  <span class="n">norms</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">orthoX</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">keep</span> <span class="o">*=</span> <span class="n">norms</span> <span class="o">&gt;</span> <span class="mf">0.0</span>
+  <span class="n">orthoX</span> <span class="o">/=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">keep</span><span class="p">,</span> <span class="n">norms</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">orthoX</span>
+
+
+<span class="k">def</span> <span class="nf">_project_out</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">U</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Derives component of U in the orthogonal complement of basis.</span>
+
+<span class="sd">  This method iteratively subtracts out the basis component and orthonormalizes</span>
+<span class="sd">  the remainder. To an extent, these two operations can oppose each other</span>
+<span class="sd">  when the remainder norm is near-zero (since normalization enlarges a vector</span>
+<span class="sd">  which may possibly lie in the subspace `basis` to be subtracted).</span>
+
+<span class="sd">  We make sure to prioritize orthogonality between `basis` and `U`, favoring</span>
+<span class="sd">  to return a lower-rank space thank `rank(U)`, in this tradeoff.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    basis : An `(n, m)` array which describes a linear subspace of R^n, this</span>
+<span class="sd">        is assumed to be orthonormal but zero columns are allowed.</span>
+<span class="sd">    U : An `(n, k)` array representing another subspace of R^n, whose `basis`</span>
+<span class="sd">        component is to be projected out.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    An `(n, k)` array, with some columns possibly zeroed out, representing</span>
+<span class="sd">    the component of `U` in the complement of `basis`. The nonzero columns</span>
+<span class="sd">    are mutually orthonormal.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="c1"># See Sec. 6.9 of The Symmetric Eigenvalue Problem by Beresford Parlett [1]</span>
+  <span class="c1"># which motivates two loop iterations for basis subtraction. This</span>
+  <span class="c1"># &quot;twice is enough&quot; approach is due to Kahan. See also a practical note</span>
+  <span class="c1"># by SLEPc developers [2].</span>
+  <span class="c1">#</span>
+  <span class="c1"># Interspersing with orthonormalization isn&#39;t directly grounded in the</span>
+  <span class="c1"># original analysis, but taken from Algorithm 5 of [3]. In practice, due to</span>
+  <span class="c1"># normalization, I have noticed that the orthonormalized basis</span>
+  <span class="c1"># does not always end up as a subspace of the starting basis in practice.</span>
+  <span class="c1"># There may be room to refine this procedure further, but the adjustment</span>
+  <span class="c1"># in the subsequent block handles this edge case well enough for now.</span>
+  <span class="c1">#</span>
+  <span class="c1"># [1]: https://epubs.siam.org/doi/abs/10.1137/1.9781611971163</span>
+  <span class="c1"># [2]: http://slepc.upv.es/documentation/reports/str1.pdf</span>
+  <span class="c1"># [3]: https://arxiv.org/abs/1704.07458</span>
+  <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">U</span> <span class="o">-=</span> <span class="n">_mm</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">_mm</span><span class="p">(</span><span class="n">basis</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">U</span><span class="p">))</span>
+    <span class="n">U</span> <span class="o">=</span> <span class="n">_orthonormalize</span><span class="p">(</span><span class="n">U</span><span class="p">)</span>
+
+  <span class="c1"># It&#39;s crucial to end on a subtraction of the original basis.</span>
+  <span class="c1"># This seems to be a detail not present in [2], possibly because of</span>
+  <span class="c1"># of reliance on soft locking.</span>
+  <span class="c1">#</span>
+  <span class="c1"># Near convergence, if the residuals R are 0 and our last</span>
+  <span class="c1"># operation when projecting (X, P) out from R is the orthonormalization</span>
+  <span class="c1"># done above, then due to catastrophic cancellation we may re-introduce</span>
+  <span class="c1"># (X, P) subspace components into U, which can ruin the Rayleigh-Ritz</span>
+  <span class="c1"># conditioning.</span>
+  <span class="c1">#</span>
+  <span class="c1"># We zero out any columns that are even remotely suspicious, so the invariant</span>
+  <span class="c1"># that [basis, U] is zero-or-orthogonal is ensured.</span>
+  <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">U</span> <span class="o">-=</span> <span class="n">_mm</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">_mm</span><span class="p">(</span><span class="n">basis</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">U</span><span class="p">))</span>
+  <span class="n">normU</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">U</span> <span class="o">*=</span> <span class="p">(</span><span class="n">normU</span> <span class="o">&gt;=</span> <span class="mf">0.99</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">U</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">U</span>
+
+<span class="k">def</span> <span class="nf">_orthonormalize</span><span class="p">(</span><span class="n">basis</span><span class="p">):</span>
+  <span class="c1"># Twice is enough, again.</span>
+  <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">basis</span> <span class="o">=</span> <span class="n">_svqb</span><span class="p">(</span><span class="n">basis</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">basis</span>
+
+
+<span class="k">def</span> <span class="nf">_rayleigh_ritz_orth</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">S</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Solve the Rayleigh-Ritz problem for `A` projected to `S`.</span>
+
+<span class="sd">  Solves the local eigenproblem for `A` within the subspace `S`, which is</span>
+<span class="sd">  assumed to be orthonormal (with zero columns allowed), identifying `w, V`</span>
+<span class="sd">  satisfying</span>
+
+<span class="sd">  (1) `S.T A S V ~= diag(w) V`</span>
+<span class="sd">  (2) `V` is standard orthonormal</span>
+
+<span class="sd">  Note that (2) is simplified to be standard orthonormal because `S` is.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    A: An operator representing the action of an `n`-sized square matrix.</span>
+<span class="sd">    S: An orthonormal subspace of R^n represented by an `(n, k)` array, with</span>
+<span class="sd">       zero columns allowed.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    Eigenvectors `V` and eigenvalues `w` satisfying the size-`k` system</span>
+<span class="sd">    described in this method doc. Note `V` will be full rank, even if `S` isn&#39;t.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="n">SAS</span> <span class="o">=</span> <span class="n">_mm</span><span class="p">(</span><span class="n">S</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">A</span><span class="p">(</span><span class="n">S</span><span class="p">))</span>
+
+  <span class="c1"># Solve the projected subsystem.</span>
+  <span class="c1"># If we could tell to eigh to stop after first k, we would.</span>
+  <span class="k">return</span> <span class="n">_eigh_ascending</span><span class="p">(</span><span class="n">SAS</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_extend_basis</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Extend the basis of `X` with `m` addition dimensions.</span>
+
+<span class="sd">  Given an orthonormal `X` of dimension `k`, a typical strategy for deriving</span>
+<span class="sd">  an extended basis is to generate a random one and project it out.</span>
+
+<span class="sd">  We instead generate a basis using block householder reflectors [1] [2] to</span>
+<span class="sd">  leverage the favorable properties of determinism and avoiding the chance that</span>
+<span class="sd">  the generated random basis has overlap with the starting basis, which may</span>
+<span class="sd">  happen with non-negligible probability in low-dimensional cases.</span>
+
+<span class="sd">  [1]: https://epubs.siam.org/doi/abs/10.1137/0725014</span>
+<span class="sd">  [2]: https://www.jstage.jst.go.jp/article/ipsjdc/2/0/2_0_298/_article</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    X : An `(n, k)` array representing a `k`-rank orthonormal basis for a linear</span>
+<span class="sd">        subspace of R^n.</span>
+<span class="sd">    m : A nonnegative integer such that `k + m &lt;= n` telling us how much to</span>
+<span class="sd">        extend the basis by.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    An `(n, m)` array representing an extension to the basis of `X` such that</span>
+<span class="sd">    their union is orthonormal.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">n</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+  <span class="c1"># X = vstack(Xupper, Xlower), where Xupper is (k, k)</span>
+  <span class="n">Xupper</span><span class="p">,</span> <span class="n">Xlower</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+  <span class="n">u</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">vt</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">Xupper</span><span class="p">)</span>
+
+  <span class="c1"># Adding U V^T to Xupper won&#39;t change its row or column space, but notice</span>
+  <span class="c1"># its singular values are all lifted by 1; we could write its upper k rows</span>
+  <span class="c1"># as u diag(1 + s) vt.</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">Xupper</span> <span class="o">+</span> <span class="n">_mm</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">vt</span><span class="p">),</span> <span class="n">Xlower</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+  <span class="c1"># Suppose we found a full-rank (n, k) matrix w which defines the</span>
+  <span class="c1"># perpendicular to a space we&#39;d like to reflect over. The block householder</span>
+  <span class="c1"># reflector H(w) would have the usual involution property.</span>
+  <span class="c1">#</span>
+  <span class="c1"># Consider the two definitions below:</span>
+  <span class="c1"># H(w) = I - 2 w w^T</span>
+  <span class="c1"># 2 w w^T = y (v diag(1+s)^(-1) vt) y^T</span>
+  <span class="c1">#</span>
+  <span class="c1"># After some algebra, we see H(w) X = vstack(-u vt, 0)</span>
+  <span class="c1"># Applying H(w) to both sides since H(w)^2 = I we have</span>
+  <span class="c1"># X = H(w) vstack(-u vt, 0). But since H(w) is unitary its action must</span>
+  <span class="c1"># preserve rank. Thus H(w) vstack(0, eye(n - k)) must be orthogonal to</span>
+  <span class="c1"># X; taking just the first m columns H(w) vstack(0, eye(m), 0) yields</span>
+  <span class="c1"># an orthogonal extension to X.</span>
+  <span class="n">other</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+      <span class="p">[</span><span class="n">jnp</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
+       <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span> <span class="o">-</span> <span class="n">k</span> <span class="o">-</span> <span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">dtype</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+  <span class="n">w</span> <span class="o">=</span> <span class="n">_mm</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">vt</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="p">((</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">s</span><span class="p">))</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">))[</span><span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:])</span>
+  <span class="n">h</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">multi_dot</span><span class="p">(</span>
+      <span class="p">[</span><span class="n">w</span><span class="p">,</span> <span class="n">w</span><span class="p">[</span><span class="n">k</span><span class="p">:,</span> <span class="p">:]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">other</span><span class="p">],</span> <span class="n">precision</span><span class="o">=</span><span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">Precision</span><span class="o">.</span><span class="n">HIGHEST</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">h</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">k</span><span class="p">:]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+
+<span class="c1"># Sparse direct solve via QR factorization</span>
+<span class="k">def</span> <span class="nf">_spsolve_abstract_eval</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">indptr</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tol</span><span class="p">,</span> <span class="n">reorder</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">b</span><span class="o">.</span><span class="n">dtype</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;data types do not match: </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="si">=}</span><span class="s2"> </span><span class="si">{</span><span class="n">b</span><span class="o">.</span><span class="n">dtype</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">indices</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">integer</span><span class="p">)</span> <span class="ow">and</span> <span class="n">jnp</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">indptr</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">integer</span><span class="p">)):</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;index arrays must be integer typed; got </span><span class="si">{</span><span class="n">indices</span><span class="o">.</span><span class="n">dtype</span><span class="si">=}</span><span class="s2"> </span><span class="si">{</span><span class="n">indptr</span><span class="o">.</span><span class="n">dtype</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="n">indices</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="n">indptr</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="n">b</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Arrays must be one-dimensional. &quot;</span>
+                     <span class="sa">f</span><span class="s2">&quot;Got </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="si">=}</span><span class="s2"> </span><span class="si">{</span><span class="n">indices</span><span class="o">.</span><span class="n">shape</span><span class="si">=}</span><span class="s2"> </span><span class="si">{</span><span class="n">indptr</span><span class="o">.</span><span class="n">shape</span><span class="si">=}</span><span class="s2"> </span><span class="si">{</span><span class="n">b</span><span class="o">.</span><span class="n">shape</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">indptr</span><span class="o">.</span><span class="n">size</span> <span class="o">!=</span> <span class="n">b</span><span class="o">.</span><span class="n">size</span> <span class="o">+</span> <span class="mi">1</span> <span class="ow">or</span>  <span class="n">data</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">indices</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid CSR buffer sizes: </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="si">=}</span><span class="s2"> </span><span class="si">{</span><span class="n">indices</span><span class="o">.</span><span class="n">shape</span><span class="si">=}</span><span class="s2"> </span><span class="si">{</span><span class="n">indptr</span><span class="o">.</span><span class="n">shape</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">reorder</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">reorder</span><span class="si">=}</span><span class="s2"> not valid, must be one of [1, 2, 3, 4]&quot;</span><span class="p">)</span>
+  <span class="n">tol</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">tol</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">b</span>
+
+
+<span class="k">def</span> <span class="nf">_spsolve_gpu_lowering</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">indptr</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tol</span><span class="p">,</span> <span class="n">reorder</span><span class="p">):</span>
+  <span class="n">data_aval</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">avals_in</span>
+  <span class="k">return</span> <span class="n">gpu_solver</span><span class="o">.</span><span class="n">cuda_csrlsvqr</span><span class="p">(</span><span class="n">data_aval</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span>
+                                  <span class="n">indptr</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">tol</span><span class="p">,</span> <span class="n">reorder</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_spsolve_cpu_lowering</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">indptr</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">tol</span><span class="p">,</span> <span class="n">reorder</span><span class="p">):</span>
+  <span class="k">del</span> <span class="n">tol</span><span class="p">,</span> <span class="n">reorder</span>
+  <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">indptr</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span>
+
+  <span class="k">def</span> <span class="nf">_callback</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">indptr</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">csr_matrix</span><span class="p">((</span><span class="n">data</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">indptr</span><span class="p">),</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">linalg</span><span class="o">.</span><span class="n">spsolve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">dtype</span><span class="p">),)</span>
+
+  <span class="n">result</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">mlir</span><span class="o">.</span><span class="n">emit_python_callback</span><span class="p">(</span>
+      <span class="n">ctx</span><span class="p">,</span> <span class="n">_callback</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">ctx</span><span class="o">.</span><span class="n">avals_in</span><span class="p">,</span> <span class="n">ctx</span><span class="o">.</span><span class="n">avals_out</span><span class="p">,</span>
+      <span class="n">has_side_effect</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">result</span>
+
+
+<span class="k">def</span> <span class="nf">_spsolve_jvp_lhs</span><span class="p">(</span><span class="n">data_dot</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">indptr</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
+    <span class="c1"># d/dM M^-1 b = M^-1 M_dot M^-1 b</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">spsolve</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">indptr</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">sparse</span><span class="o">.</span><span class="n">csr_matvec_p</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">data_dot</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">indptr</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span>
+                                 <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">indptr</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)),</span>
+                                 <span class="n">transpose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">spsolve</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">indptr</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_spsolve_jvp_rhs</span><span class="p">(</span><span class="n">b_dot</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">indptr</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
+    <span class="c1"># d/db M^-1 b = M^-1 b_dot</span>
+    <span class="k">return</span> <span class="n">spsolve</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">indptr</span><span class="p">,</span> <span class="n">b_dot</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_csr_transpose</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">indptr</span><span class="p">):</span>
+  <span class="c1"># Transpose of a square CSR matrix</span>
+  <span class="n">m</span> <span class="o">=</span> <span class="n">indptr</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span>
+  <span class="n">row</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">indptr</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
+  <span class="n">row_T</span><span class="p">,</span> <span class="n">indices_T</span><span class="p">,</span> <span class="n">data_T</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">sort</span><span class="p">((</span><span class="n">indices</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">data</span><span class="p">),</span> <span class="n">num_keys</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+  <span class="n">indptr_T</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">indptr</span><span class="p">)</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
+      <span class="n">jnp</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">row_T</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="n">m</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">indptr</span><span class="o">.</span><span class="n">dtype</span><span class="p">))</span>
+  <span class="k">return</span> <span class="n">data_T</span><span class="p">,</span> <span class="n">indices_T</span><span class="p">,</span> <span class="n">indptr_T</span>
+
+
+<span class="k">def</span> <span class="nf">_spsolve_transpose</span><span class="p">(</span><span class="n">ct</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">indptr</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
+  <span class="k">assert</span> <span class="ow">not</span> <span class="n">ad</span><span class="o">.</span><span class="n">is_undefined_primal</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span>
+  <span class="k">assert</span> <span class="ow">not</span> <span class="n">ad</span><span class="o">.</span><span class="n">is_undefined_primal</span><span class="p">(</span><span class="n">indptr</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">ad</span><span class="o">.</span><span class="n">is_undefined_primal</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+    <span class="c1"># TODO(jakevdp): can we do this without an explicit transpose?</span>
+    <span class="n">data_T</span><span class="p">,</span> <span class="n">indices_T</span><span class="p">,</span> <span class="n">indptr_T</span> <span class="o">=</span> <span class="n">_csr_transpose</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">indptr</span><span class="p">)</span>
+    <span class="n">ct_out</span> <span class="o">=</span> <span class="n">spsolve</span><span class="p">(</span><span class="n">data_T</span><span class="p">,</span> <span class="n">indices_T</span><span class="p">,</span> <span class="n">indptr_T</span><span class="p">,</span> <span class="n">ct</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">indptr</span><span class="p">,</span> <span class="n">ct_out</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="c1"># Should never reach here, because JVP is linear wrt data.</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;spsolve transpose with respect to data&quot;</span><span class="p">)</span>
+
+
+<span class="n">spsolve_p</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">Primitive</span><span class="p">(</span><span class="s1">&#39;spsolve&#39;</span><span class="p">)</span>
+<span class="n">spsolve_p</span><span class="o">.</span><span class="n">def_impl</span><span class="p">(</span><span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">xla</span><span class="o">.</span><span class="n">apply_primitive</span><span class="p">,</span> <span class="n">spsolve_p</span><span class="p">))</span>
+<span class="n">spsolve_p</span><span class="o">.</span><span class="n">def_abstract_eval</span><span class="p">(</span><span class="n">_spsolve_abstract_eval</span><span class="p">)</span>
+<span class="n">ad</span><span class="o">.</span><span class="n">defjvp</span><span class="p">(</span><span class="n">spsolve_p</span><span class="p">,</span> <span class="n">_spsolve_jvp_lhs</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">_spsolve_jvp_rhs</span><span class="p">)</span>
+<span class="n">ad</span><span class="o">.</span><span class="n">primitive_transposes</span><span class="p">[</span><span class="n">spsolve_p</span><span class="p">]</span> <span class="o">=</span> <span class="n">_spsolve_transpose</span>
+<span class="n">mlir</span><span class="o">.</span><span class="n">register_lowering</span><span class="p">(</span><span class="n">spsolve_p</span><span class="p">,</span> <span class="n">_spsolve_gpu_lowering</span><span class="p">,</span> <span class="n">platform</span><span class="o">=</span><span class="s1">&#39;cuda&#39;</span><span class="p">)</span>
+<span class="n">mlir</span><span class="o">.</span><span class="n">register_lowering</span><span class="p">(</span><span class="n">spsolve_p</span><span class="p">,</span> <span class="n">_spsolve_cpu_lowering</span><span class="p">,</span> <span class="n">platform</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="spsolve">
+<a class="viewcode-back" href="../../../../_autosummary/jax.experimental.sparse.linalg.spsolve.html#jax.experimental.sparse.linalg.spsolve">[docs]</a>
+<span class="k">def</span> <span class="nf">spsolve</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">indptr</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">reorder</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;A sparse direct solver using QR factorization.</span>
+
+<span class="sd">  Accepts a sparse matrix in CSR format `data, indices, indptr` arrays.</span>
+<span class="sd">  Currently only the CUDA GPU backend is implemented.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    data : An array containing the non-zero entries of the CSR matrix.</span>
+<span class="sd">    indices : The column indices of the CSR matrix.</span>
+<span class="sd">    indptr : The row pointer array of the CSR matrix.</span>
+<span class="sd">    b : The right hand side of the linear system.</span>
+<span class="sd">    tol : Tolerance to decide if singular or not. Defaults to 1e-6.</span>
+<span class="sd">    reorder : The reordering scheme to use to reduce fill-in. No reordering if</span>
+<span class="sd">      ``reorder=0``. Otherwise, symrcm, symamd, or csrmetisnd (``reorder=1,2,3``),</span>
+<span class="sd">      respectively. Defaults to symrcm.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    An array with the same dtype and size as b representing the solution to</span>
+<span class="sd">    the sparse linear system.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">spsolve_p</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">indptr</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="n">tol</span><span class="p">,</span> <span class="n">reorder</span><span class="o">=</span><span class="n">reorder</span><span class="p">)</span></div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The JAX authors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, The JAX Authors. NumPy and SciPy documentation are copyright the respective authors..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

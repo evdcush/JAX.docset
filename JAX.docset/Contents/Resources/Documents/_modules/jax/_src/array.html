@@ -1,0 +1,1550 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>jax._src.array &#8212; JAX  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/style.css?v=02ed413a" />
+    <link rel="stylesheet" href="../../../_static/style.css" type="text/css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../../../_static/design-tabs.js?v=36754332"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/jax/_src/array';</script>
+    <link rel="icon" href="../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/jax_logo_250px.png" class="logo__image only-light" alt="JAX  documentation - Home"/>
+    <script>document.write(`<img src="../../../_static/jax_logo_250px.png" class="logo__image only-dark" alt="JAX  documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installing JAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/quickstart.html">JAX Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/thinking_in_jax.html">How to Think in JAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/Common_Gotchas_in_JAX.html">🔪 JAX - The Sharp Bits 🔪</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq.html">JAX Frequently Asked Questions (FAQ)</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../jax-101/index.html">Tutorial: JAX 101</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/01-jax-basics.html">JAX As Accelerated NumPy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/02-jitting.html">Just In Time Compilation with JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/03-vectorization.html">Automatic Vectorization in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/04-advanced-autodiff.html">Advanced Automatic Differentiation in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/05-random-numbers.html">Pseudo Random Numbers in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/05.1-pytrees.html">Working with Pytrees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/06-parallelism.html">Parallel Evaluation in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/07-state.html">Stateful Computations in JAX</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Further Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../user_guides.html">User Guides</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../profiling.html">Profiling JAX programs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../device_memory_profiling.html">Device Memory Profiling</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../debugging/index.html">Runtime value debugging in JAX</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../debugging/print_breakpoint.html"><code class="docutils literal notranslate"><span class="pre">jax.debug.print</span></code> and <code class="docutils literal notranslate"><span class="pre">jax.debug.breakpoint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../debugging/checkify_guide.html">The <code class="docutils literal notranslate"><span class="pre">checkify</span></code> transformation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../debugging/flags.html">JAX debugging flags</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../gpu_performance_tips.html">GPU performance tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../persistent_compilation_cache.html">Persistent Compilation Cache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jaxpr.html">Understanding Jaxprs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/external_callbacks.html">External Callbacks in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../type_promotion.html">Type promotion semantics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytrees.html">Pytrees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../aot.html">Ahead-of-time lowering and compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../errors.html">JAX Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../transfer_guard.html">Transfer guard</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../pallas/index.html">Pallas: a JAX kernel language</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../pallas/design.html">Pallas Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pallas/quickstart.html">Pallas Quickstart</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../pallas/tpu/index.html">Pallas TPU</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../pallas/tpu/details.html">Writing TPU kernels with Pallas</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../pallas/tpu/pipelining.html">Pipelining and <code class="docutils literal notranslate"><span class="pre">BlockSpec</span></code>s</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../advanced_guide.html">Advanced Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/neural_network_with_tfds_data.html">Training a Simple Neural Network, with tensorflow/datasets Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Neural_Network_and_Data_Loading.html">Training a Simple Neural Network, with PyTorch Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/vmapped_log_probs.html">Autobatching for Bayesian Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../multi_process.html">Using JAX in multi-host and multi-process environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Distributed_arrays_and_automatic_parallelization.html">Distributed arrays and automatic parallelization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/shard_map.html">SPMD multi-device parallelism with <code class="docutils literal notranslate"><span class="pre">shard_map</span></code></a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/xmap_tutorial.html">Named axes and easy-to-revise parallelism with <code class="docutils literal notranslate"><span class="pre">xmap</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/autodiff_cookbook.html">The Autodiff Cookbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Custom_derivative_rules_for_Python_code.html">Custom derivative rules for JAX-transformable Python functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/autodiff_remat.html">Control autodiff’s saved values with <code class="docutils literal notranslate"><span class="pre">jax.checkpoint</span></code> (aka <code class="docutils literal notranslate"><span class="pre">jax.remat</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/How_JAX_primitives_work.html">How JAX primitives work</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Writing_custom_interpreters_in_Jax.html">Writing custom Jaxpr interpreters in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Custom_Operation_for_GPUs.html">Custom operations for GPUs with C++ and CUDA</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/convolutions.html">Generalized Convolutions in JAX</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../contributor_guide.html">Developer Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html">Contributing to JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../developer.html">Building from source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax_internal_api.html">Internal APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autodidax.html">Autodidax: JAX core from scratch</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jep/index.html">JAX Enhancement Proposals (JEPs)</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/263-prng.html">263: JAX PRNG Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/2026-custom-derivatives.html">2026: Custom JVP/VJP rules for JAX-transformable functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/4008-custom-vjp-update.html">4008: Custom VJP and `nondiff_argnums` update</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/4410-omnistaging.html">4410: Omnistaging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/9263-typed-keys.html">9263: Typed keys &amp; pluggable RNGs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/9407-type-promotion.html">9407: Design of Type Promotion Semantics for JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/9419-jax-versioning.html">9419: Jax and Jaxlib versioning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/10657-sequencing-effects.html">10657: Sequencing side-effects in JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/11830-new-remat-checkpoint.html">11830: `jax.remat` / `jax.checkpoint` new implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/12049-type-annotations.html">12049: Type Annotation Roadmap for JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/14273-shard-map.html">14273: `shard_map` (`shmap`) for simple per-device code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/15856-jex.html">15856: `jax.extend`, an extensions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/17111-shmap-transpose.html">17111: Efficient transposition of `shard_map` (and other maps)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/18137-numpy-scipy-scope.html">18137: Scope of JAX NumPy &amp; SciPy Wrappers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../investigating_a_regression.html">Investigating a regression</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../building_on_jax.html">Building on JAX</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../notes.html">Notes</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_compatibility.html">API compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../deprecation.html">Python and NumPy version support policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax_array_migration.html">jax.Array migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../async_dispatch.html">Asynchronous dispatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../concurrency.html">Concurrency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../gpu_memory_allocation.html">GPU memory allocation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../rank_promotion_warning.html">Rank promotion warning</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../jax.html">Public API: jax package</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.numpy.html"><code class="docutils literal notranslate"><span class="pre">jax.numpy</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fft.html">jax.numpy.fft.fft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fft2.html">jax.numpy.fft.fft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fftfreq.html">jax.numpy.fft.fftfreq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fftn.html">jax.numpy.fft.fftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fftshift.html">jax.numpy.fft.fftshift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.hfft.html">jax.numpy.fft.hfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifft.html">jax.numpy.fft.ifft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifft2.html">jax.numpy.fft.ifft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifftn.html">jax.numpy.fft.ifftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifftshift.html">jax.numpy.fft.ifftshift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ihfft.html">jax.numpy.fft.ihfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.irfft.html">jax.numpy.fft.irfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.irfft2.html">jax.numpy.fft.irfft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.irfftn.html">jax.numpy.fft.irfftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfft.html">jax.numpy.fft.rfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfft2.html">jax.numpy.fft.rfft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfftfreq.html">jax.numpy.fft.rfftfreq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfftn.html">jax.numpy.fft.rfftn</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.scipy.html"><code class="docutils literal notranslate"><span class="pre">jax.scipy</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.logpmf.html">jax.scipy.stats.bernoulli.logpmf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.pmf.html">jax.scipy.stats.bernoulli.pmf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.cdf.html">jax.scipy.stats.bernoulli.cdf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.ppf.html">jax.scipy.stats.bernoulli.ppf</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.lax.html"><code class="docutils literal notranslate"><span class="pre">jax.lax</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.random.html"><code class="docutils literal notranslate"><span class="pre">jax.random</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.sharding.html"><code class="docutils literal notranslate"><span class="pre">jax.sharding</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.debug.html"><code class="docutils literal notranslate"><span class="pre">jax.debug</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.dlpack.html"><code class="docutils literal notranslate"><span class="pre">jax.dlpack</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.distributed.html"><code class="docutils literal notranslate"><span class="pre">jax.distributed</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.dtypes.html"><code class="docutils literal notranslate"><span class="pre">jax.dtypes</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.flatten_util.html"><code class="docutils literal notranslate"><span class="pre">jax.flatten_util</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.image.html"><code class="docutils literal notranslate"><span class="pre">jax.image</span></code> module</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.nn.html"><code class="docutils literal notranslate"><span class="pre">jax.nn</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-13"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.nn.initializers.html"><code class="docutils literal notranslate"><span class="pre">jax.nn.initializers</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.ops.html"><code class="docutils literal notranslate"><span class="pre">jax.ops</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.profiler.html"><code class="docutils literal notranslate"><span class="pre">jax.profiler</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.stages.html"><code class="docutils literal notranslate"><span class="pre">jax.stages</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.tree.html"><code class="docutils literal notranslate"><span class="pre">jax.tree</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.tree_util.html"><code class="docutils literal notranslate"><span class="pre">jax.tree_util</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.typing.html"><code class="docutils literal notranslate"><span class="pre">jax.typing</span></code> module</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.extend.html"><code class="docutils literal notranslate"><span class="pre">jax.extend</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.extend.linear_util.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.linear_util</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.extend.mlir.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.mlir</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.extend.random.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.random</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.example_libraries.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-15"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.example_libraries.optimizers.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries.optimizers</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.example_libraries.stax.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries.stax</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.experimental.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.array_api.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.array_api</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.checkify.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.checkify</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.host_callback.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.host_callback</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.maps.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.maps</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.pjit.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.pjit</span></code> module</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../jax.experimental.sparse.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.sparse</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.BCOO.html">jax.experimental.sparse.BCOO</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_broadcast_in_dim.html">jax.experimental.sparse.bcoo_broadcast_in_dim</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_concatenate.html">jax.experimental.sparse.bcoo_concatenate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_dot_general.html">jax.experimental.sparse.bcoo_dot_general</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_dot_general_sampled.html">jax.experimental.sparse.bcoo_dot_general_sampled</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_dynamic_slice.html">jax.experimental.sparse.bcoo_dynamic_slice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_extract.html">jax.experimental.sparse.bcoo_extract</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_fromdense.html">jax.experimental.sparse.bcoo_fromdense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_gather.html">jax.experimental.sparse.bcoo_gather</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_multiply_dense.html">jax.experimental.sparse.bcoo_multiply_dense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_multiply_sparse.html">jax.experimental.sparse.bcoo_multiply_sparse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_update_layout.html">jax.experimental.sparse.bcoo_update_layout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_reduce_sum.html">jax.experimental.sparse.bcoo_reduce_sum</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_reshape.html">jax.experimental.sparse.bcoo_reshape</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_slice.html">jax.experimental.sparse.bcoo_slice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_sort_indices.html">jax.experimental.sparse.bcoo_sort_indices</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_squeeze.html">jax.experimental.sparse.bcoo_squeeze</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_sum_duplicates.html">jax.experimental.sparse.bcoo_sum_duplicates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_todense.html">jax.experimental.sparse.bcoo_todense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_transpose.html">jax.experimental.sparse.bcoo_transpose</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.jet.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.jet</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.custom_partitioning.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.custom_partitioning</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.multihost_utils.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.multihost_utils</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.compilation_cache.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.compilation_cache</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.key_reuse.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.key_reuse</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.mesh_utils.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.mesh_utils</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.lib.html"><code class="docutils literal notranslate"><span class="pre">jax.lib</span></code> module</a></li>
+</ul>
+</li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../glossary.html">JAX Glossary of Terms</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/google/jax" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for jax._src.array</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2021 The JAX Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     https://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">import</span> <span class="nn">enum</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">operator</span> <span class="k">as</span> <span class="nn">op</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">cast</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Sequence</span>
+
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">abstract_arrays</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">api</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">api_util</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">basearray</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">config</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">core</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">dispatch</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">dtypes</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">errors</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">profiler</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">tree_util</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">xla_bridge</span>
+<span class="kn">from</span> <span class="nn">jax._src.lib</span> <span class="kn">import</span> <span class="n">xla_client</span> <span class="k">as</span> <span class="n">xc</span>
+<span class="kn">from</span> <span class="nn">jax._src.lib</span> <span class="kn">import</span> <span class="n">xla_extension_version</span>
+<span class="kn">from</span> <span class="nn">jax._src.lib</span> <span class="kn">import</span> <span class="n">xla_extension</span> <span class="k">as</span> <span class="n">xe</span>
+<span class="kn">from</span> <span class="nn">jax._src.interpreters</span> <span class="kn">import</span> <span class="n">mlir</span>
+<span class="kn">from</span> <span class="nn">jax._src.interpreters</span> <span class="kn">import</span> <span class="n">pxla</span>
+<span class="kn">from</span> <span class="nn">jax._src.interpreters</span> <span class="kn">import</span> <span class="n">xla</span>
+<span class="kn">from</span> <span class="nn">jax._src.sharding</span> <span class="kn">import</span> <span class="n">Sharding</span>
+<span class="kn">from</span> <span class="nn">jax._src.sharding_impls</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">SingleDeviceSharding</span><span class="p">,</span> <span class="n">XLACompatibleSharding</span><span class="p">,</span> <span class="n">PmapSharding</span><span class="p">,</span>
+    <span class="n">device_replica_id_map</span><span class="p">,</span> <span class="n">hashed_index</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">jax._src.layout</span> <span class="kn">import</span> <span class="n">DeviceLocalLayout</span><span class="p">,</span> <span class="n">Layout</span><span class="p">,</span> <span class="n">AutoLayout</span>
+<span class="kn">from</span> <span class="nn">jax._src.typing</span> <span class="kn">import</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">DLDeviceType</span>
+<span class="kn">from</span> <span class="nn">jax._src.util</span> <span class="kn">import</span> <span class="n">safe_zip</span><span class="p">,</span> <span class="n">unzip3</span><span class="p">,</span> <span class="n">use_cpp_class</span><span class="p">,</span> <span class="n">use_cpp_method</span>
+
+
+<span class="n">Shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+<span class="n">Device</span> <span class="o">=</span> <span class="n">xc</span><span class="o">.</span><span class="n">Device</span>
+<span class="n">Index</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">slice</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+<span class="n">PRNGKeyArray</span> <span class="o">=</span> <span class="n">Any</span>  <span class="c1"># TODO(jakevdp): fix cycles and import this.</span>
+
+<span class="k">def</span> <span class="nf">_get_device</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">ArrayImpl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Device</span><span class="p">:</span>
+  <span class="n">devices</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">_internal_device_list</span>  <span class="c1"># type: ignore</span>
+  <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">devices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+  <span class="k">return</span> <span class="n">devices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">Shard</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;A single data shard of an Array.</span>
+
+<span class="sd">  Attributes:</span>
+<span class="sd">    device : Which device this shard resides on.</span>
+<span class="sd">    index : The index into the global array of this shard.</span>
+<span class="sd">    replica_id : Integer id indicating which replica of the global array this</span>
+<span class="sd">      shard is part of. Always 0 for fully sharded data</span>
+<span class="sd">      (i.e. when there’s only 1 replica).</span>
+<span class="sd">    data : The data of this shard. None if ``device`` is non-local.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Device</span><span class="p">,</span> <span class="n">sharding</span><span class="p">:</span> <span class="n">Sharding</span><span class="p">,</span> <span class="n">global_shape</span><span class="p">:</span> <span class="n">Shape</span><span class="p">,</span>
+               <span class="n">data</span><span class="p">:</span> <span class="kc">None</span> <span class="o">|</span> <span class="n">ArrayImpl</span> <span class="o">|</span> <span class="n">PRNGKeyArray</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_device</span> <span class="o">=</span> <span class="n">device</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_sharding</span> <span class="o">=</span> <span class="n">sharding</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_global_shape</span> <span class="o">=</span> <span class="n">global_shape</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Shard(device=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="si">!r}</span><span class="s1">, index=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="si">}</span><span class="s1">, &#39;</span>
+              <span class="sa">f</span><span class="s1">&#39;replica_id=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">replica_id</span><span class="si">}</span><span class="s1">, data=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+      <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;Shard(device=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="si">!r}</span><span class="s1">, data=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="si">}</span><span class="s1">)&#39;</span>
+
+  <span class="nd">@functools</span><span class="o">.</span><span class="n">cached_property</span>
+  <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Index</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">device_indices_map_fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sharding</span><span class="o">.</span><span class="n">devices_indices_map</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Cannot calculate indices from sharding: &#39;</span>
+                       <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_sharding</span><span class="si">}</span><span class="s1">. Please create a device to index &#39;</span>
+                       <span class="s1">&#39;mapping for your sharding.&#39;</span><span class="p">)</span> <span class="kn">from</span> <span class="kc">None</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">device_indices_map_fn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_global_shape</span><span class="p">)[</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">index</span>
+
+  <span class="nd">@functools</span><span class="o">.</span><span class="n">cached_property</span>
+  <span class="k">def</span> <span class="nf">replica_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">device_replica_id_map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sharding</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_global_shape</span><span class="p">)[</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">]</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">device</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span>
+
+
+<span class="k">def</span> <span class="nf">_reconstruct_array</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">arr_state</span><span class="p">,</span> <span class="n">aval_state</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Method to reconstruct a device array from a serialized state.&quot;&quot;&quot;</span>
+  <span class="n">np_value</span> <span class="o">=</span> <span class="n">fun</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+  <span class="n">np_value</span><span class="o">.</span><span class="n">__setstate__</span><span class="p">(</span><span class="n">arr_state</span><span class="p">)</span>
+  <span class="n">jnp_value</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">device_put</span><span class="p">(</span><span class="n">np_value</span><span class="p">)</span>
+  <span class="n">jnp_value</span><span class="o">.</span><span class="n">aval</span> <span class="o">=</span> <span class="n">jnp_value</span><span class="o">.</span><span class="n">aval</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">aval_state</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">jnp_value</span>
+
+
+<span class="nd">@functools</span><span class="o">.</span><span class="n">lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">4096</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_cached_index_calc</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+  <span class="n">map_</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">addressable_devices_indices_map</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+  <span class="n">seen_h_indices</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+  <span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">array_index</span><span class="p">,</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">map_</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
+    <span class="n">h_index</span> <span class="o">=</span> <span class="n">hashed_index</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">h_index</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">seen_h_indices</span><span class="p">:</span>
+      <span class="n">seen_h_indices</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">h_index</span><span class="p">)</span>
+      <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">array_index</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+  <span class="k">return</span> <span class="n">l</span>
+
+
+<span class="nd">@functools</span><span class="o">.</span><span class="n">lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">4096</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_process_has_full_value_in_mcjax</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+  <span class="c1"># Return False for single host as a fast path.</span>
+  <span class="k">if</span> <span class="n">xla_bridge</span><span class="o">.</span><span class="n">process_count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+  <span class="n">num_unique_indices</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">hashed_index</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">devices_indices_map</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">()})</span>
+  <span class="n">num_addressable_unique_indices</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span>
+      <span class="p">{</span><span class="n">hashed_index</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">addressable_devices_indices_map</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">()})</span>
+  <span class="k">return</span> <span class="n">num_unique_indices</span> <span class="o">==</span> <span class="n">num_addressable_unique_indices</span>
+
+
+<span class="k">class</span> <span class="nc">ArrayImpl</span><span class="p">(</span><span class="n">basearray</span><span class="o">.</span><span class="n">Array</span><span class="p">):</span>
+  <span class="c1"># TODO(yashkatariya): Add __slots__ here.</span>
+
+  <span class="n">aval</span><span class="p">:</span> <span class="n">core</span><span class="o">.</span><span class="n">ShapedArray</span>
+  <span class="n">_sharding</span><span class="p">:</span> <span class="n">Sharding</span>
+  <span class="n">_arrays</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ArrayImpl</span><span class="p">]</span>
+  <span class="n">_committed</span><span class="p">:</span> <span class="nb">bool</span>
+  <span class="n">_skip_checks</span><span class="p">:</span> <span class="nb">bool</span>
+  <span class="n">_npy_value</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">|</span> <span class="kc">None</span>
+
+  <span class="nd">@use_cpp_method</span><span class="p">()</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">aval</span><span class="p">:</span> <span class="n">core</span><span class="o">.</span><span class="n">ShapedArray</span><span class="p">,</span> <span class="n">sharding</span><span class="p">:</span> <span class="n">Sharding</span><span class="p">,</span>
+               <span class="n">arrays</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">ArrayImpl</span><span class="p">],</span>
+               <span class="n">committed</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">_skip_checks</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="c1"># NOTE: the actual implementation of the constructor is moved to C++.</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">aval</span> <span class="o">=</span> <span class="n">aval</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_sharding</span> <span class="o">=</span> <span class="n">sharding</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="o">.</span><span class="n">_arrays</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">arrays</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_committed</span> <span class="o">=</span> <span class="n">committed</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_npy_value</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># Don&#39;t rearrange if skip_checks is enabled because this assumes that the</span>
+    <span class="c1"># input buffers are already arranged properly. This usually happens when</span>
+    <span class="c1"># Array&#39;s are created as output of a JAX transformation</span>
+    <span class="c1"># (like pjit, xmap, etc).</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">_skip_checks</span> <span class="ow">or</span> <span class="n">config</span><span class="o">.</span><span class="n">enable_checks</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_check_and_rearrange</span><span class="p">()</span>
+
+  <span class="k">def</span> <span class="nf">_check_and_rearrange</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">db</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">db</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Input buffers to `Array` must have matching dtypes. &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Got </span><span class="si">{</span><span class="n">db</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">, expected </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2"> for buffer: </span><span class="si">{</span><span class="n">db</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">device_id_to_buffer</span> <span class="o">=</span> <span class="p">{</span><span class="n">_get_device</span><span class="p">(</span><span class="n">db</span><span class="p">)</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="n">db</span> <span class="k">for</span> <span class="n">db</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span><span class="p">}</span>
+
+    <span class="n">addressable_dev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">addressable_devices</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">addressable_dev</span><span class="p">):</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+          <span class="sa">f</span><span class="s2">&quot;Expected </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">addressable_dev</span><span class="p">)</span><span class="si">}</span><span class="s2"> per-device arrays &quot;</span>
+          <span class="s2">&quot;(this is how many devices are addressable by the sharding), but &quot;</span>
+          <span class="sa">f</span><span class="s2">&quot;got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">array_device_ids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">device_id_to_buffer</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="n">addressable_device_ids</span> <span class="o">=</span> <span class="p">{</span><span class="n">d</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">addressable_dev</span><span class="p">}</span>
+    <span class="c1"># Calculate a symmetric difference because the device ids between sharding</span>
+    <span class="c1"># and _arrays should match.</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="n">array_device_ids</span> <span class="o">^</span> <span class="n">addressable_device_ids</span>
+    <span class="k">if</span> <span class="n">diff</span><span class="p">:</span>
+      <span class="n">dev_in_sharding_not_in_arrays</span> <span class="o">=</span> <span class="n">addressable_device_ids</span> <span class="o">-</span> <span class="n">array_device_ids</span>
+      <span class="n">dev_in_arrays_not_in_sharding</span> <span class="o">=</span> <span class="n">array_device_ids</span> <span class="o">-</span> <span class="n">addressable_device_ids</span>
+      <span class="n">err_msg</span> <span class="o">=</span> <span class="p">(</span>
+          <span class="s2">&quot;Addressable devices and per-device arrays devices do not match.&quot;</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">dev_in_sharding_not_in_arrays</span><span class="p">:</span>
+        <span class="n">err_msg</span> <span class="o">+=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Sharding contains devices </span><span class="si">{</span><span class="n">dev_in_sharding_not_in_arrays</span><span class="si">}</span><span class="s2"> &quot;</span>
+                    <span class="s2">&quot;that are not present in per-device arrays.&quot;</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">dev_in_arrays_not_in_sharding</span><span class="p">:</span>
+        <span class="n">err_msg</span> <span class="o">+=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Per-device arrays contain devices </span><span class="si">{</span><span class="n">dev_in_arrays_not_in_sharding</span><span class="si">}</span><span class="s2"> &quot;</span>
+                    <span class="s2">&quot;that are not present in the sharding.&quot;</span><span class="p">)</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span>
+
+    <span class="n">ss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">shard_shape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">db</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">db</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">ss</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Expected shard shape </span><span class="si">{</span><span class="n">ss</span><span class="si">}</span><span class="s2"> doesn&#39;t match the single device array &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;shape </span><span class="si">{</span><span class="n">db</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">. Shape of Array is &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">aval</span><span class="o">.</span><span class="n">str_short</span><span class="p">()</span><span class="si">}</span><span class="s2"> with sharding </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">sharding</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Rearrange arrays based on the device assignment.</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sharding</span><span class="p">,</span> <span class="n">XLACompatibleSharding</span><span class="p">):</span>
+      <span class="n">addressable_da</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">_addressable_device_assignment</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span> <span class="o">=</span> <span class="p">[</span><span class="n">device_id_to_buffer</span><span class="p">[</span><span class="n">device</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="k">for</span> <span class="n">device</span> <span class="ow">in</span> <span class="n">addressable_da</span><span class="p">]</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Shape</span><span class="p">:</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">aval</span><span class="o">.</span><span class="n">shape</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">dtype</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">aval</span><span class="o">.</span><span class="n">dtype</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">ndim</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">sharding</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sharding</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">weak_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">aval</span><span class="o">.</span><span class="n">weak_type</span>
+
+  <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">IndexError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;len() of unsized object&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">err</span>  <span class="c1"># same as numpy error</span>
+
+  <span class="k">def</span> <span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">core</span><span class="o">.</span><span class="n">check_bool_conversion</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__float__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">core</span><span class="o">.</span><span class="n">check_scalar_conversion</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="o">.</span><span class="fm">__float__</span><span class="p">()</span>
+
+  <span class="k">def</span> <span class="fm">__int__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">core</span><span class="o">.</span><span class="n">check_scalar_conversion</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="o">.</span><span class="fm">__int__</span><span class="p">()</span>
+
+  <span class="k">def</span> <span class="fm">__complex__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">core</span><span class="o">.</span><span class="n">check_scalar_conversion</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="o">.</span><span class="fm">__complex__</span><span class="p">()</span>
+
+  <span class="k">def</span> <span class="nf">__hex__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">core</span><span class="o">.</span><span class="n">check_integer_conversion</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">hex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+
+  <span class="k">def</span> <span class="nf">__oct__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">core</span><span class="o">.</span><span class="n">check_integer_conversion</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">oct</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+
+  <span class="k">def</span> <span class="fm">__index__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">core</span><span class="o">.</span><span class="n">check_integer_conversion</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">op</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">tobytes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s2">&quot;C&quot;</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">tolist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+  <span class="k">def</span> <span class="fm">__format__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">format_spec</span><span class="p">):</span>
+    <span class="c1"># Simulates behavior of https://github.com/numpy/numpy/pull/9883</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">return</span> <span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">[()],</span> <span class="n">format_spec</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">return</span> <span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">,</span> <span class="n">format_spec</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">jax._src.lax</span> <span class="kn">import</span> <span class="n">lax</span>
+    <span class="kn">from</span> <span class="nn">jax._src.numpy</span> <span class="kn">import</span> <span class="n">lax_numpy</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_check_if_deleted</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sharding</span><span class="p">,</span> <span class="n">PmapSharding</span><span class="p">):</span>
+      <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">pmap_no_rank_reduction</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+        <span class="n">cidx</span> <span class="o">=</span> <span class="n">idx</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">else</span> <span class="p">(</span><span class="n">idx</span><span class="p">,)</span>
+
+        <span class="n">padded_cidx</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
+            <span class="nb">slice</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="k">else</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cidx</span>
+        <span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">),)</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">cidx</span><span class="p">))</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+          <span class="n">padded_cidx</span> <span class="o">=</span> <span class="p">(</span><span class="n">idx</span><span class="p">,)</span> <span class="o">+</span> <span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">),)</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">padded_cidx</span> <span class="o">=</span> <span class="n">idx</span> <span class="o">+</span> <span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">),)</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span>
+
+      <span class="n">indices</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">devices_indices_map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="n">arr_idx</span> <span class="o">=</span> <span class="n">indices</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">padded_cidx</span><span class="p">)</span>
+      <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="n">arr_idx</span> <span class="o">=</span> <span class="kc">None</span>
+      <span class="k">if</span> <span class="n">arr_idx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span><span class="p">[</span><span class="n">arr_idx</span><span class="p">]</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">ArrayImpl</span><span class="p">(</span>
+            <span class="n">a</span><span class="o">.</span><span class="n">aval</span><span class="p">,</span> <span class="n">SingleDeviceSharding</span><span class="p">(</span><span class="n">_get_device</span><span class="p">(</span><span class="n">a</span><span class="p">)),</span> <span class="p">[</span><span class="n">a</span><span class="p">],</span> <span class="n">committed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">_skip_checks</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">pmap_no_rank_reduction</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+          <span class="c1"># If cidx was the index of a single shard, then it corresponds to one</span>
+          <span class="c1"># shard of the chunked dimension.</span>
+          <span class="n">dims</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cidx</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">int</span><span class="p">))</span>
+          <span class="k">return</span> <span class="n">lax</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">dimensions</span><span class="o">=</span><span class="n">dims</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="k">return</span> <span class="n">out</span>
+
+    <span class="k">return</span> <span class="n">lax_numpy</span><span class="o">.</span><span class="n">_rewriting_take</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;iteration over a 0-d array&quot;</span><span class="p">)</span>  <span class="c1"># same as numpy error</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_fully_replicated</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_fully_addressable</span>
+      <span class="k">if</span> <span class="n">dispatch</span><span class="o">.</span><span class="n">is_single_device_sharding</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sharding</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_fully_replicated</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">sl</span> <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_chunk_iter</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">for</span> <span class="n">sl</span> <span class="ow">in</span> <span class="n">chunk</span><span class="o">.</span><span class="n">_unstack</span><span class="p">())</span>  <span class="c1"># type: ignore</span>
+      <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sharding</span><span class="p">,</span> <span class="n">PmapSharding</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>  <span class="c1"># type: ignore</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># TODO(yashkatariya): Don&#39;t bounce to host and use `_chunk_iter` path</span>
+        <span class="c1"># here after uneven partitioning support is added.</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">api</span><span class="o">.</span><span class="n">device_put</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">is_fully_replicated</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">is_fully_replicated</span>
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">prefix</span> <span class="o">=</span> <span class="s1">&#39;Array(&#39;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aval</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">aval</span><span class="o">.</span><span class="n">weak_type</span><span class="p">:</span>
+      <span class="n">dtype_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;dtype=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">, weak_type=True)&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">dtype_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;dtype=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">)&#39;</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_fully_addressable</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_fully_replicated</span><span class="p">:</span>
+      <span class="n">line_width</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">get_printoptions</span><span class="p">()[</span><span class="s2">&quot;linewidth&quot;</span><span class="p">]</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;[], shape=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array2string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="n">prefix</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span>
+                            <span class="n">separator</span><span class="o">=</span><span class="s1">&#39;, &#39;</span><span class="p">,</span> <span class="n">max_line_width</span><span class="o">=</span><span class="n">line_width</span><span class="p">)</span>
+      <span class="n">last_line_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">-</span> <span class="n">s</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+      <span class="n">sep</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span>
+      <span class="k">if</span> <span class="n">last_line_len</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">dtype_str</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="n">line_width</span><span class="p">:</span>
+        <span class="n">sep</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
+      <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}{</span><span class="n">s</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">sep</span><span class="si">}{</span><span class="n">dtype_str</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">dtype_str</span><span class="si">}</span><span class="s2">&quot;</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">is_fully_addressable</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Is this Array fully addressable?</span>
+
+<span class="sd">    A jax.Array is fully addressable if the current process can address all of</span>
+<span class="sd">    the devices named in the :class:`Sharding`. ``is_fully_addressable`` is</span>
+<span class="sd">    equivalent to &quot;is_local&quot; in multi-process JAX.</span>
+
+<span class="sd">    Note that fully replicated is not equal to fully addressable i.e.</span>
+<span class="sd">    a jax.Array which is fully replicated can span across multiple hosts and is</span>
+<span class="sd">    not fully addressable.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">is_fully_addressable</span>
+
+  <span class="k">def</span> <span class="nf">__array__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># copy argument is supported by np.asarray starting in numpy 2.0</span>
+    <span class="n">kwds</span> <span class="o">=</span> <span class="p">{}</span> <span class="k">if</span> <span class="n">copy</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{</span><span class="s1">&#39;copy&#39;</span><span class="p">:</span> <span class="n">copy</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">__dlpack__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">stream</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">max_version</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">dl_device</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">DLDeviceType</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">copy</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">jax._src.dlpack</span> <span class="kn">import</span> <span class="n">to_dlpack</span>  <span class="c1"># pylint: disable=g-import-not-at-top</span>
+
+    <span class="n">device_set</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">device_set</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">device_set</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">BufferError</span><span class="p">(</span>
+        <span class="s2">&quot;to_dlpack can only pack a dlpack tensor from an array on a singular &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;device, but an array with a Sharding over </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">device_set</span><span class="p">)</span><span class="si">}</span><span class="s2"> devices &quot;</span>
+        <span class="s2">&quot;was provided.&quot;</span>
+      <span class="p">)</span>
+    <span class="n">device</span><span class="p">,</span> <span class="o">=</span> <span class="n">device_set</span>
+    <span class="k">return</span> <span class="n">to_dlpack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="n">stream</span><span class="p">,</span>
+                     <span class="n">max_version</span><span class="o">=</span><span class="n">max_version</span><span class="p">,</span>
+                     <span class="n">src_device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
+                     <span class="n">dl_device</span><span class="o">=</span><span class="n">dl_device</span><span class="p">,</span>
+                     <span class="n">copy</span><span class="o">=</span><span class="n">copy</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">__dlpack_device__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">BufferError</span><span class="p">(</span><span class="s2">&quot;__dlpack__ only supported for unsharded arrays.&quot;</span><span class="p">)</span>
+
+    <span class="kn">from</span> <span class="nn">jax._src.dlpack</span> <span class="kn">import</span> <span class="n">DLDeviceType</span>  <span class="c1"># pylint: disable=g-import-not-at-top</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">platform</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;cpu&quot;</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">DLDeviceType</span><span class="o">.</span><span class="n">kDLCPU</span><span class="p">,</span> <span class="mi">0</span>
+
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">platform</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;gpu&quot;</span><span class="p">:</span>
+      <span class="n">platform_version</span> <span class="o">=</span> <span class="n">_get_device</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">platform_version</span>
+      <span class="k">if</span> <span class="s2">&quot;cuda&quot;</span> <span class="ow">in</span> <span class="n">platform_version</span><span class="p">:</span>
+        <span class="n">dl_device_type</span> <span class="o">=</span> <span class="n">DLDeviceType</span><span class="o">.</span><span class="n">kDLCUDA</span>
+      <span class="k">elif</span> <span class="s2">&quot;rocm&quot;</span> <span class="ow">in</span> <span class="n">platform_version</span><span class="p">:</span>
+        <span class="n">dl_device_type</span> <span class="o">=</span> <span class="n">DLDeviceType</span><span class="o">.</span><span class="n">kDLROCM</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">BufferError</span><span class="p">(</span><span class="s2">&quot;Unknown GPU platform for __dlpack__: &quot;</span>
+                         <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">platform_version</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+      <span class="n">local_hardware_id</span> <span class="o">=</span> <span class="n">_get_device</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">local_hardware_id</span>
+      <span class="k">if</span> <span class="n">local_hardware_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">BufferError</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t get local_hardware_id for __dlpack__&quot;</span><span class="p">)</span>
+
+      <span class="k">return</span> <span class="n">dl_device_type</span><span class="p">,</span> <span class="n">local_hardware_id</span>
+
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">BufferError</span><span class="p">(</span>
+          <span class="s2">&quot;__dlpack__ device only supported for CPU and GPU, got platform: &quot;</span>
+          <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">platform</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+      <span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">__reduce__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">fun</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">arr_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span><span class="o">.</span><span class="n">__reduce__</span><span class="p">()</span>  <span class="c1"># type: ignore</span>
+    <span class="n">aval_state</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;weak_type&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">aval</span><span class="o">.</span><span class="n">weak_type</span><span class="p">,</span>
+                  <span class="s1">&#39;named_shape&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">aval</span><span class="o">.</span><span class="n">named_shape</span><span class="p">}</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">_reconstruct_array</span><span class="p">,</span> <span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">arr_state</span><span class="p">,</span> <span class="n">aval_state</span><span class="p">))</span>
+
+  <span class="nd">@use_cpp_method</span><span class="p">()</span>
+  <span class="k">def</span> <span class="nf">unsafe_buffer_pointer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;unsafe_buffer_pointer() is supported only for unsharded&quot;</span>
+                       <span class="s2">&quot; arrays.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">unsafe_buffer_pointer</span><span class="p">()</span>
+
+  <span class="nd">@property</span>
+  <span class="nd">@use_cpp_method</span><span class="p">()</span>
+  <span class="k">def</span> <span class="nf">__cuda_array_interface__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;__cuda_array_interface__() is supported only for &quot;</span>
+                       <span class="s2">&quot;unsharded arrays.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">__cuda_array_interface__</span>  <span class="c1"># pytype: disable=attribute-error  # bind-properties</span>
+
+  <span class="nd">@use_cpp_method</span><span class="p">()</span>
+  <span class="k">def</span> <span class="nf">on_device_size_in_bytes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns the total global on-device size of the array in bytes.&quot;&quot;&quot;</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">per_shard_size</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.</span><span class="n">on_device_size_in_bytes</span><span class="p">()</span>  <span class="c1"># type: ignore</span>
+    <span class="k">return</span> <span class="n">per_shard_size</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">device_set</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">devices</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">[</span><span class="n">Device</span><span class="p">]:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_check_if_deleted</span><span class="p">()</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">device_set</span>
+
+  <span class="c1"># TODO(https://github.com/google/jax/issues/12380): Remove this when DA is</span>
+  <span class="c1"># deleted.</span>
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">device_buffer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ArrayImpl</span><span class="p">:</span>
+    <span class="c1"># Added 2023 Dec 6</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+      <span class="s2">&quot;arr.device_buffer is deprecated. Use arr.addressable_data(0)&quot;</span><span class="p">,</span>
+      <span class="ne">DeprecationWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_check_if_deleted</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Length of buffers is greater than 1. Please use &#39;</span>
+                     <span class="s1">&#39;`.device_buffers` instead.&#39;</span><span class="p">)</span>
+
+  <span class="c1"># TODO(https://github.com/google/jax/issues/12380): Remove this when SDA is</span>
+  <span class="c1"># deleted.</span>
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">device_buffers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">ArrayImpl</span><span class="p">]:</span>
+    <span class="c1"># Added 2023 Dec 6</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+      <span class="s2">&quot;arr.device_buffers is deprecated. Use [x.data for x in arr.addressable_shards]&quot;</span><span class="p">,</span>
+      <span class="ne">DeprecationWarning</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_check_if_deleted</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="n">Sequence</span><span class="p">[</span><span class="n">ArrayImpl</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">addressable_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ArrayImpl</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_check_if_deleted</span><span class="p">()</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_fully_replicated</span><span class="p">:</span>
+      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fully_replicated_shard</span><span class="p">()</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+
+  <span class="nd">@functools</span><span class="o">.</span><span class="n">cached_property</span>
+  <span class="k">def</span> <span class="nf">addressable_shards</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Shard</span><span class="p">]:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_check_if_deleted</span><span class="p">()</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span><span class="p">:</span>
+      <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Shard</span><span class="p">(</span><span class="n">_get_device</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">sharding</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">a</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">out</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">layout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># TODO(yashkatariya): Remove the deleted check from here.</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_deleted</span><span class="p">():</span>
+      <span class="k">return</span> <span class="n">Layout</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sharding</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">Layout</span><span class="p">(</span><span class="n">DeviceLocalLayout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pjrt_layout</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">sharding</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">xe</span><span class="o">.</span><span class="n">XlaRuntimeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+      <span class="n">msg</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">args</span>
+      <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span> <span class="ow">and</span> <span class="n">msg</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;UNIMPLEMENTED&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Layout</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sharding</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span>
+
+  <span class="nd">@property</span>
+  <span class="k">def</span> <span class="nf">global_shards</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Shard</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns list of all `Shard`s of the Array across all devices.</span>
+
+<span class="sd">    The result includes shards that are not addressable by the current process.</span>
+<span class="sd">    If a `Shard` is not addressable, then its `data` will be `None`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_check_if_deleted</span><span class="p">()</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_fully_addressable</span><span class="p">:</span>  <span class="c1"># pylint: disable=using-constant-test</span>
+      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">addressable_shards</span>
+
+    <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">device_id_to_buffer</span> <span class="o">=</span> <span class="p">{</span><span class="n">_get_device</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">global_d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">device_set</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">device_id_to_buffer</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">global_d</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">array</span> <span class="o">=</span> <span class="n">device_id_to_buffer</span><span class="p">[</span><span class="n">global_d</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">array</span> <span class="o">=</span> <span class="kc">None</span>
+      <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Shard</span><span class="p">(</span><span class="n">global_d</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sharding</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">array</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">out</span>
+
+  <span class="nd">@use_cpp_method</span><span class="p">()</span>
+  <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">return</span>
+    <span class="k">for</span> <span class="n">buf</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span><span class="p">:</span>
+      <span class="n">buf</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_npy_value</span> <span class="o">=</span> <span class="kc">None</span>
+
+  <span class="nd">@use_cpp_method</span><span class="p">()</span>
+  <span class="k">def</span> <span class="nf">is_deleted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">return</span> <span class="kc">True</span>
+    <span class="c1"># This path is taken when a view of `Array` is created and the original</span>
+    <span class="c1"># Array is deleted. In that case, the buffers the view represents also get</span>
+    <span class="c1"># deleted.</span>
+    <span class="k">return</span> <span class="nb">any</span><span class="p">(</span><span class="n">buf</span><span class="o">.</span><span class="n">is_deleted</span><span class="p">()</span> <span class="k">for</span> <span class="n">buf</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">_check_if_deleted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_deleted</span><span class="p">():</span>
+      <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+          <span class="sa">f</span><span class="s2">&quot;Array has been deleted with shape=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">aval</span><span class="o">.</span><span class="n">str_short</span><span class="p">()</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+  <span class="nd">@use_cpp_method</span><span class="p">()</span>
+  <span class="k">def</span> <span class="nf">block_until_ready</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_check_if_deleted</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">db</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span><span class="p">:</span>
+      <span class="n">db</span><span class="o">.</span><span class="n">block_until_ready</span><span class="p">()</span>
+    <span class="k">return</span> <span class="bp">self</span>
+
+  <span class="nd">@use_cpp_method</span><span class="p">()</span>
+  <span class="k">def</span> <span class="nf">_single_device_array_to_np_array</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+  <span class="nd">@use_cpp_method</span><span class="p">()</span>
+  <span class="k">def</span> <span class="nf">_copy_single_device_array_to_host_async</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">copy_to_host_async</span><span class="p">()</span>
+
+  <span class="nd">@profiler</span><span class="o">.</span><span class="n">annotate_function</span>
+  <span class="k">def</span> <span class="nf">copy_to_host_async</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_check_if_deleted</span><span class="p">()</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_npy_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_fully_replicated</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_copy_single_device_array_to_host_async</span><span class="p">()</span>
+        <span class="k">return</span>
+      <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">_cached_index_calc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sharding</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">_copy_single_device_array_to_host_async</span><span class="p">()</span>
+
+  <span class="nd">@property</span>
+  <span class="nd">@functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">profiler</span><span class="o">.</span><span class="n">annotate_function</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;np.asarray(jax.Array)&quot;</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">_value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_check_if_deleted</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_npy_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_fully_replicated</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_npy_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_single_device_array_to_np_array</span><span class="p">()</span>  <span class="c1"># type: ignore</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_npy_value</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">writeable</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_npy_value</span><span class="p">)</span>
+
+      <span class="c1"># TODO(yashkatariya): Merge `_process_has_full_value_in_mcjax` with</span>
+      <span class="c1"># is_fully_addressable.</span>
+      <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_fully_addressable</span> <span class="ow">and</span>
+          <span class="ow">not</span> <span class="n">_process_has_full_value_in_mcjax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sharding</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Fetching value for `jax.Array` that spans &quot;</span>
+                           <span class="s2">&quot;non-addressable devices is not possible. You can use &quot;</span>
+                           <span class="s2">&quot;`jax.experimental.multihost_utils.process_allgather` &quot;</span>
+                           <span class="s2">&quot;for this use case.&quot;</span><span class="p">)</span>
+
+      <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">_cached_index_calc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sharding</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">_copy_single_device_array_to_host_async</span><span class="p">()</span>
+
+      <span class="n">npy_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+      <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">_cached_index_calc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sharding</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">):</span>
+        <span class="n">npy_value</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrays</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">_single_device_array_to_np_array</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_npy_value</span> <span class="o">=</span> <span class="n">npy_value</span>  <span class="c1"># type: ignore</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_npy_value</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">writeable</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="c1"># https://docs.python.org/3/library/typing.html#typing.cast</span>
+    <span class="k">return</span> <span class="n">cast</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_npy_value</span><span class="p">)</span>
+
+
+<span class="c1"># TODO(b/273265390): ideally we would write this as a decorator on the ArrayImpl</span>
+<span class="c1"># class, however this triggers a pytype bug. Workaround: apply the decorator</span>
+<span class="c1"># after the fact.</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+  <span class="n">ArrayImpl</span> <span class="o">=</span> <span class="n">use_cpp_class</span><span class="p">(</span><span class="n">xc</span><span class="o">.</span><span class="n">ArrayImpl</span><span class="p">)(</span><span class="n">ArrayImpl</span><span class="p">)</span>
+
+
+<span class="c1"># explicitly set to be unhashable.</span>
+<span class="nb">setattr</span><span class="p">(</span><span class="n">ArrayImpl</span><span class="p">,</span> <span class="s2">&quot;__hash__&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="nb">setattr</span><span class="p">(</span><span class="n">ArrayImpl</span><span class="p">,</span> <span class="s2">&quot;__array_priority__&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<div class="viewcode-block" id="make_array_from_callback">
+<a class="viewcode-back" href="../../../_autosummary/jax.make_array_from_callback.html#jax.make_array_from_callback">[docs]</a>
+<span class="k">def</span> <span class="nf">make_array_from_callback</span><span class="p">(</span>
+    <span class="n">shape</span><span class="p">:</span> <span class="n">Shape</span><span class="p">,</span> <span class="n">sharding</span><span class="p">:</span> <span class="n">Sharding</span> <span class="o">|</span> <span class="n">Layout</span><span class="p">,</span>
+    <span class="n">data_callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Index</span> <span class="o">|</span> <span class="kc">None</span><span class="p">],</span> <span class="n">ArrayLike</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">ArrayImpl</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns a ``jax.Array`` via data fetched from ``data_callback``.</span>
+
+<span class="sd">  ``data_callback`` is used to fetch the data for each addressable shard of the</span>
+<span class="sd">  returned ``jax.Array``. This function must return concrete arrays, meaning that</span>
+<span class="sd">  ``make_array_from_callback`` has limited compatibility with JAX transformations</span>
+<span class="sd">  like :func:`jit` or :func:`vmap`.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    shape : Shape of the ``jax.Array``.</span>
+<span class="sd">    sharding: A ``Sharding`` instance which describes how the ``jax.Array`` is</span>
+<span class="sd">      laid out across devices.</span>
+<span class="sd">    data_callback : Callback that takes indices into the global array value as</span>
+<span class="sd">      input and returns the corresponding data of the global array value.</span>
+<span class="sd">      The data can be returned as any array-like object, e.g. a ``numpy.ndarray``.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    A ``jax.Array`` via data fetched from ``data_callback``.</span>
+
+<span class="sd">  Example:</span>
+
+<span class="sd">    &gt;&gt;&gt; import math</span>
+<span class="sd">    &gt;&gt;&gt; from jax.sharding import Mesh</span>
+<span class="sd">    &gt;&gt;&gt; from jax.sharding import PartitionSpec as P</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    ...</span>
+<span class="sd">    &gt;&gt;&gt; input_shape = (8, 8)</span>
+<span class="sd">    &gt;&gt;&gt; global_input_data = np.arange(math.prod(input_shape)).reshape(input_shape)</span>
+<span class="sd">    &gt;&gt;&gt; global_mesh = Mesh(np.array(jax.devices()).reshape(2, 4), (&#39;x&#39;, &#39;y&#39;))</span>
+<span class="sd">    &gt;&gt;&gt; inp_sharding = jax.sharding.NamedSharding(global_mesh, P(&#39;x&#39;, &#39;y&#39;))</span>
+<span class="sd">    ...</span>
+<span class="sd">    &gt;&gt;&gt; def cb(index):</span>
+<span class="sd">    ...  return global_input_data[index]</span>
+<span class="sd">    ...</span>
+<span class="sd">    &gt;&gt;&gt; arr = jax.make_array_from_callback(input_shape, inp_sharding, cb)</span>
+<span class="sd">    &gt;&gt;&gt; arr.addressable_data(0).shape</span>
+<span class="sd">    (4, 2)</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">dll</span> <span class="o">=</span> <span class="n">sharding</span><span class="o">.</span><span class="n">device_local_layout</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sharding</span><span class="p">,</span> <span class="n">Layout</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+  <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">AutoLayout</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+        <span class="s2">&quot;`DeviceLocalLayout.AUTO` cannot be used in place of a device-local&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot; layout when calling `jax.make_array_from_callback`. Got </span><span class="si">{</span><span class="n">sharding</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="n">sharding</span> <span class="o">=</span> <span class="n">sharding</span><span class="o">.</span><span class="n">sharding</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sharding</span><span class="p">,</span> <span class="n">Layout</span><span class="p">)</span> <span class="k">else</span> <span class="n">sharding</span>  <span class="c1"># type: ignore</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sharding</span><span class="p">,</span> <span class="n">Sharding</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;sharding should be an instance of `jax.sharding`. Got </span><span class="si">{</span><span class="n">sharding</span><span class="si">}</span><span class="s2"> of&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot; type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">sharding</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">sharding</span><span class="o">.</span><span class="n">is_fully_replicated</span><span class="p">:</span>
+    <span class="n">devices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sharding</span><span class="o">.</span><span class="n">_internal_device_list</span><span class="o">.</span><span class="n">addressable_device_list</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+    <span class="n">per_device_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">data_callback</span><span class="p">((</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">),)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">))]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">devices</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">device_to_index_map</span> <span class="o">=</span> <span class="n">sharding</span><span class="o">.</span><span class="n">addressable_devices_indices_map</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">devices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">device_to_index_map</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="n">per_device_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">data_callback</span><span class="p">(</span><span class="n">device_to_index_map</span><span class="p">[</span><span class="n">device</span><span class="p">])</span>
+                         <span class="k">for</span> <span class="n">device</span> <span class="ow">in</span> <span class="n">devices</span><span class="p">]</span>
+
+  <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">per_device_values</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">core</span><span class="o">.</span><span class="n">Tracer</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">UnexpectedTracerError</span><span class="p">(</span>
+        <span class="s2">&quot;jax.make_array_from_callback cannot be called within a traced context.&quot;</span><span class="p">)</span>
+
+  <span class="n">first_value</span> <span class="o">=</span> <span class="n">xla</span><span class="o">.</span><span class="n">canonicalize_dtype</span><span class="p">(</span><span class="n">per_device_values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+  <span class="n">aval</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">ShapedArray</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">first_value</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">weak_type</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+  <span class="c1"># first value can be numpy array, python scalar, etc.</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">sharding</span><span class="o">.</span><span class="n">is_fully_replicated</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">first_value</span><span class="p">,</span> <span class="n">ArrayImpl</span><span class="p">)</span>
+      <span class="ow">and</span> <span class="ow">not</span> <span class="n">dtypes</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">aval</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">dtypes</span><span class="o">.</span><span class="n">extended</span><span class="p">)</span> <span class="ow">and</span> <span class="n">dll</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># Do this check outside because `batched_device_put` won&#39;t do these checks</span>
+    <span class="c1"># like ArrayImpl.</span>
+    <span class="k">if</span> <span class="n">shape</span> <span class="o">!=</span> <span class="n">first_value</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Expected shard shape </span><span class="si">{</span><span class="n">shape</span><span class="si">}</span><span class="s2"> doesn&#39;t match the single device &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;array shape </span><span class="si">{</span><span class="n">first_value</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">. Shape of Array is &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">aval</span><span class="o">.</span><span class="n">str_short</span><span class="p">()</span><span class="si">}</span><span class="s2"> with sharding </span><span class="si">{</span><span class="n">sharding</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pxla</span><span class="o">.</span><span class="n">batched_device_put</span><span class="p">(</span>
+        <span class="n">aval</span><span class="p">,</span> <span class="n">sharding</span><span class="p">,</span> <span class="n">per_device_values</span><span class="p">,</span> <span class="n">devices</span><span class="p">,</span> <span class="n">committed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+  <span class="c1"># After minimum jaxlib version &gt;= 0.4.26, merge this condition into the</span>
+  <span class="c1"># following if block.</span>
+  <span class="k">if</span> <span class="n">xla_extension_version</span> <span class="o">&gt;=</span> <span class="mi">256</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">first_value</span><span class="p">,</span> <span class="n">ArrayImpl</span><span class="p">):</span>
+    <span class="n">maybe_default_layout</span> <span class="o">=</span> <span class="n">pxla</span><span class="o">.</span><span class="n">_maybe_get_default_layout</span><span class="p">(</span>
+        <span class="n">Layout</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">sharding</span><span class="p">),</span> <span class="kc">None</span><span class="p">,</span> <span class="n">sharding</span><span class="p">,</span> <span class="n">aval</span><span class="p">)</span>
+    <span class="n">layout_eq</span> <span class="o">=</span> <span class="n">first_value</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">device_local_layout</span> <span class="o">==</span> <span class="n">maybe_default_layout</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">layout_eq</span> <span class="o">=</span> <span class="kc">True</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">first_value</span><span class="p">,</span> <span class="n">ArrayImpl</span><span class="p">)</span>
+      <span class="ow">and</span> <span class="n">first_value</span><span class="o">.</span><span class="n">_committed</span>
+      <span class="ow">and</span> <span class="n">sharding</span><span class="o">.</span><span class="n">is_fully_replicated</span>
+      <span class="ow">and</span> <span class="n">first_value</span><span class="o">.</span><span class="n">is_fully_replicated</span>
+      <span class="ow">and</span> <span class="n">first_value</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">_device_assignment</span> <span class="o">==</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">devices</span><span class="p">)</span>
+      <span class="ow">and</span> <span class="n">layout_eq</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">first_value</span>
+
+  <span class="k">if</span> <span class="n">dll</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">devices</span> <span class="o">=</span> <span class="p">[</span><span class="n">Layout</span><span class="p">(</span><span class="n">dll</span><span class="p">,</span> <span class="n">SingleDeviceSharding</span><span class="p">(</span><span class="n">d</span><span class="p">))</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">devices</span><span class="p">]</span>
+  <span class="n">arrays</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">device_put</span><span class="p">(</span><span class="n">per_device_values</span><span class="p">,</span> <span class="n">devices</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">dtypes</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">aval</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">dtypes</span><span class="o">.</span><span class="n">extended</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">aval</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">_rules</span><span class="o">.</span><span class="n">make_sharded_array</span><span class="p">(</span><span class="n">aval</span><span class="p">,</span> <span class="n">sharding</span><span class="p">,</span> <span class="n">arrays</span><span class="p">,</span>
+                                                <span class="n">committed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">ArrayImpl</span><span class="p">(</span><span class="n">aval</span><span class="p">,</span> <span class="n">sharding</span><span class="p">,</span> <span class="n">arrays</span><span class="p">,</span> <span class="n">committed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="make_array_from_single_device_arrays">
+<a class="viewcode-back" href="../../../_autosummary/jax.make_array_from_single_device_arrays.html#jax.make_array_from_single_device_arrays">[docs]</a>
+<span class="k">def</span> <span class="nf">make_array_from_single_device_arrays</span><span class="p">(</span>
+    <span class="n">shape</span><span class="p">:</span> <span class="n">Shape</span><span class="p">,</span> <span class="n">sharding</span><span class="p">:</span> <span class="n">Sharding</span><span class="p">,</span> <span class="n">arrays</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">basearray</span><span class="o">.</span><span class="n">Array</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ArrayImpl</span><span class="p">:</span>
+<span class="w">  </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Returns a ``jax.Array`` from a sequence of ``jax.Array``\s each on a single device.</span>
+<span class="sd">      Every device in input ``sharding``\&#39;s mesh must have an array in ``arrays``\s.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    shape : Shape of the output ``jax.Array``. This conveys information already included with</span>
+<span class="sd">      ``sharding`` and ``arrays`` and serves as a double check.</span>
+<span class="sd">    sharding: Sharding: A global Sharding instance which describes how the output jax.Array is laid out across devices.</span>
+<span class="sd">    arrays: Sequence of ``jax.Array``\s that are each single device addressable. ``len(arrays)``</span>
+<span class="sd">      must equal ``len(sharding.addressable_devices)`` and the shape of each array must be the same. For multiprocess code,</span>
+<span class="sd">      each process will call with a different ``arrays`` argument that corresponds to that processes&#39; data.</span>
+<span class="sd">      These arrays are commonly created via ``jax.device_put``.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    A global ``jax.Array``, sharded as ``sharding``, with shape equal to ``shape``, and with per-device</span>
+<span class="sd">      contents matching ``arrays``.</span>
+
+<span class="sd">  Examples:</span>
+
+<span class="sd">    In this single-process example, we use ``make_array_from_single_device_arrays`` to create an</span>
+<span class="sd">    a global array.</span>
+
+<span class="sd">    &gt;&gt;&gt; import math</span>
+<span class="sd">    &gt;&gt;&gt; from jax.sharding import Mesh</span>
+<span class="sd">    &gt;&gt;&gt; from jax.sharding import PartitionSpec as P</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    ...</span>
+<span class="sd">    &gt;&gt;&gt; mesh_rows = 2</span>
+<span class="sd">    &gt;&gt;&gt; mesh_cols =  jax.device_count() // 2</span>
+<span class="sd">    ...</span>
+<span class="sd">    &gt;&gt;&gt; global_shape = (8, 8)</span>
+<span class="sd">    &gt;&gt;&gt; mesh = Mesh(np.array(jax.devices()).reshape(mesh_rows, mesh_cols), (&#39;x&#39;, &#39;y&#39;))</span>
+<span class="sd">    &gt;&gt;&gt; sharding = jax.sharding.NamedSharding(mesh, P(&#39;x&#39;, &#39;y&#39;))</span>
+<span class="sd">    &gt;&gt;&gt; inp_data = np.arange(math.prod(global_shape)).reshape(global_shape)</span>
+<span class="sd">    ...</span>
+<span class="sd">    &gt;&gt;&gt; arrays = [</span>
+<span class="sd">    ...    jax.device_put(inp_data[index], d)</span>
+<span class="sd">    ...        for d, index in sharding.addressable_devices_indices_map(global_shape).items()]</span>
+<span class="sd">    ...</span>
+<span class="sd">    &gt;&gt;&gt; arr = jax.make_array_from_single_device_arrays(global_shape, sharding, arrays)</span>
+<span class="sd">    &gt;&gt;&gt; assert arr.shape == (8,8) # arr.shape is (8,8) regardless of jax.device_count()</span>
+
+<span class="sd">    When using multiple processes, a common data pipeline is to have data parallelism across devices,</span>
+<span class="sd">    with each device receiving at least one example. In this case, the following recipe will use</span>
+<span class="sd">    `make_array_from_single_device_arrays` to create a global jax.Array.</span>
+
+<span class="sd">    First, we create the per host data as Numpy arrays.</span>
+
+<span class="sd">    &gt;&gt;&gt; sharding = jax.sharding.NamedSharding(mesh, P((&#39;x&#39;, &#39;y&#39;),))</span>
+<span class="sd">    &gt;&gt;&gt; rows_per_device = 2</span>
+<span class="sd">    &gt;&gt;&gt; feature_length = 32</span>
+<span class="sd">    &gt;&gt;&gt; per_device_shape = (rows_per_device, feature_length)</span>
+<span class="sd">    &gt;&gt;&gt; per_host_shape = (rows_per_device * len(mesh.local_devices), feature_length)</span>
+<span class="sd">    &gt;&gt;&gt; per_host_generator = lambda : np.arange(np.prod(per_host_shape)).reshape(per_host_shape)</span>
+<span class="sd">    &gt;&gt;&gt; per_host_data = per_host_generator() # replace with your own per-host data pipeline that outputs numpy arrays</span>
+
+<span class="sd">    Second, we put the Numpy data onto the local devices as single device Jax Arrays. Then we call</span>
+<span class="sd">    make_array_from_single_device_arrays to make the global Array.</span>
+
+<span class="sd">    &gt;&gt;&gt; global_shape = (rows_per_device * len(sharding.device_set), ) + per_device_shape[1:]</span>
+<span class="sd">    &gt;&gt;&gt; per_device_data = np.split(per_host_data, len(mesh.local_devices), axis = 0) # per device data, but on host</span>
+<span class="sd">    &gt;&gt;&gt; per_device_data_on_device = jax.device_put(per_device_data, mesh.local_devices) # per device data, now on device</span>
+<span class="sd">    &gt;&gt;&gt; output_global_array = jax.make_array_from_single_device_arrays(global_shape, sharding, per_device_data_on_device)</span>
+<span class="sd">    ...</span>
+<span class="sd">    &gt;&gt;&gt; assert output_global_array.addressable_data(0).shape == per_device_shape</span>
+<span class="sd">    &gt;&gt;&gt; assert output_global_array.shape == global_shape</span>
+
+<span class="sd">    When using tensor parallelism (equivalent to sharding across both rows and columns in the</span>
+<span class="sd">    above example), the above example doesn&#39;t generate the data in the sharding that you plan</span>
+<span class="sd">    to consume it with. The most common fix is to simply load the data in this data parallel sharding</span>
+<span class="sd">    and have the reshard happen automatically within the downstream jitted function.</span>
+<span class="sd">    Depending on your use case, you might prefer to directly load sharded data, something that</span>
+<span class="sd">    ``make_array_from_single_device_arrays`` can do but will depend on your data loading pipeline</span>
+<span class="sd">    also loading in the matching sharding. Loading in a data parallel format is typically</span>
+<span class="sd">    fully satisfactory for data loading for LLM use cases.</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="c1"># All input arrays should be committed. Checking it is expensive on</span>
+  <span class="c1"># single-controller systems.</span>
+  <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">Tracer</span><span class="p">)</span> <span class="k">for</span> <span class="n">arr</span> <span class="ow">in</span> <span class="n">arrays</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+        <span class="s2">&quot;jax.make_array_from_single_device_arrays requires a list of concrete&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot; arrays as input. got types </span><span class="si">{</span><span class="nb">set</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span><span class="w"> </span><span class="n">arrays</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="n">aval</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">ShapedArray</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">arrays</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">weak_type</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">dtypes</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">aval</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">dtypes</span><span class="o">.</span><span class="n">extended</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">aval</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">_rules</span><span class="o">.</span><span class="n">make_sharded_array</span><span class="p">(</span><span class="n">aval</span><span class="p">,</span> <span class="n">sharding</span><span class="p">,</span> <span class="n">arrays</span><span class="p">,</span>
+                                                <span class="n">committed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="c1"># TODO(phawkins): ideally the cast() could be checked.</span>
+  <span class="k">return</span> <span class="n">ArrayImpl</span><span class="p">(</span><span class="n">aval</span><span class="p">,</span> <span class="n">sharding</span><span class="p">,</span> <span class="n">cast</span><span class="p">(</span><span class="n">Sequence</span><span class="p">[</span><span class="n">ArrayImpl</span><span class="p">],</span> <span class="n">arrays</span><span class="p">),</span>
+                   <span class="n">committed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+
+<span class="n">core</span><span class="o">.</span><span class="n">pytype_aval_mappings</span><span class="p">[</span><span class="n">ArrayImpl</span><span class="p">]</span> <span class="o">=</span> <span class="n">abstract_arrays</span><span class="o">.</span><span class="n">canonical_concrete_aval</span>
+<span class="n">xla</span><span class="o">.</span><span class="n">pytype_aval_mappings</span><span class="p">[</span><span class="n">ArrayImpl</span><span class="p">]</span> <span class="o">=</span> <span class="n">op</span><span class="o">.</span><span class="n">attrgetter</span><span class="p">(</span><span class="s1">&#39;aval&#39;</span><span class="p">)</span>
+<span class="n">xla</span><span class="o">.</span><span class="n">canonicalize_dtype_handlers</span><span class="p">[</span><span class="n">ArrayImpl</span><span class="p">]</span> <span class="o">=</span> <span class="n">pxla</span><span class="o">.</span><span class="n">identity</span>
+<span class="n">api_util</span><span class="o">.</span><span class="n">_shaped_abstractify_handlers</span><span class="p">[</span><span class="n">ArrayImpl</span><span class="p">]</span> <span class="o">=</span> <span class="n">op</span><span class="o">.</span><span class="n">attrgetter</span><span class="p">(</span><span class="s1">&#39;aval&#39;</span><span class="p">)</span>
+<span class="c1"># TODO(jakevdp) replace this with true inheritance at the C++ level.</span>
+<span class="n">basearray</span><span class="o">.</span><span class="n">Array</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">ArrayImpl</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_array_mlir_constant_handler</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">mlir</span><span class="o">.</span><span class="n">ir_constants</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">_value</span><span class="p">)</span>
+<span class="n">mlir</span><span class="o">.</span><span class="n">register_constant_handler</span><span class="p">(</span><span class="n">ArrayImpl</span><span class="p">,</span> <span class="n">_array_mlir_constant_handler</span><span class="p">)</span>
+
+
+<span class="c1"># NOTE(skye): we could refactor to generate _multi_slice parameters directly</span>
+<span class="c1"># from the input ShardingSpec, rather than the indices. However, this would</span>
+<span class="c1"># require duplicating the ordering logic of spec_to_indices, which is more</span>
+<span class="c1"># subtle and more likely to change than the index logic we have to support here.</span>
+<span class="k">def</span> <span class="nf">as_slice_indices</span><span class="p">(</span><span class="n">arr</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="n">Index</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span>
+    <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns start_indices, limit_indices, removed_dims&quot;&quot;&quot;</span>
+  <span class="n">start_indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">arr</span><span class="o">.</span><span class="n">ndim</span>
+  <span class="n">limit_indices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+  <span class="n">removed_dims</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+  <span class="n">tuple_idx</span> <span class="o">=</span> <span class="n">idx</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">else</span> <span class="p">(</span><span class="n">idx</span><span class="p">,)</span>
+  <span class="k">for</span> <span class="n">dim</span><span class="p">,</span> <span class="n">sub_idx</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tuple_idx</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sub_idx</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+      <span class="n">start_indices</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">=</span> <span class="n">sub_idx</span>
+      <span class="n">limit_indices</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">=</span> <span class="n">sub_idx</span> <span class="o">+</span> <span class="mi">1</span>
+      <span class="n">removed_dims</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">sub_idx</span> <span class="o">==</span> <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">):</span>
+      <span class="k">continue</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sub_idx</span><span class="p">,</span> <span class="nb">slice</span><span class="p">),</span> <span class="n">sub_idx</span>
+      <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sub_idx</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span> <span class="n">sub_idx</span>
+      <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sub_idx</span><span class="o">.</span><span class="n">stop</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span> <span class="n">sub_idx</span>
+      <span class="n">start_indices</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">=</span> <span class="n">sub_idx</span><span class="o">.</span><span class="n">start</span>
+      <span class="n">limit_indices</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">=</span> <span class="n">sub_idx</span><span class="o">.</span><span class="n">stop</span>
+
+  <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">start_indices</span><span class="p">),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">limit_indices</span><span class="p">),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">removed_dims</span><span class="p">)</span> <span class="c1"># type: ignore</span>
+
+
+<span class="k">def</span> <span class="nf">shard_device_array</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">devices</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">sharding</span><span class="p">):</span>
+  <span class="n">start_indices</span><span class="p">,</span> <span class="n">limit_indices</span><span class="p">,</span> <span class="n">removed_dims</span> <span class="o">=</span> <span class="n">unzip3</span><span class="p">(</span>
+      <span class="n">as_slice_indices</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">sharding</span><span class="o">.</span><span class="n">is_fully_replicated</span><span class="p">:</span>
+    <span class="n">shards</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">devices</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">shards</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">_multi_slice</span><span class="p">(</span><span class="n">start_indices</span><span class="p">,</span> <span class="n">limit_indices</span><span class="p">,</span> <span class="n">removed_dims</span><span class="p">)</span>
+  <span class="n">aval</span> <span class="o">=</span> <span class="n">api_util</span><span class="o">.</span><span class="n">shaped_abstractify</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">pxla</span><span class="o">.</span><span class="n">batched_device_put</span><span class="p">(</span><span class="n">aval</span><span class="p">,</span> <span class="n">sharding</span><span class="p">,</span> <span class="n">shards</span><span class="p">,</span> <span class="n">devices</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_hashable_index</span><span class="p">(</span><span class="n">idx</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">tree_util</span><span class="o">.</span><span class="n">tree_map</span><span class="p">(</span>
+      <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">stop</span><span class="p">)</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="nb">slice</span> <span class="k">else</span> <span class="n">x</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">shard_sharded_device_array_slow_path</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">devices</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">sharding</span><span class="p">):</span>
+  <span class="n">candidates</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+  <span class="n">bufs</span> <span class="o">=</span> <span class="p">[</span><span class="n">buf</span><span class="o">.</span><span class="n">data</span> <span class="k">for</span> <span class="n">buf</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">addressable_shards</span><span class="p">]</span>
+  <span class="n">arr_indices</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">devices_indices_map</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+  <span class="k">for</span> <span class="n">buf</span><span class="p">,</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">safe_zip</span><span class="p">(</span><span class="n">bufs</span><span class="p">,</span> <span class="n">arr_indices</span><span class="p">):</span>
+    <span class="n">candidates</span><span class="p">[</span><span class="n">_hashable_index</span><span class="p">(</span><span class="n">idx</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+
+  <span class="n">bufs</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">device</span> <span class="ow">in</span> <span class="n">safe_zip</span><span class="p">(</span><span class="n">indices</span><span class="p">,</span> <span class="n">devices</span><span class="p">):</span>
+    <span class="c1"># Look up all buffers that contain the correct slice of the logical array.</span>
+    <span class="n">candidates_list</span> <span class="o">=</span> <span class="n">candidates</span><span class="p">[</span><span class="n">_hashable_index</span><span class="p">(</span><span class="n">idx</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">candidates_list</span><span class="p">:</span>
+      <span class="c1"># This array isn&#39;t sharded correctly. Reshard it via host roundtrip.</span>
+      <span class="c1"># TODO(skye): more efficient reshard?</span>
+      <span class="k">return</span> <span class="n">pxla</span><span class="o">.</span><span class="n">shard_arg</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_value</span><span class="p">,</span> <span class="n">sharding</span><span class="p">,</span> <span class="n">canonicalize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="c1"># Try to find a candidate buffer already on the correct device,</span>
+    <span class="c1"># otherwise copy one of them.</span>
+    <span class="k">for</span> <span class="n">buf</span> <span class="ow">in</span> <span class="n">candidates_list</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">buf</span><span class="o">.</span><span class="n">devices</span><span class="p">()</span> <span class="o">==</span> <span class="p">{</span><span class="n">device</span><span class="p">}:</span>
+        <span class="n">bufs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+        <span class="k">break</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">bufs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">pxla</span><span class="o">.</span><span class="n">batched_device_put</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">aval</span><span class="p">,</span> <span class="n">sharding</span><span class="p">,</span> <span class="n">bufs</span><span class="p">,</span> <span class="n">devices</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_array_shard_arg</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">sharding</span><span class="p">):</span>
+  <span class="n">x</span><span class="o">.</span><span class="n">_check_if_deleted</span><span class="p">()</span>
+
+  <span class="n">x_indices</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">sharding</span><span class="o">.</span><span class="n">addressable_devices_indices_map</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+  <span class="n">indices</span> <span class="o">=</span> <span class="n">sharding</span><span class="o">.</span><span class="n">addressable_devices_indices_map</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">x</span><span class="o">.</span><span class="n">is_fully_addressable</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">x_indices</span><span class="p">)</span> <span class="o">==</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">indices</span><span class="p">):</span>
+      <span class="k">return</span> <span class="n">x</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+          <span class="s2">&quot;Cannot reshard an input that is not fully addressable&quot;</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">devices</span> <span class="o">=</span> <span class="n">pxla</span><span class="o">.</span><span class="n">get_addressable_devices_for_shard_arg</span><span class="p">(</span><span class="n">sharding</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">x_indices</span><span class="p">)</span> <span class="o">==</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">indices</span><span class="p">):</span>
+      <span class="k">return</span> <span class="n">xc</span><span class="o">.</span><span class="n">copy_array_to_devices_with_sharding</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">devices</span><span class="p">),</span> <span class="n">sharding</span><span class="p">)</span>
+    <span class="c1"># Resharding starts here:</span>
+    <span class="k">if</span> <span class="n">dispatch</span><span class="o">.</span><span class="n">is_single_device_sharding</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">sharding</span><span class="p">):</span>
+      <span class="k">return</span> <span class="n">shard_device_array</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">devices</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">sharding</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">shard_sharded_device_array_slow_path</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">devices</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">sharding</span><span class="p">)</span>
+
+<span class="n">pxla</span><span class="o">.</span><span class="n">shard_arg_handlers</span><span class="p">[</span><span class="n">ArrayImpl</span><span class="p">]</span> <span class="o">=</span> <span class="n">_array_shard_arg</span>
+
+
+<span class="k">def</span> <span class="nf">_array_global_result_handler</span><span class="p">(</span><span class="n">global_aval</span><span class="p">,</span> <span class="n">out_sharding</span><span class="p">,</span> <span class="n">committed</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">global_aval</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">dtypes</span><span class="o">.</span><span class="n">float0</span><span class="p">:</span>
+    <span class="k">return</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">global_aval</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtypes</span><span class="o">.</span><span class="n">float0</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+  <span class="k">if</span> <span class="n">dtypes</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">global_aval</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">dtypes</span><span class="o">.</span><span class="n">extended</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">global_aval</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">_rules</span><span class="o">.</span><span class="n">global_sharded_result_handler</span><span class="p">(</span>
+        <span class="n">global_aval</span><span class="p">,</span> <span class="n">out_sharding</span><span class="p">,</span> <span class="n">committed</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">xc</span><span class="o">.</span><span class="n">array_result_handler</span><span class="p">(</span>
+      <span class="n">global_aval</span><span class="p">,</span> <span class="n">out_sharding</span><span class="p">,</span> <span class="n">committed</span><span class="o">=</span><span class="n">committed</span><span class="p">,</span> <span class="n">_skip_checks</span><span class="o">=</span><span class="kc">True</span>
+  <span class="p">)</span>
+<span class="n">pxla</span><span class="o">.</span><span class="n">global_result_handlers</span><span class="p">[</span><span class="n">core</span><span class="o">.</span><span class="n">ShapedArray</span><span class="p">]</span> <span class="o">=</span> <span class="n">_array_global_result_handler</span>
+<span class="n">pxla</span><span class="o">.</span><span class="n">global_result_handlers</span><span class="p">[</span><span class="n">core</span><span class="o">.</span><span class="n">ConcreteArray</span><span class="p">]</span> <span class="o">=</span> <span class="n">_array_global_result_handler</span>
+<span class="n">pxla</span><span class="o">.</span><span class="n">global_result_handlers</span><span class="p">[</span><span class="n">core</span><span class="o">.</span><span class="n">AbstractToken</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">_</span><span class="p">:</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">_</span><span class="p">:</span> <span class="n">core</span><span class="o">.</span><span class="n">token</span>
+
+
+<span class="c1"># Only used for Arrays that come out of pmap.</span>
+<span class="k">def</span> <span class="nf">_array_local_result_handler</span><span class="p">(</span><span class="n">aval</span><span class="p">,</span> <span class="n">sharding</span><span class="p">,</span> <span class="n">indices</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">aval</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">dtypes</span><span class="o">.</span><span class="n">float0</span><span class="p">:</span>
+    <span class="k">return</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">aval</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtypes</span><span class="o">.</span><span class="n">float0</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+  <span class="k">if</span> <span class="n">dtypes</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">aval</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">dtypes</span><span class="o">.</span><span class="n">extended</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">aval</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">_rules</span><span class="o">.</span><span class="n">local_sharded_result_handler</span><span class="p">(</span>
+        <span class="n">aval</span><span class="p">,</span> <span class="n">sharding</span><span class="p">,</span> <span class="n">indices</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">xc</span><span class="o">.</span><span class="n">array_result_handler</span><span class="p">(</span>
+      <span class="n">aval</span><span class="p">,</span> <span class="n">sharding</span><span class="p">,</span> <span class="n">committed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">_skip_checks</span><span class="o">=</span><span class="kc">True</span>
+  <span class="p">)</span>
+<span class="n">pxla</span><span class="o">.</span><span class="n">local_result_handlers</span><span class="p">[</span><span class="n">core</span><span class="o">.</span><span class="n">ShapedArray</span><span class="p">]</span> <span class="o">=</span> <span class="n">_array_local_result_handler</span>
+<span class="n">pxla</span><span class="o">.</span><span class="n">local_result_handlers</span><span class="p">[</span><span class="n">core</span><span class="o">.</span><span class="n">ConcreteArray</span><span class="p">]</span> <span class="o">=</span> <span class="n">_array_local_result_handler</span>
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The JAX authors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, The JAX Authors. NumPy and SciPy documentation are copyright the respective authors..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

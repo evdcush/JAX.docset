@@ -1,0 +1,1251 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Just In Time Compilation with JAX &#8212; JAX  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/style.css?v=02ed413a" />
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'jax-101/02-jitting';</script>
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Automatic Vectorization in JAX" href="03-vectorization.html" />
+    <link rel="prev" title="JAX As Accelerated NumPy" href="01-jax-basics.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/jax_logo_250px.png" class="logo__image only-light" alt="JAX  documentation - Home"/>
+    <script>document.write(`<img src="../_static/jax_logo_250px.png" class="logo__image only-dark" alt="JAX  documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installing JAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/quickstart.html">JAX Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/thinking_in_jax.html">How to Think in JAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Common_Gotchas_in_JAX.html">🔪 JAX - The Sharp Bits 🔪</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">JAX Frequently Asked Questions (FAQ)</a></li>
+</ul>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Tutorial: JAX 101</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01-jax-basics.html">JAX As Accelerated NumPy</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Just In Time Compilation with JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03-vectorization.html">Automatic Vectorization in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04-advanced-autodiff.html">Advanced Automatic Differentiation in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05-random-numbers.html">Pseudo Random Numbers in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.1-pytrees.html">Working with Pytrees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06-parallelism.html">Parallel Evaluation in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07-state.html">Stateful Computations in JAX</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Further Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../user_guides.html">User Guides</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../profiling.html">Profiling JAX programs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../device_memory_profiling.html">Device Memory Profiling</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../debugging/index.html">Runtime value debugging in JAX</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../debugging/print_breakpoint.html"><code class="docutils literal notranslate"><span class="pre">jax.debug.print</span></code> and <code class="docutils literal notranslate"><span class="pre">jax.debug.breakpoint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../debugging/checkify_guide.html">The <code class="docutils literal notranslate"><span class="pre">checkify</span></code> transformation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../debugging/flags.html">JAX debugging flags</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../gpu_performance_tips.html">GPU performance tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../persistent_compilation_cache.html">Persistent Compilation Cache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jaxpr.html">Understanding Jaxprs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/external_callbacks.html">External Callbacks in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../type_promotion.html">Type promotion semantics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pytrees.html">Pytrees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../aot.html">Ahead-of-time lowering and compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../errors.html">JAX Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../transfer_guard.html">Transfer guard</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../pallas/index.html">Pallas: a JAX kernel language</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../pallas/design.html">Pallas Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pallas/quickstart.html">Pallas Quickstart</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../pallas/tpu/index.html">Pallas TPU</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../pallas/tpu/details.html">Writing TPU kernels with Pallas</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../pallas/tpu/pipelining.html">Pipelining and <code class="docutils literal notranslate"><span class="pre">BlockSpec</span></code>s</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../advanced_guide.html">Advanced Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/neural_network_with_tfds_data.html">Training a Simple Neural Network, with tensorflow/datasets Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/Neural_Network_and_Data_Loading.html">Training a Simple Neural Network, with PyTorch Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/vmapped_log_probs.html">Autobatching for Bayesian Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../multi_process.html">Using JAX in multi-host and multi-process environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/Distributed_arrays_and_automatic_parallelization.html">Distributed arrays and automatic parallelization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/shard_map.html">SPMD multi-device parallelism with <code class="docutils literal notranslate"><span class="pre">shard_map</span></code></a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/xmap_tutorial.html">Named axes and easy-to-revise parallelism with <code class="docutils literal notranslate"><span class="pre">xmap</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/autodiff_cookbook.html">The Autodiff Cookbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/Custom_derivative_rules_for_Python_code.html">Custom derivative rules for JAX-transformable Python functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/autodiff_remat.html">Control autodiff’s saved values with <code class="docutils literal notranslate"><span class="pre">jax.checkpoint</span></code> (aka <code class="docutils literal notranslate"><span class="pre">jax.remat</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/How_JAX_primitives_work.html">How JAX primitives work</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/Writing_custom_interpreters_in_Jax.html">Writing custom Jaxpr interpreters in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Custom_Operation_for_GPUs.html">Custom operations for GPUs with C++ and CUDA</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/convolutions.html">Generalized Convolutions in JAX</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../contributor_guide.html">Developer Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html">Contributing to JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../developer.html">Building from source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax_internal_api.html">Internal APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../autodidax.html">Autodidax: JAX core from scratch</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../jep/index.html">JAX Enhancement Proposals (JEPs)</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../jep/263-prng.html">263: JAX PRNG Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jep/2026-custom-derivatives.html">2026: Custom JVP/VJP rules for JAX-transformable functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jep/4008-custom-vjp-update.html">4008: Custom VJP and `nondiff_argnums` update</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jep/4410-omnistaging.html">4410: Omnistaging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jep/9263-typed-keys.html">9263: Typed keys &amp; pluggable RNGs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jep/9407-type-promotion.html">9407: Design of Type Promotion Semantics for JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jep/9419-jax-versioning.html">9419: Jax and Jaxlib versioning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jep/10657-sequencing-effects.html">10657: Sequencing side-effects in JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jep/11830-new-remat-checkpoint.html">11830: `jax.remat` / `jax.checkpoint` new implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jep/12049-type-annotations.html">12049: Type Annotation Roadmap for JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jep/14273-shard-map.html">14273: `shard_map` (`shmap`) for simple per-device code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jep/15856-jex.html">15856: `jax.extend`, an extensions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jep/17111-shmap-transpose.html">17111: Efficient transposition of `shard_map` (and other maps)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jep/18137-numpy-scipy-scope.html">18137: Scope of JAX NumPy &amp; SciPy Wrappers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../investigating_a_regression.html">Investigating a regression</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../building_on_jax.html">Building on JAX</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../notes.html">Notes</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api_compatibility.html">API compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../deprecation.html">Python and NumPy version support policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax_array_migration.html">jax.Array migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../async_dispatch.html">Asynchronous dispatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concurrency.html">Concurrency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gpu_memory_allocation.html">GPU memory allocation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rank_promotion_warning.html">Rank promotion warning</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../jax.html">Public API: jax package</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../jax.numpy.html"><code class="docutils literal notranslate"><span class="pre">jax.numpy</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.fft.html">jax.numpy.fft.fft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.fft2.html">jax.numpy.fft.fft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.fftfreq.html">jax.numpy.fft.fftfreq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.fftn.html">jax.numpy.fft.fftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.fftshift.html">jax.numpy.fft.fftshift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.hfft.html">jax.numpy.fft.hfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.ifft.html">jax.numpy.fft.ifft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.ifft2.html">jax.numpy.fft.ifft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.ifftn.html">jax.numpy.fft.ifftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.ifftshift.html">jax.numpy.fft.ifftshift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.ihfft.html">jax.numpy.fft.ihfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.irfft.html">jax.numpy.fft.irfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.irfft2.html">jax.numpy.fft.irfft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.irfftn.html">jax.numpy.fft.irfftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.rfft.html">jax.numpy.fft.rfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.rfft2.html">jax.numpy.fft.rfft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.rfftfreq.html">jax.numpy.fft.rfftfreq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.numpy.fft.rfftn.html">jax.numpy.fft.rfftn</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../jax.scipy.html"><code class="docutils literal notranslate"><span class="pre">jax.scipy</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.scipy.stats.bernoulli.logpmf.html">jax.scipy.stats.bernoulli.logpmf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.scipy.stats.bernoulli.pmf.html">jax.scipy.stats.bernoulli.pmf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.scipy.stats.bernoulli.cdf.html">jax.scipy.stats.bernoulli.cdf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../_autosummary/jax.scipy.stats.bernoulli.ppf.html">jax.scipy.stats.bernoulli.ppf</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.lax.html"><code class="docutils literal notranslate"><span class="pre">jax.lax</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.random.html"><code class="docutils literal notranslate"><span class="pre">jax.random</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.sharding.html"><code class="docutils literal notranslate"><span class="pre">jax.sharding</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.debug.html"><code class="docutils literal notranslate"><span class="pre">jax.debug</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.dlpack.html"><code class="docutils literal notranslate"><span class="pre">jax.dlpack</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.distributed.html"><code class="docutils literal notranslate"><span class="pre">jax.distributed</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.dtypes.html"><code class="docutils literal notranslate"><span class="pre">jax.dtypes</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.flatten_util.html"><code class="docutils literal notranslate"><span class="pre">jax.flatten_util</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.image.html"><code class="docutils literal notranslate"><span class="pre">jax.image</span></code> module</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../jax.nn.html"><code class="docutils literal notranslate"><span class="pre">jax.nn</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-13"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../jax.nn.initializers.html"><code class="docutils literal notranslate"><span class="pre">jax.nn.initializers</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.ops.html"><code class="docutils literal notranslate"><span class="pre">jax.ops</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.profiler.html"><code class="docutils literal notranslate"><span class="pre">jax.profiler</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.stages.html"><code class="docutils literal notranslate"><span class="pre">jax.stages</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.tree.html"><code class="docutils literal notranslate"><span class="pre">jax.tree</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.tree_util.html"><code class="docutils literal notranslate"><span class="pre">jax.tree_util</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.typing.html"><code class="docutils literal notranslate"><span class="pre">jax.typing</span></code> module</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../jax.extend.html"><code class="docutils literal notranslate"><span class="pre">jax.extend</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../jax.extend.linear_util.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.linear_util</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jax.extend.mlir.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.mlir</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jax.extend.random.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.random</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../jax.example_libraries.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-15"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../jax.example_libraries.optimizers.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries.optimizers</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jax.example_libraries.stax.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries.stax</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../jax.experimental.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../jax.experimental.array_api.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.array_api</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jax.experimental.checkify.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.checkify</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jax.experimental.host_callback.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.host_callback</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jax.experimental.maps.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.maps</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jax.experimental.pjit.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.pjit</span></code> module</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../jax.experimental.sparse.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.sparse</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.BCOO.html">jax.experimental.sparse.BCOO</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_broadcast_in_dim.html">jax.experimental.sparse.bcoo_broadcast_in_dim</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_concatenate.html">jax.experimental.sparse.bcoo_concatenate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_dot_general.html">jax.experimental.sparse.bcoo_dot_general</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_dot_general_sampled.html">jax.experimental.sparse.bcoo_dot_general_sampled</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_dynamic_slice.html">jax.experimental.sparse.bcoo_dynamic_slice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_extract.html">jax.experimental.sparse.bcoo_extract</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_fromdense.html">jax.experimental.sparse.bcoo_fromdense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_gather.html">jax.experimental.sparse.bcoo_gather</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_multiply_dense.html">jax.experimental.sparse.bcoo_multiply_dense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_multiply_sparse.html">jax.experimental.sparse.bcoo_multiply_sparse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_update_layout.html">jax.experimental.sparse.bcoo_update_layout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_reduce_sum.html">jax.experimental.sparse.bcoo_reduce_sum</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_reshape.html">jax.experimental.sparse.bcoo_reshape</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_slice.html">jax.experimental.sparse.bcoo_slice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_sort_indices.html">jax.experimental.sparse.bcoo_sort_indices</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_squeeze.html">jax.experimental.sparse.bcoo_squeeze</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_sum_duplicates.html">jax.experimental.sparse.bcoo_sum_duplicates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_todense.html">jax.experimental.sparse.bcoo_todense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../_autosummary/jax.experimental.sparse.bcoo_transpose.html">jax.experimental.sparse.bcoo_transpose</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../jax.experimental.jet.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.jet</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jax.experimental.custom_partitioning.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.custom_partitioning</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jax.experimental.multihost_utils.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.multihost_utils</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jax.experimental.compilation_cache.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.compilation_cache</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jax.experimental.key_reuse.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.key_reuse</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jax.experimental.mesh_utils.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.mesh_utils</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../jax.lib.html"><code class="docutils literal notranslate"><span class="pre">jax.lib</span></code> module</a></li>
+</ul>
+</li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">JAX Glossary of Terms</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/google/jax" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/jax-101/02-jitting.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Just In Time Compilation with JAX</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-jax-transforms-work">How JAX transforms work</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jit-compiling-a-function">JIT compiling a function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-can-t-we-just-jit-everything">Why can’t we just JIT everything?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-use-jit">When to use JIT</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caching">Caching</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="just-in-time-compilation-with-jax">
+<h1>Just In Time Compilation with JAX<a class="headerlink" href="#just-in-time-compilation-with-jax" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://colab.research.google.com/github/google/jax/blob/main/docs/jax-101/02-jitting.ipynb"><img alt="Open in Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a> <a class="reference external" href="https://kaggle.com/kernels/welcome?src=https://github.com/google/jax/blob/main/docs/jax-101/02-jitting.ipynb"><img alt="Open in Kaggle" src="https://kaggle.com/static/images/open-in-kaggle.svg" /></a></p>
+<p><em>Authors: Rosalia Schneider &amp; Vladimir Mikulik</em></p>
+<p>In this section, we will further explore how JAX works, and how we can make it performant.
+We will discuss the <code class="docutils literal notranslate"><span class="pre">jax.jit()</span></code> transform, which will perform <em>Just In Time</em> (JIT) compilation
+of a JAX Python function so it can be executed efficiently in XLA.</p>
+<section id="how-jax-transforms-work">
+<h2>How JAX transforms work<a class="headerlink" href="#how-jax-transforms-work" title="Link to this heading">#</a></h2>
+<p>In the previous section, we discussed that JAX allows us to transform Python functions. This is done by first converting the Python function into a simple intermediate language called jaxpr. The transformations then work on the jaxpr representation.</p>
+<p>We can show a representation of the jaxpr of a function by using <code class="docutils literal notranslate"><span class="pre">jax.make_jaxpr</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+
+<span class="n">global_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">def</span> <span class="nf">log2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="n">global_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+  <span class="n">ln_x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+  <span class="n">ln_2</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">ln_x</span> <span class="o">/</span> <span class="n">ln_2</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">make_jaxpr</span><span class="p">(</span><span class="n">log2</span><span class="p">)(</span><span class="mf">3.0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{ lambda ; a:f32[]. let
+    b:f32[] = log a
+    c:f32[] = log 2.0
+    d:f32[] = div b c
+  in (d,) }
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <a class="reference external" href="https://jax.readthedocs.io/en/latest/jaxpr.html">Understanding Jaxprs</a> section of the documentation provides more information on the meaning of the above output.</p>
+<p>Importantly, note how the jaxpr does not capture the side-effect of the function: there is nothing in it corresponding to <code class="docutils literal notranslate"><span class="pre">global_list.append(x)</span></code>. This is a feature, not a bug: JAX is designed to understand side-effect-free (a.k.a. functionally pure) code. If <em>pure function</em> and <em>side-effect</em> are unfamiliar terms, this is explained in a little more detail in <a class="reference external" href="https://jax.readthedocs.io/en/latest/notebooks/Common_Gotchas_in_JAX.html#pure-functions">🔪 JAX - The Sharp Bits 🔪: Pure Functions</a>.</p>
+<p>Of course, impure functions can still be written and even run, but JAX gives no guarantees about their behaviour once converted to jaxpr. However, as a rule of thumb, you can expect (but shouldn’t rely on) the side-effects of a JAX-transformed function to run once (during the first call), and never again. This is because of the way that JAX generates jaxpr, using a process called ‘tracing’.</p>
+<p>When tracing, JAX wraps each argument by a <em>tracer</em> object. These tracers then record all JAX operations performed on them during the function call (which happens in regular Python). Then, JAX uses the tracer records to reconstruct the entire function. The output of that reconstruction is the jaxpr. Since the tracers do not record the Python side-effects, they do not appear in the jaxpr. However, the side-effects still happen during the trace itself.</p>
+<p>Note: the Python <code class="docutils literal notranslate"><span class="pre">print()</span></code> function is not pure: the text output is a side-effect of the function. Therefore, any <code class="docutils literal notranslate"><span class="pre">print()</span></code> calls will only happen during tracing, and will not appear in the jaxpr:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">log2_with_print</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;printed x:&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+  <span class="n">ln_x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+  <span class="n">ln_2</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">ln_x</span> <span class="o">/</span> <span class="n">ln_2</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">make_jaxpr</span><span class="p">(</span><span class="n">log2_with_print</span><span class="p">)(</span><span class="mf">3.</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>printed x: Traced&lt;ShapedArray(float32[], weak_type=True)&gt;with&lt;DynamicJaxprTrace(level=1/0)&gt;
+{ lambda ; a:f32[]. let
+    b:f32[] = log a
+    c:f32[] = log 2.0
+    d:f32[] = div b c
+  in (d,) }
+</pre></div>
+</div>
+</div>
+</div>
+<p>See how the printed <code class="docutils literal notranslate"><span class="pre">x</span></code> is a <code class="docutils literal notranslate"><span class="pre">Traced</span></code> object? That’s the JAX internals at work.</p>
+<p>The fact that the Python code runs at least once is strictly an implementation detail, and so shouldn’t be relied upon. However, it’s useful to understand as you can use it when debugging to print out intermediate values of a computation.</p>
+<p>A key thing to understand is that jaxpr captures the function as executed on the parameters given to it. For example, if we have a conditional, jaxpr will only know about the branch we take:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">log2_if_rank_2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="n">ln_x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">ln_2</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ln_x</span> <span class="o">/</span> <span class="n">ln_2</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">x</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">make_jaxpr</span><span class="p">(</span><span class="n">log2_if_rank_2</span><span class="p">)(</span><span class="n">jax</span><span class="o">.</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{ lambda ; a:i32[3]. let  in (a,) }
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="jit-compiling-a-function">
+<h2>JIT compiling a function<a class="headerlink" href="#jit-compiling-a-function" title="Link to this heading">#</a></h2>
+<p>As explained before, JAX enables operations to execute on CPU/GPU/TPU using the same code.
+Let’s look at an example of computing a <em>Scaled Exponential Linear Unit</em>
+(<a class="reference external" href="https://proceedings.neurips.cc/paper/6698-self-normalizing-neural-networks.pdf">SELU</a>), an
+operation commonly used in deep learning:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+
+<span class="k">def</span> <span class="nf">selu</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.67</span><span class="p">,</span> <span class="n">lambda_</span><span class="o">=</span><span class="mf">1.05</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">lambda_</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">)</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1000000</span><span class="p">)</span>
+<span class="o">%</span><span class="k">timeit</span> selu(x).block_until_ready()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100 loops, best of 5: 2.05 ms per loop
+</pre></div>
+</div>
+</div>
+</div>
+<p>The code above is sending one operation at a time to the accelerator. This limits the ability of the XLA compiler to optimize our functions.</p>
+<p>Naturally, what we want to do is give the XLA compiler as much code as possible, so it can fully optimize it. For this purpose, JAX provides the <code class="docutils literal notranslate"><span class="pre">jax.jit</span></code> transformation, which will JIT compile a JAX-compatible function. The example below shows how to use JIT to speed up the previous function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">selu_jit</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">selu</span><span class="p">)</span>
+
+<span class="c1"># Warm up</span>
+<span class="n">selu_jit</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">block_until_ready</span><span class="p">()</span>
+
+<span class="o">%</span><span class="k">timeit</span> selu_jit(x).block_until_ready()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10000 loops, best of 5: 150 µs per loop
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s what just happened:</p>
+<ol class="arabic simple">
+<li><p>We defined <code class="docutils literal notranslate"><span class="pre">selu_jit</span></code> as the compiled version of <code class="docutils literal notranslate"><span class="pre">selu</span></code>.</p></li>
+<li><p>We called <code class="docutils literal notranslate"><span class="pre">selu_jit</span></code> once on <code class="docutils literal notranslate"><span class="pre">x</span></code>. This is where JAX does its tracing – it needs to have some inputs to wrap in tracers, after all. The jaxpr is then compiled using XLA into very efficient code optimized for your GPU or TPU. Finally, the compiled code is executed to satisfy the call. Subsequent calls to <code class="docutils literal notranslate"><span class="pre">selu_jit</span></code> will use the compiled code directly, skipping the python implementation entirely.</p></li>
+</ol>
+<p>(If we didn’t include the warm-up call separately, everything would still work, but then the compilation time would be included in the benchmark. It would still be faster, because we run many loops in the benchmark, but it wouldn’t be a fair comparison.)</p>
+<ol class="arabic simple" start="3">
+<li><p>We timed the execution speed of the compiled version. (Note the use of <code class="docutils literal notranslate"><span class="pre">block_until_ready()</span></code>, which is required due to JAX’s <a class="reference external" href="https://jax.readthedocs.io/en/latest/async_dispatch.html">Asynchronous execution</a> model).</p></li>
+</ol>
+</section>
+<section id="why-can-t-we-just-jit-everything">
+<h2>Why can’t we just JIT everything?<a class="headerlink" href="#why-can-t-we-just-jit-everything" title="Link to this heading">#</a></h2>
+<p>After going through the example above, you might be wondering whether we should simply apply <code class="docutils literal notranslate"><span class="pre">jax.jit</span></code> to every function. To understand why this is not the case, and when we should/shouldn’t apply <code class="docutils literal notranslate"><span class="pre">jit</span></code>, let’s first check some cases where JIT doesn’t work.</p>
+<div class="cell tag_raises-exception docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Condition on value of x.</span>
+
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">x</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">x</span>
+
+<span class="n">f_jit</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="n">f_jit</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># Should raise an error. </span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">UnfilteredStackTrace</span><span class="g g-Whitespace">                      </span>Traceback (most recent call last)
+<span class="nn">&lt;ipython-input-12-2c1a07641e48&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="n">f_jit</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">10</span> <span class="n">f_jit</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># Should raise an error.</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/_src/traceback_util.py</span> in <span class="ni">reraise_with_filtered_traceback</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">161</span>     <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">162</span>       <span class="k">return</span> <span class="n">fun</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">163</span>     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/_src/api.py</span> in <span class="ni">cache_miss</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">418</span>         <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">flat_fun</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+<span class="ne">--&gt; </span><span class="mi">419</span>         <span class="n">donated_invars</span><span class="o">=</span><span class="n">donated_invars</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="n">inline</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">420</span>     <span class="n">out_pytree_def</span> <span class="o">=</span> <span class="n">out_tree</span><span class="p">()</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/core.py</span> in <span class="ni">bind</span><span class="nt">(self, fun, *args, **params)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1631</span>   <span class="k">def</span> <span class="nf">bind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fun</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
+<span class="ne">-&gt; </span><span class="mi">1632</span>     <span class="k">return</span> <span class="n">call_bind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fun</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1633</span> 
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/core.py</span> in <span class="ni">call_bind</span><span class="nt">(primitive, fun, *args, **params)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1622</span>   <span class="n">tracers</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">top_trace</span><span class="o">.</span><span class="n">full_raise</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1623</span>   <span class="n">outs</span> <span class="o">=</span> <span class="n">primitive</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">top_trace</span><span class="p">,</span> <span class="n">fun</span><span class="p">,</span> <span class="n">tracers</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1624</span>   <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="n">full_lower</span><span class="p">,</span> <span class="n">apply_todos</span><span class="p">(</span><span class="n">env_trace_todo</span><span class="p">(),</span> <span class="n">outs</span><span class="p">))</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/core.py</span> in <span class="ni">process</span><span class="nt">(self, trace, fun, tracers, params)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1634</span>   <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trace</span><span class="p">,</span> <span class="n">fun</span><span class="p">,</span> <span class="n">tracers</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+<span class="ne">-&gt; </span><span class="mi">1635</span>     <span class="k">return</span> <span class="n">trace</span><span class="o">.</span><span class="n">process_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fun</span><span class="p">,</span> <span class="n">tracers</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1636</span> 
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/core.py</span> in <span class="ni">process_call</span><span class="nt">(self, primitive, f, tracers, params)</span>
+<span class="g g-Whitespace">    </span><span class="mi">626</span>   <span class="k">def</span> <span class="nf">process_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">primitive</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">tracers</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">627</span>     <span class="k">return</span> <span class="n">primitive</span><span class="o">.</span><span class="n">impl</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="o">*</span><span class="n">tracers</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">628</span>   <span class="n">process_map</span> <span class="o">=</span> <span class="n">process_call</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/interpreters/xla.py</span> in <span class="ni">_xla_call_impl</span><span class="nt">(***failed resolving arguments***)</span>
+<span class="g g-Whitespace">    </span><span class="mi">687</span>   <span class="n">compiled_fun</span> <span class="o">=</span> <span class="n">_xla_callable</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">donated_invars</span><span class="p">,</span>
+<span class="ne">--&gt; </span><span class="mi">688</span>                                <span class="o">*</span><span class="n">unsafe_map</span><span class="p">(</span><span class="n">arg_spec</span><span class="p">,</span> <span class="n">args</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">689</span>   <span class="k">try</span><span class="p">:</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/linear_util.py</span> in <span class="ni">memoized_fun</span><span class="nt">(fun, *args)</span>
+<span class="g g-Whitespace">    </span><span class="mi">262</span>     <span class="k">else</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">263</span>       <span class="n">ans</span> <span class="o">=</span> <span class="n">call</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">264</span>       <span class="n">cache</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">fun</span><span class="o">.</span><span class="n">stores</span><span class="p">)</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/interpreters/xla.py</span> in <span class="ni">_xla_callable_uncached</span><span class="nt">(fun, device, backend, name, donated_invars, *arg_specs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">759</span>   <span class="k">return</span> <span class="n">lower_xla_callable</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">donated_invars</span><span class="p">,</span>
+<span class="ne">--&gt; </span><span class="mi">760</span>                             <span class="o">*</span><span class="n">arg_specs</span><span class="p">)</span><span class="o">.</span><span class="n">compile</span><span class="p">()</span><span class="o">.</span><span class="n">unsafe_call</span>
+<span class="g g-Whitespace">    </span><span class="mi">761</span> 
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/interpreters/xla.py</span> in <span class="ni">lower_xla_callable</span><span class="nt">(fun, device, backend, name, donated_invars, *arg_specs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">771</span>   <span class="n">jaxpr</span><span class="p">,</span> <span class="n">out_avals</span><span class="p">,</span> <span class="n">consts</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">trace_to_jaxpr_final</span><span class="p">(</span>
+<span class="ne">--&gt; </span><span class="mi">772</span>       <span class="n">fun</span><span class="p">,</span> <span class="n">abstract_args</span><span class="p">,</span> <span class="n">pe</span><span class="o">.</span><span class="n">debug_info_final</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="s2">&quot;jit&quot;</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">773</span>   <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">Tracer</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">consts</span><span class="p">):</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/interpreters/partial_eval.py</span> in <span class="ni">trace_to_jaxpr_final</span><span class="nt">(fun, in_avals, debug_info)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1541</span>     <span class="k">with</span> <span class="n">core</span><span class="o">.</span><span class="n">new_sublevel</span><span class="p">():</span>
+<span class="ne">-&gt; </span><span class="mi">1542</span>       <span class="n">jaxpr</span><span class="p">,</span> <span class="n">out_avals</span><span class="p">,</span> <span class="n">consts</span> <span class="o">=</span> <span class="n">trace_to_subjaxpr_dynamic</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">main</span><span class="p">,</span> <span class="n">in_avals</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1543</span>     <span class="k">del</span> <span class="n">fun</span><span class="p">,</span> <span class="n">main</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/interpreters/partial_eval.py</span> in <span class="ni">trace_to_subjaxpr_dynamic</span><span class="nt">(fun, main, in_avals)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1519</span>     <span class="n">in_tracers</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">trace</span><span class="o">.</span><span class="n">new_arg</span><span class="p">,</span> <span class="n">in_avals</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1520</span>     <span class="n">ans</span> <span class="o">=</span> <span class="n">fun</span><span class="o">.</span><span class="n">call_wrapped</span><span class="p">(</span><span class="o">*</span><span class="n">in_tracers</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1521</span>     <span class="n">out_tracers</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">trace</span><span class="o">.</span><span class="n">full_raise</span><span class="p">,</span> <span class="n">ans</span><span class="p">)</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/linear_util.py</span> in <span class="ni">call_wrapped</span><span class="nt">(self, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">165</span>     <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">166</span>       <span class="n">ans</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">167</span>     <span class="k">except</span><span class="p">:</span>
+
+<span class="nn">&lt;ipython-input-12-2c1a07641e48&gt;</span> in <span class="ni">f</span><span class="nt">(x)</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="ne">----&gt; </span><span class="mi">4</span>   <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="k">return</span> <span class="n">x</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/core.py</span> in <span class="ni">__bool__</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">548</span>   <span class="k">def</span> <span class="nf">__nonzero__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">aval</span><span class="o">.</span><span class="n">_nonzero</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">549</span>   <span class="k">def</span> <span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">aval</span><span class="o">.</span><span class="n">_bool</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">550</span>   <span class="k">def</span> <span class="fm">__int__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">aval</span><span class="o">.</span><span class="n">_int</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/core.py</span> in <span class="ni">error</span><span class="nt">(self, arg)</span>
+<span class="g g-Whitespace">    </span><span class="mi">999</span>   <span class="k">def</span> <span class="nf">error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+<span class="ne">-&gt; </span><span class="mi">1000</span>     <span class="k">raise</span> <span class="n">ConcretizationTypeError</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">fname_context</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1001</span>   <span class="k">return</span> <span class="n">error</span>
+
+<span class="ne">UnfilteredStackTrace</span>: jax._src.errors.ConcretizationTypeError: Abstract tracer value encountered where concrete value is expected: Traced&lt;ShapedArray(bool[], weak_type=True)&gt;with&lt;DynamicJaxprTrace(level=0/1)&gt;
+<span class="n">The</span> <span class="n">problem</span> <span class="n">arose</span> <span class="k">with</span> <span class="n">the</span> <span class="nb">bool</span> <span class="n">function</span><span class="o">.</span> 
+<span class="n">While</span> <span class="n">tracing</span> <span class="n">the</span> <span class="n">function</span> <span class="n">f</span> <span class="n">at</span> <span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">2</span><span class="n">c1a07641e48</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">3</span> <span class="k">for</span> <span class="n">jit</span><span class="p">,</span> <span class="n">this</span> <span class="n">concrete</span> <span class="n">value</span> <span class="n">was</span> <span class="ow">not</span> <span class="n">available</span> <span class="ow">in</span> <span class="n">Python</span> <span class="n">because</span> <span class="n">it</span> <span class="n">depends</span> <span class="n">on</span> <span class="n">the</span> <span class="n">value</span> <span class="n">of</span> <span class="n">the</span> <span class="n">argument</span> <span class="s1">&#39;x&#39;</span><span class="o">.</span>
+
+<span class="n">See</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">jax</span><span class="o">.</span><span class="n">readthedocs</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">en</span><span class="o">/</span><span class="n">latest</span><span class="o">/</span><span class="n">errors</span><span class="o">.</span><span class="n">html</span><span class="c1">#jax.errors.ConcretizationTypeError</span>
+
+<span class="n">The</span> <span class="n">stack</span> <span class="n">trace</span> <span class="n">below</span> <span class="n">excludes</span> <span class="n">JAX</span><span class="o">-</span><span class="n">internal</span> <span class="n">frames</span><span class="o">.</span>
+<span class="n">The</span> <span class="n">preceding</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">original</span> <span class="n">exception</span> <span class="n">that</span> <span class="n">occurred</span><span class="p">,</span> <span class="n">unmodified</span><span class="o">.</span>
+
+<span class="gt">--------------------</span>
+
+<span class="n">The</span> <span class="n">above</span> <span class="n">exception</span> <span class="n">was</span> <span class="n">the</span> <span class="n">direct</span> <span class="n">cause</span> <span class="n">of</span> <span class="n">the</span> <span class="n">following</span> <span class="n">exception</span><span class="p">:</span>
+
+<span class="ne">ConcretizationTypeError</span><span class="g g-Whitespace">                   </span>Traceback (most recent call last)
+<span class="nn">&lt;ipython-input-12-2c1a07641e48&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> 
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="n">f_jit</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">10</span> <span class="n">f_jit</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># Should raise an error.</span>
+
+<span class="nn">&lt;ipython-input-12-2c1a07641e48&gt;</span> in <span class="ni">f</span><span class="nt">(x)</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> 
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="ne">----&gt; </span><span class="mi">4</span>   <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="k">return</span> <span class="n">x</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>   <span class="k">else</span><span class="p">:</span>
+
+<span class="ne">ConcretizationTypeError</span>: Abstract tracer value encountered where concrete value is expected: Traced&lt;ShapedArray(bool[], weak_type=True)&gt;with&lt;DynamicJaxprTrace(level=0/1)&gt;
+<span class="n">The</span> <span class="n">problem</span> <span class="n">arose</span> <span class="k">with</span> <span class="n">the</span> <span class="nb">bool</span> <span class="n">function</span><span class="o">.</span> 
+<span class="n">While</span> <span class="n">tracing</span> <span class="n">the</span> <span class="n">function</span> <span class="n">f</span> <span class="n">at</span> <span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">2</span><span class="n">c1a07641e48</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">3</span> <span class="k">for</span> <span class="n">jit</span><span class="p">,</span> <span class="n">this</span> <span class="n">concrete</span> <span class="n">value</span> <span class="n">was</span> <span class="ow">not</span> <span class="n">available</span> <span class="ow">in</span> <span class="n">Python</span> <span class="n">because</span> <span class="n">it</span> <span class="n">depends</span> <span class="n">on</span> <span class="n">the</span> <span class="n">value</span> <span class="n">of</span> <span class="n">the</span> <span class="n">argument</span> <span class="s1">&#39;x&#39;</span><span class="o">.</span>
+
+<span class="n">See</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">jax</span><span class="o">.</span><span class="n">readthedocs</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">en</span><span class="o">/</span><span class="n">latest</span><span class="o">/</span><span class="n">errors</span><span class="o">.</span><span class="n">html</span><span class="c1">#jax.errors.ConcretizationTypeError</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_raises-exception docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># While loop conditioned on x and n.</span>
+
+<span class="k">def</span> <span class="nf">g</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+  <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+  <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">i</span>
+
+<span class="n">g_jit</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="n">g_jit</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>  <span class="c1"># Should raise an error. </span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">UnfilteredStackTrace</span><span class="g g-Whitespace">                      </span>Traceback (most recent call last)
+<span class="nn">&lt;ipython-input-13-2aa78f448d5d&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="n">g_jit</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">10</span> <span class="n">g_jit</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>  <span class="c1"># Should raise an error.</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/_src/traceback_util.py</span> in <span class="ni">reraise_with_filtered_traceback</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">161</span>     <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">162</span>       <span class="k">return</span> <span class="n">fun</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">163</span>     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/_src/api.py</span> in <span class="ni">cache_miss</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">418</span>         <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">flat_fun</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+<span class="ne">--&gt; </span><span class="mi">419</span>         <span class="n">donated_invars</span><span class="o">=</span><span class="n">donated_invars</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="n">inline</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">420</span>     <span class="n">out_pytree_def</span> <span class="o">=</span> <span class="n">out_tree</span><span class="p">()</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/core.py</span> in <span class="ni">bind</span><span class="nt">(self, fun, *args, **params)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1631</span>   <span class="k">def</span> <span class="nf">bind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fun</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
+<span class="ne">-&gt; </span><span class="mi">1632</span>     <span class="k">return</span> <span class="n">call_bind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fun</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1633</span> 
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/core.py</span> in <span class="ni">call_bind</span><span class="nt">(primitive, fun, *args, **params)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1622</span>   <span class="n">tracers</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">top_trace</span><span class="o">.</span><span class="n">full_raise</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1623</span>   <span class="n">outs</span> <span class="o">=</span> <span class="n">primitive</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">top_trace</span><span class="p">,</span> <span class="n">fun</span><span class="p">,</span> <span class="n">tracers</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1624</span>   <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="n">full_lower</span><span class="p">,</span> <span class="n">apply_todos</span><span class="p">(</span><span class="n">env_trace_todo</span><span class="p">(),</span> <span class="n">outs</span><span class="p">))</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/core.py</span> in <span class="ni">process</span><span class="nt">(self, trace, fun, tracers, params)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1634</span>   <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trace</span><span class="p">,</span> <span class="n">fun</span><span class="p">,</span> <span class="n">tracers</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+<span class="ne">-&gt; </span><span class="mi">1635</span>     <span class="k">return</span> <span class="n">trace</span><span class="o">.</span><span class="n">process_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fun</span><span class="p">,</span> <span class="n">tracers</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1636</span> 
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/core.py</span> in <span class="ni">process_call</span><span class="nt">(self, primitive, f, tracers, params)</span>
+<span class="g g-Whitespace">    </span><span class="mi">626</span>   <span class="k">def</span> <span class="nf">process_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">primitive</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">tracers</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">627</span>     <span class="k">return</span> <span class="n">primitive</span><span class="o">.</span><span class="n">impl</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="o">*</span><span class="n">tracers</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">628</span>   <span class="n">process_map</span> <span class="o">=</span> <span class="n">process_call</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/interpreters/xla.py</span> in <span class="ni">_xla_call_impl</span><span class="nt">(***failed resolving arguments***)</span>
+<span class="g g-Whitespace">    </span><span class="mi">687</span>   <span class="n">compiled_fun</span> <span class="o">=</span> <span class="n">_xla_callable</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">donated_invars</span><span class="p">,</span>
+<span class="ne">--&gt; </span><span class="mi">688</span>                                <span class="o">*</span><span class="n">unsafe_map</span><span class="p">(</span><span class="n">arg_spec</span><span class="p">,</span> <span class="n">args</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">689</span>   <span class="k">try</span><span class="p">:</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/linear_util.py</span> in <span class="ni">memoized_fun</span><span class="nt">(fun, *args)</span>
+<span class="g g-Whitespace">    </span><span class="mi">262</span>     <span class="k">else</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">263</span>       <span class="n">ans</span> <span class="o">=</span> <span class="n">call</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">264</span>       <span class="n">cache</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">fun</span><span class="o">.</span><span class="n">stores</span><span class="p">)</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/interpreters/xla.py</span> in <span class="ni">_xla_callable_uncached</span><span class="nt">(fun, device, backend, name, donated_invars, *arg_specs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">759</span>   <span class="k">return</span> <span class="n">lower_xla_callable</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">donated_invars</span><span class="p">,</span>
+<span class="ne">--&gt; </span><span class="mi">760</span>                             <span class="o">*</span><span class="n">arg_specs</span><span class="p">)</span><span class="o">.</span><span class="n">compile</span><span class="p">()</span><span class="o">.</span><span class="n">unsafe_call</span>
+<span class="g g-Whitespace">    </span><span class="mi">761</span> 
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/interpreters/xla.py</span> in <span class="ni">lower_xla_callable</span><span class="nt">(fun, device, backend, name, donated_invars, *arg_specs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">771</span>   <span class="n">jaxpr</span><span class="p">,</span> <span class="n">out_avals</span><span class="p">,</span> <span class="n">consts</span> <span class="o">=</span> <span class="n">pe</span><span class="o">.</span><span class="n">trace_to_jaxpr_final</span><span class="p">(</span>
+<span class="ne">--&gt; </span><span class="mi">772</span>       <span class="n">fun</span><span class="p">,</span> <span class="n">abstract_args</span><span class="p">,</span> <span class="n">pe</span><span class="o">.</span><span class="n">debug_info_final</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="s2">&quot;jit&quot;</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">773</span>   <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">core</span><span class="o">.</span><span class="n">Tracer</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">consts</span><span class="p">):</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/interpreters/partial_eval.py</span> in <span class="ni">trace_to_jaxpr_final</span><span class="nt">(fun, in_avals, debug_info)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1541</span>     <span class="k">with</span> <span class="n">core</span><span class="o">.</span><span class="n">new_sublevel</span><span class="p">():</span>
+<span class="ne">-&gt; </span><span class="mi">1542</span>       <span class="n">jaxpr</span><span class="p">,</span> <span class="n">out_avals</span><span class="p">,</span> <span class="n">consts</span> <span class="o">=</span> <span class="n">trace_to_subjaxpr_dynamic</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">main</span><span class="p">,</span> <span class="n">in_avals</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1543</span>     <span class="k">del</span> <span class="n">fun</span><span class="p">,</span> <span class="n">main</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/interpreters/partial_eval.py</span> in <span class="ni">trace_to_subjaxpr_dynamic</span><span class="nt">(fun, main, in_avals)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1519</span>     <span class="n">in_tracers</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">trace</span><span class="o">.</span><span class="n">new_arg</span><span class="p">,</span> <span class="n">in_avals</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1520</span>     <span class="n">ans</span> <span class="o">=</span> <span class="n">fun</span><span class="o">.</span><span class="n">call_wrapped</span><span class="p">(</span><span class="o">*</span><span class="n">in_tracers</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1521</span>     <span class="n">out_tracers</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">trace</span><span class="o">.</span><span class="n">full_raise</span><span class="p">,</span> <span class="n">ans</span><span class="p">)</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/linear_util.py</span> in <span class="ni">call_wrapped</span><span class="nt">(self, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">165</span>     <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">166</span>       <span class="n">ans</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">167</span>     <span class="k">except</span><span class="p">:</span>
+
+<span class="nn">&lt;ipython-input-13-2aa78f448d5d&gt;</span> in <span class="ni">g</span><span class="nt">(x, n)</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>   <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="ne">----&gt; </span><span class="mi">5</span>   <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/core.py</span> in <span class="ni">__bool__</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">548</span>   <span class="k">def</span> <span class="nf">__nonzero__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">aval</span><span class="o">.</span><span class="n">_nonzero</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">549</span>   <span class="k">def</span> <span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">aval</span><span class="o">.</span><span class="n">_bool</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">550</span>   <span class="k">def</span> <span class="fm">__int__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">aval</span><span class="o">.</span><span class="n">_int</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+<span class="nn">/usr/local/lib/python3.7/dist-packages/jax/core.py</span> in <span class="ni">error</span><span class="nt">(self, arg)</span>
+<span class="g g-Whitespace">    </span><span class="mi">999</span>   <span class="k">def</span> <span class="nf">error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+<span class="ne">-&gt; </span><span class="mi">1000</span>     <span class="k">raise</span> <span class="n">ConcretizationTypeError</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">fname_context</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1001</span>   <span class="k">return</span> <span class="n">error</span>
+
+<span class="ne">UnfilteredStackTrace</span>: jax._src.errors.ConcretizationTypeError: Abstract tracer value encountered where concrete value is expected: Traced&lt;ShapedArray(bool[], weak_type=True)&gt;with&lt;DynamicJaxprTrace(level=0/1)&gt;
+<span class="n">The</span> <span class="n">problem</span> <span class="n">arose</span> <span class="k">with</span> <span class="n">the</span> <span class="nb">bool</span> <span class="n">function</span><span class="o">.</span> 
+<span class="n">While</span> <span class="n">tracing</span> <span class="n">the</span> <span class="n">function</span> <span class="n">g</span> <span class="n">at</span> <span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">13</span><span class="o">-</span><span class="mi">2</span><span class="n">aa78f448d5d</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">3</span> <span class="k">for</span> <span class="n">jit</span><span class="p">,</span> <span class="n">this</span> <span class="n">concrete</span> <span class="n">value</span> <span class="n">was</span> <span class="ow">not</span> <span class="n">available</span> <span class="ow">in</span> <span class="n">Python</span> <span class="n">because</span> <span class="n">it</span> <span class="n">depends</span> <span class="n">on</span> <span class="n">the</span> <span class="n">value</span> <span class="n">of</span> <span class="n">the</span> <span class="n">argument</span> <span class="s1">&#39;n&#39;</span><span class="o">.</span>
+
+<span class="n">See</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">jax</span><span class="o">.</span><span class="n">readthedocs</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">en</span><span class="o">/</span><span class="n">latest</span><span class="o">/</span><span class="n">errors</span><span class="o">.</span><span class="n">html</span><span class="c1">#jax.errors.ConcretizationTypeError</span>
+
+<span class="n">The</span> <span class="n">stack</span> <span class="n">trace</span> <span class="n">below</span> <span class="n">excludes</span> <span class="n">JAX</span><span class="o">-</span><span class="n">internal</span> <span class="n">frames</span><span class="o">.</span>
+<span class="n">The</span> <span class="n">preceding</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">original</span> <span class="n">exception</span> <span class="n">that</span> <span class="n">occurred</span><span class="p">,</span> <span class="n">unmodified</span><span class="o">.</span>
+
+<span class="gt">--------------------</span>
+
+<span class="n">The</span> <span class="n">above</span> <span class="n">exception</span> <span class="n">was</span> <span class="n">the</span> <span class="n">direct</span> <span class="n">cause</span> <span class="n">of</span> <span class="n">the</span> <span class="n">following</span> <span class="n">exception</span><span class="p">:</span>
+
+<span class="ne">ConcretizationTypeError</span><span class="g g-Whitespace">                   </span>Traceback (most recent call last)
+<span class="nn">&lt;ipython-input-13-2aa78f448d5d&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> 
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="n">g_jit</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">10</span> <span class="n">g_jit</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>  <span class="c1"># Should raise an error.</span>
+
+<span class="nn">&lt;ipython-input-13-2aa78f448d5d&gt;</span> in <span class="ni">g</span><span class="nt">(x, n)</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="k">def</span> <span class="nf">g</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>   <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="ne">----&gt; </span><span class="mi">5</span>   <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span>   <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">i</span>
+
+<span class="ne">ConcretizationTypeError</span>: Abstract tracer value encountered where concrete value is expected: Traced&lt;ShapedArray(bool[], weak_type=True)&gt;with&lt;DynamicJaxprTrace(level=0/1)&gt;
+<span class="n">The</span> <span class="n">problem</span> <span class="n">arose</span> <span class="k">with</span> <span class="n">the</span> <span class="nb">bool</span> <span class="n">function</span><span class="o">.</span> 
+<span class="n">While</span> <span class="n">tracing</span> <span class="n">the</span> <span class="n">function</span> <span class="n">g</span> <span class="n">at</span> <span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">13</span><span class="o">-</span><span class="mi">2</span><span class="n">aa78f448d5d</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">3</span> <span class="k">for</span> <span class="n">jit</span><span class="p">,</span> <span class="n">this</span> <span class="n">concrete</span> <span class="n">value</span> <span class="n">was</span> <span class="ow">not</span> <span class="n">available</span> <span class="ow">in</span> <span class="n">Python</span> <span class="n">because</span> <span class="n">it</span> <span class="n">depends</span> <span class="n">on</span> <span class="n">the</span> <span class="n">value</span> <span class="n">of</span> <span class="n">the</span> <span class="n">argument</span> <span class="s1">&#39;n&#39;</span><span class="o">.</span>
+
+<span class="n">See</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">jax</span><span class="o">.</span><span class="n">readthedocs</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">en</span><span class="o">/</span><span class="n">latest</span><span class="o">/</span><span class="n">errors</span><span class="o">.</span><span class="n">html</span><span class="c1">#jax.errors.ConcretizationTypeError</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The problem is that we tried to condition on the <em>value</em> of an input to the function being jitted. The reason we can’t do this is related to the fact mentioned above that jaxpr depends on the actual values used to trace it.</p>
+<p>The more specific information about the values we use in the trace, the more we can use standard Python control flow to express ourselves. However, being too specific means we can’t reuse the same traced function for other values. JAX solves this by tracing at different levels of abstraction for different purposes.</p>
+<p>For <code class="docutils literal notranslate"><span class="pre">jax.jit</span></code>, the default level is <code class="docutils literal notranslate"><span class="pre">ShapedArray</span></code> – that is, each tracer has a concrete shape (which we’re allowed to condition on), but no concrete value. This allows the compiled function to work on all possible inputs with the same shape – the standard use case in machine learning. However, because the tracers have no concrete value, if we attempt to condition on one, we get the error above.</p>
+<p>In <code class="docutils literal notranslate"><span class="pre">jax.grad</span></code>, the constraints are more relaxed, so you can do more. If you compose several transformations, however, you must satisfy the constraints of the most strict one. So, if you <code class="docutils literal notranslate"><span class="pre">jit(grad(f))</span></code>, <code class="docutils literal notranslate"><span class="pre">f</span></code> mustn’t condition on value. For more detail on the interaction between Python control flow and JAX, see <a class="reference external" href="https://jax.readthedocs.io/en/latest/notebooks/Common_Gotchas_in_JAX.html#control-flow">🔪 JAX - The Sharp Bits 🔪: Control Flow</a>.</p>
+<p>One way to deal with this problem is to rewrite the code to avoid conditionals on value. Another is to use special <a class="reference external" href="https://jax.readthedocs.io/en/latest/jax.lax.html#control-flow-operators">control flow operators</a> like <code class="docutils literal notranslate"><span class="pre">jax.lax.cond</span></code>. However, sometimes that is impossible. In that case, you can consider jitting only part of the function. For example, if the most computationally expensive part of the function is inside the loop, we can JIT just that inner part (though make sure to check the next section on caching to avoid shooting yourself in the foot):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># While loop conditioned on x and n with a jitted body.</span>
+
+<span class="nd">@jax</span><span class="o">.</span><span class="n">jit</span>
+<span class="k">def</span> <span class="nf">loop_body</span><span class="p">(</span><span class="n">prev_i</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">prev_i</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="k">def</span> <span class="nf">g_inner_jitted</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+  <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">loop_body</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">i</span>
+
+<span class="n">g_inner_jitted</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Array(30, dtype=int32, weak_type=True)
+</pre></div>
+</div>
+</div>
+</div>
+<p>If we really need to JIT a function that has a condition on the value of an input, we can tell JAX to help itself to a less abstract tracer for a particular input by specifying <code class="docutils literal notranslate"><span class="pre">static_argnums</span></code> or <code class="docutils literal notranslate"><span class="pre">static_argnames</span></code>. The cost of this is that the resulting jaxpr is less flexible, so JAX will have to re-compile the function for every new value of the specified static input. It is only a good strategy if the function is guaranteed to get limited different values.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f_jit_correct</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">static_argnums</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f_jit_correct</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g_jit_correct</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">static_argnames</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">g_jit_correct</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>30
+</pre></div>
+</div>
+</div>
+</div>
+<p>To specify such arguments when using <code class="docutils literal notranslate"><span class="pre">jit</span></code> as a decorator, a common pattern is to use python’s <code class="docutils literal notranslate"><span class="pre">functools.partial</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+
+<span class="nd">@partial</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">,</span> <span class="n">static_argnames</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">g_jit_decorated</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+  <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+  <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">i</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">g_jit_decorated</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>30
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="when-to-use-jit">
+<h2>When to use JIT<a class="headerlink" href="#when-to-use-jit" title="Link to this heading">#</a></h2>
+<p>In many of the examples above, jitting is not worth it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;g jitted:&quot;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">timeit</span> g_jit_correct(10, 20).block_until_ready()
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;g:&quot;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">timeit</span> g(10, 20)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>g jitted:
+The slowest run took 13.54 times longer than the fastest. This could mean that an intermediate result is being cached.
+1000 loops, best of 5: 229 µs per loop
+g:
+The slowest run took 11.72 times longer than the fastest. This could mean that an intermediate result is being cached.
+1000000 loops, best of 5: 1.2 µs per loop
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is because <code class="docutils literal notranslate"><span class="pre">jax.jit</span></code> introduces some overhead itself. Therefore, it usually only saves time if the compiled function is complex and you will run it numerous times. Fortunately, this is common in machine learning, where we tend to compile a large, complicated model, then run it for millions of iterations.</p>
+<p>Generally, you want to jit the largest possible chunk of your computation; ideally, the entire update step. This gives the compiler maximum freedom to optimise.</p>
+</section>
+<section id="caching">
+<h2>Caching<a class="headerlink" href="#caching" title="Link to this heading">#</a></h2>
+<p>It’s important to understand the caching behaviour of <code class="docutils literal notranslate"><span class="pre">jax.jit</span></code>.</p>
+<p>Suppose I define <code class="docutils literal notranslate"><span class="pre">f</span> <span class="pre">=</span> <span class="pre">jax.jit(g)</span></code>. When I first invoke <code class="docutils literal notranslate"><span class="pre">f</span></code>, it will get compiled, and the resulting XLA code will get cached. Subsequent calls of <code class="docutils literal notranslate"><span class="pre">f</span></code> will reuse the cached code. This is how <code class="docutils literal notranslate"><span class="pre">jax.jit</span></code> makes up for the up-front cost of compilation.</p>
+<p>If I specify <code class="docutils literal notranslate"><span class="pre">static_argnums</span></code>, then the cached code will be used only for the same values of arguments labelled as static. If any of them change, recompilation occurs. If there are many values, then your program might spend more time compiling than it would have executing ops one-by-one.</p>
+<p>Avoid calling <code class="docutils literal notranslate"><span class="pre">jax.jit</span></code> inside loops. For most cases, JAX will be able to use the compiled, cached function in subsequent calls to <code class="docutils literal notranslate"><span class="pre">jax.jit</span></code>. However, because the cache relies on the hash of the function, it becomes problematic when equivalent functions are redefined. This will cause unnecessary compilation each time in the loop:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+
+<span class="k">def</span> <span class="nf">unjitted_loop_body</span><span class="p">(</span><span class="n">prev_i</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">prev_i</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="k">def</span> <span class="nf">g_inner_jitted_partial</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+  <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+    <span class="c1"># Don&#39;t do this! each time the partial returns</span>
+    <span class="c1"># a function with different hash</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">unjitted_loop_body</span><span class="p">))(</span><span class="n">i</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">i</span>
+
+<span class="k">def</span> <span class="nf">g_inner_jitted_lambda</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+  <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+    <span class="c1"># Don&#39;t do this!, lambda will also return</span>
+    <span class="c1"># a function with a different hash</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">unjitted_loop_body</span><span class="p">(</span><span class="n">x</span><span class="p">))(</span><span class="n">i</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">i</span>
+
+<span class="k">def</span> <span class="nf">g_inner_jitted_normal</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+  <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+    <span class="c1"># this is OK, since JAX can find the</span>
+    <span class="c1"># cached, compiled function</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">unjitted_loop_body</span><span class="p">)(</span><span class="n">i</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">i</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;jit called in a loop with partials:&quot;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">timeit</span> g_inner_jitted_partial(10, 20).block_until_ready()
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;jit called in a loop with lambdas:&quot;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">timeit</span> g_inner_jitted_lambda(10, 20).block_until_ready()
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;jit called in a loop with caching:&quot;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">timeit</span> g_inner_jitted_normal(10, 20).block_until_ready()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>jit called in a loop with partials:
+1 loop, best of 5: 192 ms per loop
+jit called in a loop with lambdas:
+10 loops, best of 5: 199 ms per loop
+jit called in a loop with caching:
+10 loops, best of 5: 21.6 ms per loop
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="01-jax-basics.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">JAX As Accelerated NumPy</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="03-vectorization.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Automatic Vectorization in JAX</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-jax-transforms-work">How JAX transforms work</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jit-compiling-a-function">JIT compiling a function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-can-t-we-just-jit-everything">Why can’t we just JIT everything?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-use-jit">When to use JIT</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caching">Caching</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The JAX authors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, The JAX Authors. NumPy and SciPy documentation are copyright the respective authors..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

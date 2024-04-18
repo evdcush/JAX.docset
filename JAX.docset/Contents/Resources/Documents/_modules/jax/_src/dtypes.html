@@ -1,0 +1,1355 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>jax._src.dtypes &#8212; JAX  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/style.css?v=02ed413a" />
+    <link rel="stylesheet" href="../../../_static/style.css" type="text/css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../../../_static/design-tabs.js?v=36754332"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/jax/_src/dtypes';</script>
+    <link rel="icon" href="../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/jax_logo_250px.png" class="logo__image only-light" alt="JAX  documentation - Home"/>
+    <script>document.write(`<img src="../../../_static/jax_logo_250px.png" class="logo__image only-dark" alt="JAX  documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installing JAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/quickstart.html">JAX Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/thinking_in_jax.html">How to Think in JAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/Common_Gotchas_in_JAX.html">🔪 JAX - The Sharp Bits 🔪</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq.html">JAX Frequently Asked Questions (FAQ)</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../jax-101/index.html">Tutorial: JAX 101</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/01-jax-basics.html">JAX As Accelerated NumPy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/02-jitting.html">Just In Time Compilation with JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/03-vectorization.html">Automatic Vectorization in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/04-advanced-autodiff.html">Advanced Automatic Differentiation in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/05-random-numbers.html">Pseudo Random Numbers in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/05.1-pytrees.html">Working with Pytrees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/06-parallelism.html">Parallel Evaluation in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/07-state.html">Stateful Computations in JAX</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Further Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../user_guides.html">User Guides</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../profiling.html">Profiling JAX programs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../device_memory_profiling.html">Device Memory Profiling</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../debugging/index.html">Runtime value debugging in JAX</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../debugging/print_breakpoint.html"><code class="docutils literal notranslate"><span class="pre">jax.debug.print</span></code> and <code class="docutils literal notranslate"><span class="pre">jax.debug.breakpoint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../debugging/checkify_guide.html">The <code class="docutils literal notranslate"><span class="pre">checkify</span></code> transformation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../debugging/flags.html">JAX debugging flags</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../gpu_performance_tips.html">GPU performance tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../persistent_compilation_cache.html">Persistent Compilation Cache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jaxpr.html">Understanding Jaxprs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/external_callbacks.html">External Callbacks in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../type_promotion.html">Type promotion semantics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytrees.html">Pytrees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../aot.html">Ahead-of-time lowering and compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../errors.html">JAX Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../transfer_guard.html">Transfer guard</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../pallas/index.html">Pallas: a JAX kernel language</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../pallas/design.html">Pallas Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pallas/quickstart.html">Pallas Quickstart</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../pallas/tpu/index.html">Pallas TPU</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../pallas/tpu/details.html">Writing TPU kernels with Pallas</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../pallas/tpu/pipelining.html">Pipelining and <code class="docutils literal notranslate"><span class="pre">BlockSpec</span></code>s</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../advanced_guide.html">Advanced Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/neural_network_with_tfds_data.html">Training a Simple Neural Network, with tensorflow/datasets Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Neural_Network_and_Data_Loading.html">Training a Simple Neural Network, with PyTorch Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/vmapped_log_probs.html">Autobatching for Bayesian Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../multi_process.html">Using JAX in multi-host and multi-process environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Distributed_arrays_and_automatic_parallelization.html">Distributed arrays and automatic parallelization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/shard_map.html">SPMD multi-device parallelism with <code class="docutils literal notranslate"><span class="pre">shard_map</span></code></a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/xmap_tutorial.html">Named axes and easy-to-revise parallelism with <code class="docutils literal notranslate"><span class="pre">xmap</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/autodiff_cookbook.html">The Autodiff Cookbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Custom_derivative_rules_for_Python_code.html">Custom derivative rules for JAX-transformable Python functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/autodiff_remat.html">Control autodiff’s saved values with <code class="docutils literal notranslate"><span class="pre">jax.checkpoint</span></code> (aka <code class="docutils literal notranslate"><span class="pre">jax.remat</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/How_JAX_primitives_work.html">How JAX primitives work</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Writing_custom_interpreters_in_Jax.html">Writing custom Jaxpr interpreters in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Custom_Operation_for_GPUs.html">Custom operations for GPUs with C++ and CUDA</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/convolutions.html">Generalized Convolutions in JAX</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../contributor_guide.html">Developer Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html">Contributing to JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../developer.html">Building from source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax_internal_api.html">Internal APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autodidax.html">Autodidax: JAX core from scratch</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jep/index.html">JAX Enhancement Proposals (JEPs)</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/263-prng.html">263: JAX PRNG Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/2026-custom-derivatives.html">2026: Custom JVP/VJP rules for JAX-transformable functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/4008-custom-vjp-update.html">4008: Custom VJP and `nondiff_argnums` update</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/4410-omnistaging.html">4410: Omnistaging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/9263-typed-keys.html">9263: Typed keys &amp; pluggable RNGs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/9407-type-promotion.html">9407: Design of Type Promotion Semantics for JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/9419-jax-versioning.html">9419: Jax and Jaxlib versioning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/10657-sequencing-effects.html">10657: Sequencing side-effects in JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/11830-new-remat-checkpoint.html">11830: `jax.remat` / `jax.checkpoint` new implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/12049-type-annotations.html">12049: Type Annotation Roadmap for JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/14273-shard-map.html">14273: `shard_map` (`shmap`) for simple per-device code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/15856-jex.html">15856: `jax.extend`, an extensions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/17111-shmap-transpose.html">17111: Efficient transposition of `shard_map` (and other maps)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/18137-numpy-scipy-scope.html">18137: Scope of JAX NumPy &amp; SciPy Wrappers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../investigating_a_regression.html">Investigating a regression</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../building_on_jax.html">Building on JAX</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../notes.html">Notes</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_compatibility.html">API compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../deprecation.html">Python and NumPy version support policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax_array_migration.html">jax.Array migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../async_dispatch.html">Asynchronous dispatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../concurrency.html">Concurrency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../gpu_memory_allocation.html">GPU memory allocation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../rank_promotion_warning.html">Rank promotion warning</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../jax.html">Public API: jax package</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.numpy.html"><code class="docutils literal notranslate"><span class="pre">jax.numpy</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fft.html">jax.numpy.fft.fft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fft2.html">jax.numpy.fft.fft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fftfreq.html">jax.numpy.fft.fftfreq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fftn.html">jax.numpy.fft.fftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fftshift.html">jax.numpy.fft.fftshift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.hfft.html">jax.numpy.fft.hfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifft.html">jax.numpy.fft.ifft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifft2.html">jax.numpy.fft.ifft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifftn.html">jax.numpy.fft.ifftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifftshift.html">jax.numpy.fft.ifftshift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ihfft.html">jax.numpy.fft.ihfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.irfft.html">jax.numpy.fft.irfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.irfft2.html">jax.numpy.fft.irfft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.irfftn.html">jax.numpy.fft.irfftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfft.html">jax.numpy.fft.rfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfft2.html">jax.numpy.fft.rfft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfftfreq.html">jax.numpy.fft.rfftfreq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfftn.html">jax.numpy.fft.rfftn</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.scipy.html"><code class="docutils literal notranslate"><span class="pre">jax.scipy</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.logpmf.html">jax.scipy.stats.bernoulli.logpmf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.pmf.html">jax.scipy.stats.bernoulli.pmf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.cdf.html">jax.scipy.stats.bernoulli.cdf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.ppf.html">jax.scipy.stats.bernoulli.ppf</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.lax.html"><code class="docutils literal notranslate"><span class="pre">jax.lax</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.random.html"><code class="docutils literal notranslate"><span class="pre">jax.random</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.sharding.html"><code class="docutils literal notranslate"><span class="pre">jax.sharding</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.debug.html"><code class="docutils literal notranslate"><span class="pre">jax.debug</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.dlpack.html"><code class="docutils literal notranslate"><span class="pre">jax.dlpack</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.distributed.html"><code class="docutils literal notranslate"><span class="pre">jax.distributed</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.dtypes.html"><code class="docutils literal notranslate"><span class="pre">jax.dtypes</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.flatten_util.html"><code class="docutils literal notranslate"><span class="pre">jax.flatten_util</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.image.html"><code class="docutils literal notranslate"><span class="pre">jax.image</span></code> module</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.nn.html"><code class="docutils literal notranslate"><span class="pre">jax.nn</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-13"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.nn.initializers.html"><code class="docutils literal notranslate"><span class="pre">jax.nn.initializers</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.ops.html"><code class="docutils literal notranslate"><span class="pre">jax.ops</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.profiler.html"><code class="docutils literal notranslate"><span class="pre">jax.profiler</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.stages.html"><code class="docutils literal notranslate"><span class="pre">jax.stages</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.tree.html"><code class="docutils literal notranslate"><span class="pre">jax.tree</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.tree_util.html"><code class="docutils literal notranslate"><span class="pre">jax.tree_util</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.typing.html"><code class="docutils literal notranslate"><span class="pre">jax.typing</span></code> module</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.extend.html"><code class="docutils literal notranslate"><span class="pre">jax.extend</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.extend.linear_util.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.linear_util</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.extend.mlir.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.mlir</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.extend.random.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.random</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.example_libraries.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-15"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.example_libraries.optimizers.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries.optimizers</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.example_libraries.stax.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries.stax</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.experimental.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.array_api.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.array_api</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.checkify.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.checkify</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.host_callback.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.host_callback</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.maps.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.maps</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.pjit.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.pjit</span></code> module</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../jax.experimental.sparse.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.sparse</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.BCOO.html">jax.experimental.sparse.BCOO</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_broadcast_in_dim.html">jax.experimental.sparse.bcoo_broadcast_in_dim</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_concatenate.html">jax.experimental.sparse.bcoo_concatenate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_dot_general.html">jax.experimental.sparse.bcoo_dot_general</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_dot_general_sampled.html">jax.experimental.sparse.bcoo_dot_general_sampled</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_dynamic_slice.html">jax.experimental.sparse.bcoo_dynamic_slice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_extract.html">jax.experimental.sparse.bcoo_extract</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_fromdense.html">jax.experimental.sparse.bcoo_fromdense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_gather.html">jax.experimental.sparse.bcoo_gather</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_multiply_dense.html">jax.experimental.sparse.bcoo_multiply_dense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_multiply_sparse.html">jax.experimental.sparse.bcoo_multiply_sparse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_update_layout.html">jax.experimental.sparse.bcoo_update_layout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_reduce_sum.html">jax.experimental.sparse.bcoo_reduce_sum</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_reshape.html">jax.experimental.sparse.bcoo_reshape</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_slice.html">jax.experimental.sparse.bcoo_slice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_sort_indices.html">jax.experimental.sparse.bcoo_sort_indices</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_squeeze.html">jax.experimental.sparse.bcoo_squeeze</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_sum_duplicates.html">jax.experimental.sparse.bcoo_sum_duplicates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_todense.html">jax.experimental.sparse.bcoo_todense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_transpose.html">jax.experimental.sparse.bcoo_transpose</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.jet.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.jet</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.custom_partitioning.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.custom_partitioning</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.multihost_utils.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.multihost_utils</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.compilation_cache.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.compilation_cache</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.key_reuse.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.key_reuse</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.mesh_utils.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.mesh_utils</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.lib.html"><code class="docutils literal notranslate"><span class="pre">jax.lib</span></code> module</a></li>
+</ul>
+</li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../glossary.html">JAX Glossary of Terms</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/google/jax" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for jax._src.dtypes</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2019 The JAX Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     https://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+
+<span class="c1"># Array type functions.</span>
+<span class="c1">#</span>
+<span class="c1"># JAX dtypes differ from NumPy in both:</span>
+<span class="c1"># a) their type promotion rules, and</span>
+<span class="c1"># b) the set of supported types (e.g., bfloat16),</span>
+<span class="c1"># so we need our own implementation that deviates from NumPy in places.</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">abc</span>
+<span class="kn">import</span> <span class="nn">builtins</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">cast</span><span class="p">,</span> <span class="n">overload</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">import</span> <span class="nn">ml_dtypes</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">config</span>
+<span class="kn">from</span> <span class="nn">jax._src.typing</span> <span class="kn">import</span> <span class="n">DType</span><span class="p">,</span> <span class="n">DTypeLike</span>
+<span class="kn">from</span> <span class="nn">jax._src.util</span> <span class="kn">import</span> <span class="n">set_module</span><span class="p">,</span> <span class="n">StrictABC</span>
+
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">traceback_util</span>
+<span class="n">traceback_util</span><span class="o">.</span><span class="n">register_exclusion</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+  <span class="n">_ml_dtypes_version</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">ml_dtypes</span><span class="o">.</span><span class="n">__version__</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[:</span><span class="mi">3</span><span class="p">]))</span>
+<span class="k">except</span><span class="p">:</span>
+  <span class="k">pass</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="k">if</span> <span class="n">_ml_dtypes_version</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;JAX requires ml_dtypes version 0.2.0 or newer; &quot;</span>
+                     <span class="sa">f</span><span class="s2">&quot;installed version is </span><span class="si">{</span><span class="n">ml_dtypes</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+<span class="n">export</span> <span class="o">=</span> <span class="n">set_module</span><span class="p">(</span><span class="s1">&#39;jax.dtypes&#39;</span><span class="p">)</span>
+
+<span class="nd">@export</span>
+<span class="k">class</span> <span class="nc">extended</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">generic</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Scalar class for extended dtypes.</span>
+
+<span class="sd">  This is an abstract class that should never be instantiated, but rather</span>
+<span class="sd">  exists for the sake of `jnp.issubdtype`.</span>
+
+<span class="sd">  Examples:</span>
+<span class="sd">    &gt;&gt;&gt; from jax import random</span>
+<span class="sd">    &gt;&gt;&gt; from jax import dtypes</span>
+<span class="sd">    &gt;&gt;&gt; key = random.key(0)</span>
+<span class="sd">    &gt;&gt;&gt; jnp.issubdtype(key.dtype, dtypes.extended)</span>
+<span class="sd">    True</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+
+<span class="nd">@export</span>
+<span class="k">class</span> <span class="nc">prng_key</span><span class="p">(</span><span class="n">extended</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Scalar class for PRNG Key dtypes.</span>
+
+<span class="sd">  This is an abstract class that should never be instantiated, but rather</span>
+<span class="sd">  exists for the sake of `jnp.issubdtype`.</span>
+
+<span class="sd">  Examples:</span>
+<span class="sd">    &gt;&gt;&gt; from jax import random</span>
+<span class="sd">    &gt;&gt;&gt; from jax import dtypes</span>
+<span class="sd">    &gt;&gt;&gt; key = random.key(0)</span>
+<span class="sd">    &gt;&gt;&gt; jnp.issubdtype(key.dtype, dtypes.prng_key)</span>
+<span class="sd">    True</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">ExtendedDType</span><span class="p">(</span><span class="n">StrictABC</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Abstract Base Class for extended dtypes&quot;&quot;&quot;</span>
+  <span class="nd">@property</span>
+  <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+  <span class="k">def</span> <span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">:</span> <span class="o">...</span>
+
+
+<span class="c1"># fp8 support</span>
+<span class="n">float8_e4m3b11fnuz</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">generic</span><span class="p">]</span> <span class="o">=</span> <span class="n">ml_dtypes</span><span class="o">.</span><span class="n">float8_e4m3b11fnuz</span>
+<span class="n">float8_e4m3fn</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">generic</span><span class="p">]</span> <span class="o">=</span> <span class="n">ml_dtypes</span><span class="o">.</span><span class="n">float8_e4m3fn</span>
+<span class="n">float8_e4m3fnuz</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">generic</span><span class="p">]</span> <span class="o">=</span> <span class="n">ml_dtypes</span><span class="o">.</span><span class="n">float8_e4m3fnuz</span>
+<span class="n">float8_e5m2</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">generic</span><span class="p">]</span> <span class="o">=</span> <span class="n">ml_dtypes</span><span class="o">.</span><span class="n">float8_e5m2</span>
+<span class="n">float8_e5m2fnuz</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">generic</span><span class="p">]</span> <span class="o">=</span> <span class="n">ml_dtypes</span><span class="o">.</span><span class="n">float8_e5m2fnuz</span>
+
+<span class="n">_float8_e4m3b11fnuz_dtype</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">float8_e4m3b11fnuz</span><span class="p">)</span>
+<span class="n">_float8_e4m3fn_dtype</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">float8_e4m3fn</span><span class="p">)</span>
+<span class="n">_float8_e4m3fnuz_dtype</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">float8_e4m3fnuz</span><span class="p">)</span>
+<span class="n">_float8_e5m2_dtype</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">float8_e5m2</span><span class="p">)</span>
+<span class="n">_float8_e5m2fnuz_dtype</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">float8_e5m2fnuz</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">supports_inf</span><span class="p">(</span><span class="n">dtype</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Return true if the dtype supports infinity, else return False.&quot;&quot;&quot;</span>
+  <span class="n">typ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">type</span>
+  <span class="k">if</span> <span class="n">typ</span> <span class="ow">in</span> <span class="p">{</span><span class="n">float8_e4m3b11fnuz</span><span class="p">,</span> <span class="n">float8_e4m3fn</span><span class="p">,</span> <span class="n">float8_e4m3fnuz</span><span class="p">,</span> <span class="n">float8_e5m2fnuz</span><span class="p">}:</span>
+    <span class="k">return</span> <span class="kc">False</span>
+  <span class="k">return</span> <span class="n">issubdtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inexact</span><span class="p">)</span>
+
+<span class="c1"># bfloat16 support</span>
+<span class="n">bfloat16</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">generic</span><span class="p">]</span> <span class="o">=</span> <span class="n">ml_dtypes</span><span class="o">.</span><span class="n">bfloat16</span>
+<span class="n">_bfloat16_dtype</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">bfloat16</span><span class="p">)</span>
+
+<span class="n">_custom_float_scalar_types</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">float8_e4m3b11fnuz</span><span class="p">,</span>
+    <span class="n">float8_e4m3fn</span><span class="p">,</span>
+    <span class="n">float8_e4m3fnuz</span><span class="p">,</span>
+    <span class="n">float8_e5m2</span><span class="p">,</span>
+    <span class="n">float8_e5m2fnuz</span><span class="p">,</span>
+    <span class="n">bfloat16</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">_custom_float_dtypes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">_float8_e4m3b11fnuz_dtype</span><span class="p">,</span>
+    <span class="n">_float8_e4m3fn_dtype</span><span class="p">,</span>
+    <span class="n">_float8_e4m3fnuz_dtype</span><span class="p">,</span>
+    <span class="n">_float8_e5m2_dtype</span><span class="p">,</span>
+    <span class="n">_float8_e5m2fnuz_dtype</span><span class="p">,</span>
+    <span class="n">_bfloat16_dtype</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">_float8_dtypes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">_float8_e4m3b11fnuz_dtype</span><span class="p">,</span>
+    <span class="n">_float8_e4m3fn_dtype</span><span class="p">,</span>
+    <span class="n">_float8_e4m3fnuz_dtype</span><span class="p">,</span>
+    <span class="n">_float8_e5m2_dtype</span><span class="p">,</span>
+    <span class="n">_float8_e5m2fnuz_dtype</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="c1"># 4-bit integer support</span>
+<span class="n">int4</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">generic</span><span class="p">]</span> <span class="o">=</span> <span class="n">ml_dtypes</span><span class="o">.</span><span class="n">int4</span>
+<span class="n">uint4</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">generic</span><span class="p">]</span> <span class="o">=</span> <span class="n">ml_dtypes</span><span class="o">.</span><span class="n">uint4</span>
+
+<span class="n">_int4_dtype</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">int4</span><span class="p">)</span>
+<span class="n">_uint4_dtype</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">uint4</span><span class="p">)</span>
+
+<span class="n">_int4_dtypes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">_int4_dtype</span><span class="p">,</span>
+    <span class="n">_uint4_dtype</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="c1"># Default types.</span>
+<span class="n">bool_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bool_</span>
+<span class="n">int_</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span>
+<span class="n">uint</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span>
+<span class="n">float_</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span>
+<span class="n">complex_</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span>
+<span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">default_dtype_bits</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;32&#39;</span><span class="p">:</span>
+  <span class="n">int_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span>
+  <span class="n">uint</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">uint32</span>
+  <span class="n">float_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span>
+  <span class="n">complex_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">complex64</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="n">int_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span>
+  <span class="n">uint</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">uint64</span>
+  <span class="n">float_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span>
+  <span class="n">complex_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">complex128</span>
+<span class="n">_default_types</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">type</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="n">bool_</span><span class="p">,</span>
+    <span class="s1">&#39;i&#39;</span><span class="p">:</span> <span class="n">int_</span><span class="p">,</span>
+    <span class="s1">&#39;u&#39;</span><span class="p">:</span> <span class="n">uint</span><span class="p">,</span>
+    <span class="s1">&#39;f&#39;</span><span class="p">:</span> <span class="n">float_</span><span class="p">,</span>
+    <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="n">complex_</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># Trivial vectorspace datatype needed for tangent values of int/bool primals</span>
+<span class="n">float0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">([(</span><span class="s1">&#39;float0&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">void</span><span class="p">,</span> <span class="mi">0</span><span class="p">)])</span>
+
+<span class="n">_dtype_to_32bit_dtype</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">DType</span><span class="p">,</span> <span class="n">DType</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">):</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;int32&#39;</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;uint64&#39;</span><span class="p">):</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;uint32&#39;</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;float64&#39;</span><span class="p">):</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;complex128&#39;</span><span class="p">):</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;complex64&#39;</span><span class="p">),</span>
+<span class="p">}</span>
+
+<span class="c1"># Note: we promote narrow types to float32 here for backward compatibility</span>
+<span class="c1"># with earlier approaches. We might consider revisiting this, or perhaps</span>
+<span class="c1"># tying the logic more closely to the type promotion lattice.</span>
+<span class="n">_dtype_to_inexact</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">DType</span><span class="p">,</span> <span class="n">DType</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">k</span><span class="p">):</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span> <span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;uint8&#39;</span><span class="p">,</span> <span class="s1">&#39;float32&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;int8&#39;</span><span class="p">,</span> <span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;uint16&#39;</span><span class="p">,</span> <span class="s1">&#39;float32&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;int16&#39;</span><span class="p">,</span> <span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;uint32&#39;</span><span class="p">,</span> <span class="s1">&#39;float32&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;int32&#39;</span><span class="p">,</span> <span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;uint64&#39;</span><span class="p">,</span> <span class="s1">&#39;float64&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">,</span> <span class="s1">&#39;float64&#39;</span><span class="p">)</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">to_numeric_dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DType</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Promotes a dtype into an numeric dtype, if it is not already one.&quot;&quot;&quot;</span>
+  <span class="n">dtype_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;int32&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">dtype_</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;bool&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="n">dtype_</span>
+
+
+<span class="k">def</span> <span class="nf">to_inexact_dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DType</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Promotes a dtype into an inexact dtype, if it is not already one.&quot;&quot;&quot;</span>
+  <span class="n">dtype_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">_dtype_to_inexact</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dtype_</span><span class="p">,</span> <span class="n">dtype_</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">to_complex_dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DType</span><span class="p">:</span>
+  <span class="n">ftype</span> <span class="o">=</span> <span class="n">to_inexact_dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">ftype</span> <span class="ow">in</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;float64&#39;</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;complex128&#39;</span><span class="p">)]:</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;complex128&#39;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;complex64&#39;</span><span class="p">)</span>
+
+
+<span class="nd">@functools</span><span class="o">.</span><span class="n">cache</span>
+<span class="k">def</span> <span class="nf">_canonicalize_dtype</span><span class="p">(</span><span class="n">x64_enabled</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">allow_extended_dtype</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DType</span> <span class="o">|</span> <span class="n">ExtendedDType</span><span class="p">:</span>
+  <span class="k">if</span> <span class="n">issubdtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="n">extended</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">allow_extended_dtype</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Internal: canonicalize_dtype called on extended dtype </span><span class="si">{</span><span class="n">dtype</span><span class="si">}</span><span class="s2"> &quot;</span>
+                       <span class="s2">&quot;with allow_extended_dtype=False&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dtype</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="n">dtype_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+  <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;dtype </span><span class="si">{</span><span class="n">dtype</span><span class="si">!r}</span><span class="s1"> not understood&#39;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+
+  <span class="k">if</span> <span class="n">x64_enabled</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">dtype_</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">_dtype_to_32bit_dtype</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dtype_</span><span class="p">,</span> <span class="n">dtype_</span><span class="p">)</span>
+
+<span class="nd">@overload</span>
+<span class="k">def</span> <span class="nf">canonicalize_dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">allow_extended_dtype</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DType</span><span class="p">:</span> <span class="o">...</span>
+
+<span class="nd">@overload</span>
+<span class="k">def</span> <span class="nf">canonicalize_dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">allow_extended_dtype</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DType</span> <span class="o">|</span> <span class="n">ExtendedDType</span><span class="p">:</span> <span class="o">...</span>
+
+<span class="nd">@export</span>
+<span class="k">def</span> <span class="nf">canonicalize_dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">allow_extended_dtype</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DType</span> <span class="o">|</span> <span class="n">ExtendedDType</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Convert from a dtype to a canonical dtype based on config.x64_enabled.&quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">_canonicalize_dtype</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">enable_x64</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">allow_extended_dtype</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>  <span class="c1"># pytype: disable=bad-return-type</span>
+
+<span class="c1"># Default dtypes corresponding to Python scalars.</span>
+<span class="n">python_scalar_dtypes</span> <span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">type</span><span class="p">,</span> <span class="n">DType</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nb">bool</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;bool&#39;</span><span class="p">),</span>
+  <span class="nb">int</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">),</span>
+  <span class="nb">float</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;float64&#39;</span><span class="p">),</span>
+  <span class="nb">complex</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;complex128&#39;</span><span class="p">),</span>
+<span class="p">}</span>
+
+<span class="nd">@export</span>
+<span class="k">def</span> <span class="nf">scalar_type_of</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Return the scalar type associated with a JAX value.&quot;&quot;&quot;</span>
+  <span class="n">typ</span> <span class="o">=</span> <span class="n">dtype</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">typ</span> <span class="ow">in</span> <span class="n">_custom_float_dtypes</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nb">float</span>
+  <span class="k">elif</span> <span class="n">typ</span> <span class="ow">in</span> <span class="n">_int4_dtypes</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nb">int</span>
+  <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">typ</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">bool</span>
+  <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">typ</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">int</span>
+  <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">typ</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">floating</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">float</span>
+  <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">typ</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">complexfloating</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">complex</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid scalar value </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_scalar_type_to_dtype</span><span class="p">(</span><span class="n">typ</span><span class="p">:</span> <span class="nb">type</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DType</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Return the numpy dtype for the given scalar type.</span>
+
+<span class="sd">  Raises</span>
+<span class="sd">  ------</span>
+<span class="sd">  OverflowError: if `typ` is `int` and the value is too large for int64.</span>
+
+<span class="sd">  Examples</span>
+<span class="sd">  --------</span>
+<span class="sd">  &gt;&gt;&gt; _scalar_type_to_dtype(int)</span>
+<span class="sd">  dtype(&#39;int32&#39;)</span>
+<span class="sd">  &gt;&gt;&gt; _scalar_type_to_dtype(float)</span>
+<span class="sd">  dtype(&#39;float32&#39;)</span>
+<span class="sd">  &gt;&gt;&gt; _scalar_type_to_dtype(complex)</span>
+<span class="sd">  dtype(&#39;complex64&#39;)</span>
+<span class="sd">  &gt;&gt;&gt; _scalar_type_to_dtype(int)</span>
+<span class="sd">  dtype(&#39;int32&#39;)</span>
+<span class="sd">  &gt;&gt;&gt; _scalar_type_to_dtype(int, 0)</span>
+<span class="sd">  dtype(&#39;int32&#39;)</span>
+<span class="sd">  &gt;&gt;&gt; _scalar_type_to_dtype(int, 1 &lt;&lt; 63)  # doctest: +IGNORE_EXCEPTION_DETAIL</span>
+<span class="sd">  Traceback (most recent call last):</span>
+<span class="sd">  OverflowError: Python int 9223372036854775808 too large to convert to int32</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">dtype</span> <span class="o">=</span> <span class="n">canonicalize_dtype</span><span class="p">(</span><span class="n">python_scalar_dtypes</span><span class="p">[</span><span class="n">typ</span><span class="p">])</span>
+  <span class="k">if</span> <span class="n">typ</span> <span class="ow">is</span> <span class="nb">int</span> <span class="ow">and</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">min</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">OverflowError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Python int </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2"> too large to convert to </span><span class="si">{</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">dtype</span>
+
+
+<span class="k">def</span> <span class="nf">coerce_to_array</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">DTypeLike</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Coerces a scalar or NumPy array to an np.array.</span>
+
+<span class="sd">  Handles Python scalar type promotion according to JAX&#39;s rules, not NumPy&#39;s</span>
+<span class="sd">  rules.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">if</span> <span class="n">dtype</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">in</span> <span class="n">python_scalar_dtypes</span><span class="p">:</span>
+    <span class="n">dtype</span> <span class="o">=</span> <span class="n">_scalar_type_to_dtype</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">x</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
+
+<span class="n">iinfo</span> <span class="o">=</span> <span class="n">ml_dtypes</span><span class="o">.</span><span class="n">iinfo</span>
+<span class="n">finfo</span> <span class="o">=</span> <span class="n">ml_dtypes</span><span class="o">.</span><span class="n">finfo</span>
+
+<span class="k">def</span> <span class="nf">_issubclass</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Determines if ``a`` is a subclass of ``b``.</span>
+
+<span class="sd">  Similar to issubclass, but returns False instead of an exception if `a` is not</span>
+<span class="sd">  a class.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+  <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+
+<span class="c1"># TODO(jakevdp): consider whether to disallow None here. We allow it</span>
+<span class="c1"># because np.issubdtype allows it (and treats it as equivalent to float64).</span>
+<div class="viewcode-block" id="issubdtype">
+<a class="viewcode-back" href="../../../_autosummary/jax.dtypes.issubdtype.html#jax.dtypes.issubdtype">[docs]</a>
+<span class="k">def</span> <span class="nf">issubdtype</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">DTypeLike</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">DTypeLike</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns True if first argument is a typecode lower/equal in type hierarchy.</span>
+
+<span class="sd">  This is like :func:`numpy.issubdtype`, but can handle dtype extensions such as</span>
+<span class="sd">  :obj:`jax.dtypes.bfloat16` and `jax.dtypes.prng_key`.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="c1"># Main departures from np.issubdtype are:</span>
+  <span class="c1"># - &quot;extended&quot; dtypes (like prng key types) are not normal numpy dtypes, so we</span>
+  <span class="c1">#   need to handle them specifically. However, their scalar types do conform to</span>
+  <span class="c1">#   the numpy scalar type hierarchy.</span>
+  <span class="c1"># - custom dtypes (like bfloat16, int4, etc.) are normal numpy dtypes, but they</span>
+  <span class="c1">#   don&#39;t conform to the standard numpy type hierarchy (e.g. the bfloat16 scalar</span>
+  <span class="c1">#   type is not a subclass of np.floating) so we must also handle these specially.</span>
+
+  <span class="c1"># First handle extended dtypes. This is important for performance because</span>
+  <span class="c1"># isinstance(x, extended) is called frequently within JAX internals.</span>
+  <span class="n">a_is_type</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span>
+  <span class="n">b_is_type</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">b_is_type</span> <span class="ow">and</span> <span class="n">_issubclass</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">extended</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">ExtendedDType</span><span class="p">):</span>
+      <span class="k">return</span> <span class="n">_issubclass</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">a_is_type</span> <span class="ow">and</span> <span class="n">_issubclass</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">generic</span><span class="p">):</span>
+      <span class="k">return</span> <span class="n">_issubclass</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_issubclass</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+  <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">ExtendedDType</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">ExtendedDType</span><span class="p">)</span> <span class="ow">and</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span>
+  <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">ExtendedDType</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">type</span>
+    <span class="n">a_is_type</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span>
+
+  <span class="c1"># For all others, normalize inputs to scalar types.</span>
+  <span class="n">a_sctype</span> <span class="o">=</span> <span class="n">a</span> <span class="k">if</span> <span class="n">a_is_type</span> <span class="ow">and</span> <span class="n">_issubclass</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">generic</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">type</span>
+  <span class="n">b_sctype</span> <span class="o">=</span> <span class="n">b</span> <span class="k">if</span> <span class="n">b_is_type</span> <span class="ow">and</span> <span class="n">_issubclass</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">generic</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">type</span>
+
+  <span class="c1"># Now do special handling of custom float and int types, as they don&#39;t conform</span>
+  <span class="c1"># to the normal scalar type hierarchy.</span>
+  <span class="k">if</span> <span class="n">a_sctype</span> <span class="ow">in</span> <span class="n">_custom_float_scalar_types</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">b_sctype</span> <span class="ow">in</span> <span class="p">{</span><span class="n">a_sctype</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">floating</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inexact</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">generic</span><span class="p">}</span>
+  <span class="k">if</span> <span class="n">a_sctype</span> <span class="o">==</span> <span class="n">int4</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">b_sctype</span> <span class="ow">in</span> <span class="p">{</span><span class="n">a_sctype</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">signedinteger</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">generic</span><span class="p">}</span>
+  <span class="k">if</span> <span class="n">a_sctype</span> <span class="o">==</span> <span class="n">uint4</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">b_sctype</span> <span class="ow">in</span> <span class="p">{</span><span class="n">a_sctype</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">unsignedinteger</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">integer</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">number</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">generic</span><span class="p">}</span>
+
+  <span class="c1"># Otherwise, fall back to numpy.issubdtype</span>
+  <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="n">a_sctype</span><span class="p">,</span> <span class="n">b_sctype</span><span class="p">)</span></div>
+
+
+<span class="n">can_cast</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">can_cast</span>
+
+<span class="n">JAXType</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="nb">type</span><span class="p">,</span> <span class="n">DType</span><span class="p">]</span>
+
+<span class="c1"># Enumeration of all valid JAX types in order.</span>
+<span class="n">_weak_types</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">JAXType</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">complex</span><span class="p">]</span>
+<span class="n">_bool_types</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">JAXType</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)]</span>
+<span class="n">_signed_types</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">JAXType</span><span class="p">]</span>
+<span class="n">_unsigned_types</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">JAXType</span><span class="p">]</span>
+<span class="n">_int_types</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">JAXType</span><span class="p">]</span>
+<span class="n">_unsigned_types</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">uint4</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;uint8&#39;</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;uint16&#39;</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;uint32&#39;</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;uint64&#39;</span><span class="p">),</span>
+<span class="p">]</span>
+<span class="n">_signed_types</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">int4</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;int8&#39;</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;int16&#39;</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;int32&#39;</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;int64&#39;</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="n">_int_types</span> <span class="o">=</span> <span class="n">_unsigned_types</span> <span class="o">+</span> <span class="n">_signed_types</span>
+
+<span class="n">_float_types</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">JAXType</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="o">*</span><span class="n">_custom_float_dtypes</span><span class="p">,</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;float16&#39;</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;float64&#39;</span><span class="p">),</span>
+<span class="p">]</span>
+<span class="n">_complex_types</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">JAXType</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;complex64&#39;</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;complex128&#39;</span><span class="p">),</span>
+<span class="p">]</span>
+<span class="n">_jax_types</span> <span class="o">=</span> <span class="n">_bool_types</span> <span class="o">+</span> <span class="n">_int_types</span> <span class="o">+</span> <span class="n">_float_types</span> <span class="o">+</span> <span class="n">_complex_types</span>
+<span class="n">_jax_dtype_set</span> <span class="o">=</span> <span class="p">{</span><span class="n">float0</span><span class="p">,</span> <span class="o">*</span><span class="n">_bool_types</span><span class="p">,</span> <span class="o">*</span><span class="n">_int_types</span><span class="p">,</span> <span class="o">*</span><span class="n">_float_types</span><span class="p">,</span> <span class="o">*</span><span class="n">_complex_types</span><span class="p">}</span>
+
+
+<span class="n">_dtype_kinds</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">set</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">&#39;bool&#39;</span><span class="p">:</span> <span class="p">{</span><span class="o">*</span><span class="n">_bool_types</span><span class="p">},</span>
+  <span class="s1">&#39;signed integer&#39;</span><span class="p">:</span> <span class="p">{</span><span class="o">*</span><span class="n">_signed_types</span><span class="p">},</span>
+  <span class="s1">&#39;unsigned integer&#39;</span><span class="p">:</span> <span class="p">{</span><span class="o">*</span><span class="n">_unsigned_types</span><span class="p">},</span>
+  <span class="s1">&#39;integral&#39;</span><span class="p">:</span> <span class="p">{</span><span class="o">*</span><span class="n">_signed_types</span><span class="p">,</span> <span class="o">*</span><span class="n">_unsigned_types</span><span class="p">},</span>
+  <span class="s1">&#39;real floating&#39;</span><span class="p">:</span> <span class="p">{</span><span class="o">*</span><span class="n">_float_types</span><span class="p">},</span>
+  <span class="s1">&#39;complex floating&#39;</span><span class="p">:</span> <span class="p">{</span><span class="o">*</span><span class="n">_complex_types</span><span class="p">},</span>
+  <span class="s1">&#39;numeric&#39;</span><span class="p">:</span> <span class="p">{</span><span class="o">*</span><span class="n">_signed_types</span><span class="p">,</span> <span class="o">*</span><span class="n">_unsigned_types</span><span class="p">,</span> <span class="o">*</span><span class="n">_float_types</span><span class="p">,</span> <span class="o">*</span><span class="n">_complex_types</span><span class="p">},</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="isdtype">
+<a class="viewcode-back" href="../../../_autosummary/jax.numpy.isdtype.html#jax.dtypes.isdtype">[docs]</a>
+<span class="k">def</span> <span class="nf">isdtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">,</span> <span class="n">kind</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">DType</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="n">DType</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns a boolean indicating whether a provided dtype is of a specified kind.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    dtype : the input dtype</span>
+<span class="sd">    kind : the data type kind.</span>
+<span class="sd">      If ``kind`` is dtype-like, return ``dtype = kind``.</span>
+<span class="sd">      If ``kind`` is a string, then return True if the dtype is in the specified category:</span>
+
+<span class="sd">      - ``&#39;bool&#39;``: ``{bool}``</span>
+<span class="sd">      - ``&#39;signed integer&#39;``: ``{int4, int8, int16, int32, int64}``</span>
+<span class="sd">      - ``&#39;unsigned integer&#39;``: ``{uint4, uint8, uint16, uint32, uint64}``</span>
+<span class="sd">      - ``&#39;integral&#39;``: shorthand for ``(&#39;signed integer&#39;, &#39;unsigned integer&#39;)``</span>
+<span class="sd">      - ``&#39;real floating&#39;``: ``{float8_*, float16, bfloat16, float32, float64}``</span>
+<span class="sd">      - ``&#39;complex floating&#39;``: ``{complex64, complex128}``</span>
+<span class="sd">      - ``&#39;numeric&#39;``: shorthand for ``(&#39;integral&#39;, &#39;real floating&#39;, &#39;complex floating&#39;)``</span>
+
+<span class="sd">      If ``kind`` is a tuple, then return True if dtype matches any entry of the tuple.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    True or False</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">the_dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+  <span class="n">kind_tuple</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">DType</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">kind</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">else</span> <span class="p">(</span><span class="n">kind</span><span class="p">,)</span>
+  <span class="n">options</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="n">DType</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+  <span class="k">for</span> <span class="n">kind</span> <span class="ow">in</span> <span class="n">kind_tuple</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+      <span class="k">if</span> <span class="n">kind</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_dtype_kinds</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unrecognized </span><span class="si">{</span><span class="n">kind</span><span class="si">=}</span><span class="s2"> expected one of </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">_dtype_kinds</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="n">options</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">_dtype_kinds</span><span class="p">[</span><span class="n">kind</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">):</span>
+      <span class="n">options</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">kind</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="c1"># TODO(jakevdp): should we handle scalar types or ScalarMeta here?</span>
+      <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected kind to be a dtype, string, or tuple; got </span><span class="si">{</span><span class="n">kind</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">the_dtype</span> <span class="ow">in</span> <span class="n">options</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">_jax_type</span><span class="p">(</span><span class="n">dtype</span><span class="p">:</span> <span class="n">DType</span><span class="p">,</span> <span class="n">weak_type</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">JAXType</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Return the jax type for a dtype and weak type.&quot;&quot;&quot;</span>
+  <span class="k">if</span> <span class="n">weak_type</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">dtype</span> <span class="o">==</span> <span class="nb">bool</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">dtype</span>
+    <span class="k">if</span> <span class="n">dtype</span> <span class="ow">in</span> <span class="n">_custom_float_dtypes</span><span class="p">:</span>
+      <span class="k">return</span> <span class="nb">float</span>
+    <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+  <span class="k">return</span> <span class="n">dtype</span>
+
+<span class="k">def</span> <span class="nf">_dtype_and_weaktype</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">DType</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Return a (dtype, weak_type) tuple for the given input.&quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">dtype</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="nb">any</span><span class="p">(</span><span class="n">value</span> <span class="ow">is</span> <span class="n">typ</span> <span class="k">for</span> <span class="n">typ</span> <span class="ow">in</span> <span class="n">_weak_types</span><span class="p">)</span> <span class="ow">or</span> <span class="n">is_weakly_typed</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_type_promotion_lattice</span><span class="p">(</span><span class="n">jax_numpy_dtype_promotion</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="n">JAXType</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">JAXType</span><span class="p">]]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Return the type promotion lattice in the form of a DAG.</span>
+<span class="sd">  This DAG maps each type to its immediately higher type on the lattice.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">b1</span><span class="p">,</span> <span class="o">=</span> <span class="n">_bool_types</span>
+  <span class="n">_uint4</span><span class="p">,</span> <span class="n">u1</span><span class="p">,</span> <span class="n">u2</span><span class="p">,</span> <span class="n">u4</span><span class="p">,</span> <span class="n">u8</span><span class="p">,</span> <span class="n">_int4</span><span class="p">,</span> <span class="n">i1</span><span class="p">,</span> <span class="n">i2</span><span class="p">,</span> <span class="n">i4</span><span class="p">,</span> <span class="n">i8</span> <span class="o">=</span> <span class="n">_int_types</span>
+  <span class="o">*</span><span class="n">f1_types</span><span class="p">,</span> <span class="n">bf</span><span class="p">,</span> <span class="n">f2</span><span class="p">,</span> <span class="n">f4</span><span class="p">,</span> <span class="n">f8</span> <span class="o">=</span> <span class="n">_float_types</span>
+  <span class="n">c4</span><span class="p">,</span> <span class="n">c8</span> <span class="o">=</span> <span class="n">_complex_types</span>
+  <span class="n">i_</span><span class="p">,</span> <span class="n">f_</span><span class="p">,</span> <span class="n">c_</span> <span class="o">=</span> <span class="n">_weak_types</span>
+  <span class="k">if</span> <span class="n">jax_numpy_dtype_promotion</span> <span class="o">==</span> <span class="s1">&#39;standard&#39;</span><span class="p">:</span>
+    <span class="n">out</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">JAXType</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">JAXType</span><span class="p">]]</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="n">b1</span><span class="p">:</span> <span class="p">[</span><span class="n">i_</span><span class="p">],</span>
+      <span class="n">u1</span><span class="p">:</span> <span class="p">[</span><span class="n">i2</span><span class="p">,</span> <span class="n">u2</span><span class="p">],</span> <span class="n">u2</span><span class="p">:</span> <span class="p">[</span><span class="n">i4</span><span class="p">,</span> <span class="n">u4</span><span class="p">],</span> <span class="n">u4</span><span class="p">:</span> <span class="p">[</span><span class="n">i8</span><span class="p">,</span> <span class="n">u8</span><span class="p">],</span> <span class="n">u8</span><span class="p">:</span> <span class="p">[</span><span class="n">f_</span><span class="p">],</span>
+      <span class="n">i_</span><span class="p">:</span> <span class="p">[</span><span class="n">u1</span><span class="p">,</span> <span class="n">i1</span><span class="p">],</span> <span class="n">i1</span><span class="p">:</span> <span class="p">[</span><span class="n">i2</span><span class="p">],</span> <span class="n">i2</span><span class="p">:</span> <span class="p">[</span><span class="n">i4</span><span class="p">],</span> <span class="n">i4</span><span class="p">:</span> <span class="p">[</span><span class="n">i8</span><span class="p">],</span> <span class="n">i8</span><span class="p">:</span> <span class="p">[</span><span class="n">f_</span><span class="p">],</span>
+      <span class="n">f_</span><span class="p">:</span> <span class="p">[</span><span class="o">*</span><span class="n">f1_types</span><span class="p">,</span> <span class="n">bf</span><span class="p">,</span> <span class="n">f2</span><span class="p">,</span> <span class="n">c_</span><span class="p">],</span>
+      <span class="o">**</span><span class="p">{</span><span class="n">t</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">f1_types</span><span class="p">},</span> <span class="n">bf</span><span class="p">:</span> <span class="p">[</span><span class="n">f4</span><span class="p">],</span> <span class="n">f2</span><span class="p">:</span> <span class="p">[</span><span class="n">f4</span><span class="p">],</span> <span class="n">f4</span><span class="p">:</span> <span class="p">[</span><span class="n">f8</span><span class="p">,</span> <span class="n">c4</span><span class="p">],</span> <span class="n">f8</span><span class="p">:</span> <span class="p">[</span><span class="n">c8</span><span class="p">],</span>
+      <span class="n">c_</span><span class="p">:</span> <span class="p">[</span><span class="n">c4</span><span class="p">],</span> <span class="n">c4</span><span class="p">:</span> <span class="p">[</span><span class="n">c8</span><span class="p">],</span> <span class="n">c8</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="n">_int4_dtype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">out</span><span class="p">[</span><span class="n">i_</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_int4_dtype</span><span class="p">)</span>
+      <span class="n">out</span><span class="p">[</span><span class="n">_int4_dtype</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">_uint4_dtype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">out</span><span class="p">[</span><span class="n">i_</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_uint4_dtype</span><span class="p">)</span>
+      <span class="n">out</span><span class="p">[</span><span class="n">_uint4_dtype</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">return</span> <span class="n">out</span>
+  <span class="k">elif</span> <span class="n">jax_numpy_dtype_promotion</span> <span class="o">==</span> <span class="s1">&#39;strict&#39;</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="n">i_</span><span class="p">:</span> <span class="p">[</span><span class="n">f_</span><span class="p">]</span> <span class="o">+</span> <span class="n">_int_types</span><span class="p">,</span>
+      <span class="n">f_</span><span class="p">:</span> <span class="p">[</span><span class="n">c_</span><span class="p">]</span> <span class="o">+</span> <span class="n">_float_types</span><span class="p">,</span>
+      <span class="n">c_</span><span class="p">:</span> <span class="n">_complex_types</span><span class="p">,</span>
+      <span class="o">**</span><span class="p">{</span><span class="n">t</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">_jax_types</span><span class="p">}</span>
+    <span class="p">}</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+      <span class="sa">f</span><span class="s2">&quot;Unexpected value of jax_numpy_dtype_promotion=</span><span class="si">{</span><span class="n">jax_numpy_dtype_promotion</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_make_lattice_upper_bounds</span><span class="p">(</span><span class="n">jax_numpy_dtype_promotion</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="n">JAXType</span><span class="p">,</span> <span class="nb">set</span><span class="p">[</span><span class="n">JAXType</span><span class="p">]]:</span>
+  <span class="n">lattice</span> <span class="o">=</span> <span class="n">_type_promotion_lattice</span><span class="p">(</span><span class="n">jax_numpy_dtype_promotion</span><span class="p">)</span>
+  <span class="n">upper_bounds</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="p">:</span> <span class="p">{</span><span class="n">node</span><span class="p">}</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">lattice</span><span class="p">}</span>
+  <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">lattice</span><span class="p">:</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+      <span class="n">new_upper_bounds</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">lattice</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">upper_bounds</span><span class="p">[</span><span class="n">n</span><span class="p">]))</span>
+      <span class="k">if</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">new_upper_bounds</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cycle detected in type promotion lattice for node </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">new_upper_bounds</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">upper_bounds</span><span class="p">[</span><span class="n">n</span><span class="p">]):</span>
+        <span class="k">break</span>
+      <span class="n">upper_bounds</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">|=</span> <span class="n">new_upper_bounds</span>
+  <span class="k">return</span> <span class="n">upper_bounds</span>
+
+<span class="n">_lattice_upper_bounds</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="n">JAXType</span><span class="p">,</span> <span class="nb">set</span><span class="p">[</span><span class="n">JAXType</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">&#39;standard&#39;</span><span class="p">:</span> <span class="n">_make_lattice_upper_bounds</span><span class="p">(</span><span class="s1">&#39;standard&#39;</span><span class="p">),</span>
+  <span class="s1">&#39;strict&#39;</span><span class="p">:</span> <span class="n">_make_lattice_upper_bounds</span><span class="p">(</span><span class="s1">&#39;strict&#39;</span><span class="p">),</span>
+<span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">TypePromotionError</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+  <span class="k">pass</span>
+
+<span class="nd">@functools</span><span class="o">.</span><span class="n">lru_cache</span><span class="p">(</span><span class="mi">512</span><span class="p">)</span>  <span class="c1"># don&#39;t use util.memoize because there is no X64 dependence.</span>
+<span class="k">def</span> <span class="nf">_least_upper_bound</span><span class="p">(</span><span class="n">jax_numpy_dtype_promotion</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">nodes</span><span class="p">:</span> <span class="n">JAXType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">JAXType</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Compute the least upper bound of a set of nodes.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    nodes: sequence of entries from _jax_types + _weak_types</span>
+<span class="sd">  Returns:</span>
+<span class="sd">    the _jax_type representing the least upper bound of the input nodes</span>
+<span class="sd">      on the promotion lattice.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="c1"># This function computes the least upper bound of a set of nodes N within a partially</span>
+  <span class="c1"># ordered set defined by the lattice generated above.</span>
+  <span class="c1"># Given a partially ordered set S, let the set of upper bounds of n ∈ S be</span>
+  <span class="c1">#   UB(n) ≡ {m ∈ S | n ≤ m}</span>
+  <span class="c1"># Further, for a set of nodes N ⊆ S, let the set of common upper bounds be given by</span>
+  <span class="c1">#   CUB(N) ≡ {a ∈ S | ∀ b ∈ N: a ∈ UB(b)}</span>
+  <span class="c1"># Then the least upper bound of N is defined as</span>
+  <span class="c1">#   LUB(N) ≡ {c ∈ CUB(N) | ∀ d ∈ CUB(N), c ≤ d}</span>
+  <span class="c1"># The definition of an upper bound implies that c ≤ d if and only if d ∈ UB(c),</span>
+  <span class="c1"># so the LUB can be expressed:</span>
+  <span class="c1">#   LUB(N) = {c ∈ CUB(N) | ∀ d ∈ CUB(N): d ∈ UB(c)}</span>
+  <span class="c1"># or, equivalently:</span>
+  <span class="c1">#   LUB(N) = {c ∈ CUB(N) | CUB(N) ⊆ UB(c)}</span>
+  <span class="c1"># By definition, LUB(N) has a cardinality of 1 for a partially ordered set.</span>
+  <span class="c1"># Note a potential algorithmic shortcut: from the definition of CUB(N), we have</span>
+  <span class="c1">#   ∀ c ∈ N: CUB(N) ⊆ UB(c)</span>
+  <span class="c1"># So if N ∩ CUB(N) is nonempty, if follows that LUB(N) = N ∩ CUB(N).</span>
+  <span class="n">N</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span>
+  <span class="n">UB</span> <span class="o">=</span> <span class="n">_lattice_upper_bounds</span><span class="p">[</span><span class="n">jax_numpy_dtype_promotion</span><span class="p">]</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="n">UB</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">N</span><span class="p">]</span>
+  <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+    <span class="n">dtype</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">N</span> <span class="k">if</span> <span class="n">n</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">UB</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dtype</span><span class="si">=}</span><span class="s2"> is not a valid dtype for JAX type promotion.&quot;</span><span class="p">)</span>
+  <span class="n">CUB</span> <span class="o">=</span> <span class="nb">set</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="o">*</span><span class="n">bounds</span><span class="p">)</span>
+  <span class="n">LUB</span> <span class="o">=</span> <span class="p">(</span><span class="n">CUB</span> <span class="o">&amp;</span> <span class="n">N</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">CUB</span> <span class="k">if</span> <span class="n">CUB</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">UB</span><span class="p">[</span><span class="n">c</span><span class="p">])}</span>
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">LUB</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">LUB</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+  <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">LUB</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">numpy_dtype_promotion</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;strict&#39;</span><span class="p">:</span>
+      <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Input dtypes </span><span class="si">{</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">nodes</span><span class="p">)</span><span class="si">}</span><span class="s2"> have no available implicit dtype &quot;</span>
+        <span class="s2">&quot;promotion path when jax_numpy_dtype_promotion=strict. Try explicitly casting &quot;</span>
+        <span class="s2">&quot;inputs to the desired output type, or set jax_numpy_dtype_promotion=standard.&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">any</span><span class="p">(</span><span class="n">n</span> <span class="ow">in</span> <span class="n">_float8_dtypes</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">):</span>
+      <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Input dtypes </span><span class="si">{</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">nodes</span><span class="p">)</span><span class="si">}</span><span class="s2"> have no available implicit dtype &quot;</span>
+        <span class="s2">&quot;promotion path. To avoid unintended promotion, 8-bit floats do not support &quot;</span>
+        <span class="s2">&quot;implicit promotion. If you&#39;d like your inputs to be promoted to another type, &quot;</span>
+        <span class="s2">&quot;you can do so explicitly using e.g. x.astype(&#39;float32&#39;)&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">any</span><span class="p">(</span><span class="n">n</span> <span class="ow">in</span> <span class="n">_int4_dtypes</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">):</span>
+      <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Input dtypes </span><span class="si">{</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">nodes</span><span class="p">)</span><span class="si">}</span><span class="s2"> have no available implicit dtype &quot;</span>
+        <span class="s2">&quot;promotion path. To avoid unintended promotion, 4-bit integers do not support &quot;</span>
+        <span class="s2">&quot;implicit promotion. If you&#39;d like your inputs to be promoted to another type, &quot;</span>
+        <span class="s2">&quot;you can do so explicitly using e.g. x.astype(&#39;int32&#39;)&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Input dtypes </span><span class="si">{</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">nodes</span><span class="p">)</span><span class="si">}</span><span class="s2"> have no available implicit dtype &quot;</span>
+        <span class="s2">&quot;promotion path. Try explicitly casting inputs to the desired output type.&quot;</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="n">TypePromotionError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="c1"># If we get here, it means the lattice is ill-formed.</span>
+    <span class="k">raise</span> <span class="n">TypePromotionError</span><span class="p">(</span>
+      <span class="sa">f</span><span class="s2">&quot;Internal Type Promotion error: </span><span class="si">{</span><span class="n">nodes</span><span class="si">}</span><span class="s2"> do not have a unique least upper bound &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;on the specified lattice; options are </span><span class="si">{</span><span class="n">LUB</span><span class="si">}</span><span class="s2">. This is an unexpected error in &quot;</span>
+      <span class="s2">&quot;JAX&#39;s internal logic; please report it to the JAX maintainers.&quot;</span>
+    <span class="p">)</span>
+
+<div class="viewcode-block" id="promote_types">
+<a class="viewcode-back" href="../../../_autosummary/jax.numpy.promote_types.html#jax.dtypes.promote_types">[docs]</a>
+<span class="k">def</span> <span class="nf">promote_types</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DType</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns the type to which a binary operation should cast its arguments.</span>
+
+<span class="sd">  For details of JAX&#39;s type promotion semantics, see :ref:`type-promotion`.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    a: a :class:`numpy.dtype` or a dtype specifier.</span>
+<span class="sd">    b: a :class:`numpy.dtype` or a dtype specifier.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    A :class:`numpy.dtype` object.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="c1"># Note: we deliberately avoid `if a in _weak_types` here because we want to check</span>
+  <span class="c1"># object identity, not object equality, due to the behavior of np.dtype.__eq__</span>
+  <span class="n">a_tp</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">JAXType</span><span class="p">,</span> <span class="n">a</span> <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">a</span> <span class="ow">is</span> <span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">_weak_types</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+  <span class="n">b_tp</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">JAXType</span><span class="p">,</span> <span class="n">b</span> <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">b</span> <span class="ow">is</span> <span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">_weak_types</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+  <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">_least_upper_bound</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">numpy_dtype_promotion</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">a_tp</span><span class="p">,</span> <span class="n">b_tp</span><span class="p">))</span></div>
+
+
+<span class="k">def</span> <span class="nf">is_weakly_typed</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+  <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">in</span> <span class="n">_weak_types</span><span class="p">:</span>
+    <span class="k">return</span> <span class="kc">True</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">aval</span><span class="o">.</span><span class="n">weak_type</span>
+  <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+<span class="k">def</span> <span class="nf">is_python_scalar</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">aval</span><span class="o">.</span><span class="n">weak_type</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+  <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">in</span> <span class="n">python_scalar_dtypes</span>
+
+<span class="k">def</span> <span class="nf">check_valid_dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">:</span> <span class="n">DType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+  <span class="k">if</span> <span class="n">dtype</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_jax_dtype_set</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dtype </span><span class="si">{</span><span class="n">dtype</span><span class="si">}</span><span class="s2"> is not a valid JAX array &quot;</span>
+                    <span class="s2">&quot;type. Only arrays of numeric types are supported by JAX.&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">dtype</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">canonicalize</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DType</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Return the dtype object for a value or type, optionally canonicalized based on X64 mode.&quot;&quot;&quot;</span>
+  <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid argument to dtype: </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+  <span class="n">is_type</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">is_type</span> <span class="ow">and</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">python_scalar_dtypes</span><span class="p">:</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">python_scalar_dtypes</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+  <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">in</span> <span class="n">python_scalar_dtypes</span><span class="p">:</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">python_scalar_dtypes</span><span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span>
+  <span class="k">elif</span> <span class="n">is_type</span> <span class="ow">and</span> <span class="n">_issubclass</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">generic</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+  <span class="k">elif</span> <span class="n">issubdtype</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;dtype&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">extended</span><span class="p">):</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">dt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">result_type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cannot determine dtype of </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">err</span>
+  <span class="k">if</span> <span class="n">dt</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_jax_dtype_set</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">issubdtype</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">extended</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Value &#39;</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&#39; with dtype </span><span class="si">{</span><span class="n">dt</span><span class="si">}</span><span class="s2"> is not a valid JAX array &quot;</span>
+                    <span class="s2">&quot;type. Only arrays of numeric types are supported by JAX.&quot;</span><span class="p">)</span>
+  <span class="c1"># TODO(jakevdp): fix return type annotation and remove this ignore.</span>
+  <span class="k">return</span> <span class="n">canonicalize_dtype</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">allow_extended_dtype</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">if</span> <span class="n">canonicalize</span> <span class="k">else</span> <span class="n">dt</span>  <span class="c1"># type: ignore[return-value]</span>
+
+<span class="k">def</span> <span class="nf">_lattice_result_type</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">DType</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
+  <span class="n">dtypes</span><span class="p">,</span> <span class="n">weak_types</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">_dtype_and_weaktype</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">))</span>
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dtypes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">out_dtype</span> <span class="o">=</span> <span class="n">dtypes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">out_weak_type</span> <span class="o">=</span> <span class="n">weak_types</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">dtypes</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">weak_types</span><span class="p">):</span>
+    <span class="c1"># Trivial promotion case. This allows extended dtypes through.</span>
+    <span class="n">out_dtype</span> <span class="o">=</span> <span class="n">dtypes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">out_weak_type</span> <span class="o">=</span> <span class="kc">False</span>
+  <span class="k">elif</span> <span class="nb">all</span><span class="p">(</span><span class="n">weak_types</span><span class="p">)</span> <span class="ow">and</span> <span class="n">config</span><span class="o">.</span><span class="n">numpy_dtype_promotion</span><span class="o">.</span><span class="n">value</span> <span class="o">!=</span> <span class="s1">&#39;strict&#39;</span><span class="p">:</span>
+    <span class="c1"># If all inputs are weakly typed, we compute the bound of the strongly-typed</span>
+    <span class="c1"># counterparts and apply the weak type at the end. This avoids returning the</span>
+    <span class="c1"># incorrect result with non-canonical weak types (e.g. weak int16).</span>
+    <span class="c1"># TODO(jakevdp): explore removing this special case.</span>
+    <span class="n">result_type</span> <span class="o">=</span> <span class="n">_least_upper_bound</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">numpy_dtype_promotion</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                                     <span class="o">*</span><span class="p">{</span><span class="n">_jax_type</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="k">for</span> <span class="n">dtype</span> <span class="ow">in</span> <span class="n">dtypes</span><span class="p">})</span>
+    <span class="n">out_dtype</span> <span class="o">=</span> <span class="n">dtype</span><span class="p">(</span><span class="n">result_type</span><span class="p">)</span>
+    <span class="n">out_weak_type</span> <span class="o">=</span> <span class="kc">True</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">result_type</span> <span class="o">=</span> <span class="n">_least_upper_bound</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">numpy_dtype_promotion</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                                     <span class="o">*</span><span class="p">{</span><span class="n">_jax_type</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">dtypes</span><span class="p">,</span> <span class="n">weak_types</span><span class="p">)})</span>
+    <span class="n">out_dtype</span> <span class="o">=</span> <span class="n">dtype</span><span class="p">(</span><span class="n">result_type</span><span class="p">)</span>
+    <span class="n">out_weak_type</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">result_type</span> <span class="ow">is</span> <span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">_weak_types</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">out_dtype</span><span class="p">,</span> <span class="p">(</span><span class="n">out_dtype</span> <span class="o">!=</span> <span class="n">bool_</span><span class="p">)</span> <span class="ow">and</span> <span class="n">out_weak_type</span>
+
+<span class="nd">@overload</span>
+<span class="k">def</span> <span class="nf">result_type</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">return_weak_type_flag</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="kc">True</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">DType</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span> <span class="o">...</span>
+
+<span class="nd">@overload</span>
+<span class="k">def</span> <span class="nf">result_type</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">return_weak_type_flag</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DType</span><span class="p">:</span> <span class="o">...</span>
+
+<span class="nd">@overload</span>
+<span class="k">def</span> <span class="nf">result_type</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">return_weak_type_flag</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DType</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">DType</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span> <span class="o">...</span>
+
+<span class="nd">@export</span>
+<span class="k">def</span> <span class="nf">result_type</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">return_weak_type_flag</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DType</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">DType</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Convenience function to apply JAX argument dtype promotion.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    return_weak_type_flag : if True, then return a ``(dtype, weak_type)`` tuple.</span>
+<span class="sd">      If False, just return `dtype`</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    dtype or (dtype, weak_type) depending on the value of the ``return_weak_type`` argument.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;at least one array or dtype is required&quot;</span><span class="p">)</span>
+  <span class="n">dtype</span><span class="p">:</span> <span class="n">DType</span> <span class="o">|</span> <span class="n">ExtendedDType</span>
+  <span class="n">dtype</span><span class="p">,</span> <span class="n">weak_type</span> <span class="o">=</span> <span class="n">_lattice_result_type</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">float_</span> <span class="k">if</span> <span class="n">arg</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">arg</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">))</span>
+  <span class="k">if</span> <span class="n">weak_type</span><span class="p">:</span>
+    <span class="n">dtype</span> <span class="o">=</span> <span class="n">canonicalize_dtype</span><span class="p">(</span>
+      <span class="n">_default_types</span><span class="p">[</span><span class="s1">&#39;f&#39;</span> <span class="k">if</span> <span class="n">dtype</span> <span class="ow">in</span> <span class="n">_custom_float_dtypes</span> <span class="k">else</span> <span class="n">dtype</span><span class="o">.</span><span class="n">kind</span><span class="p">])</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">dtype</span> <span class="o">=</span> <span class="n">canonicalize_dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="n">allow_extended_dtype</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="c1"># TODO(jakevdp): fix return type annotation and remove this ignore.</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="n">weak_type</span><span class="p">)</span> <span class="k">if</span> <span class="n">return_weak_type_flag</span> <span class="k">else</span> <span class="n">dtype</span>  <span class="c1"># type: ignore[return-value]</span>
+
+<span class="k">def</span> <span class="nf">check_user_dtype_supported</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="n">fun_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">issubdtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="n">extended</span><span class="p">):</span>
+    <span class="k">return</span>
+  <span class="c1"># Avoid using `dtype in [...]` because of numpy dtype equality overloading.</span>
+  <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span> <span class="ow">and</span> <span class="n">dtype</span> <span class="ow">in</span> <span class="p">{</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">builtins</span><span class="o">.</span><span class="n">complex</span><span class="p">}:</span>
+    <span class="k">return</span>
+  <span class="n">np_dtype</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+  <span class="n">is_custom_dtype</span> <span class="o">=</span> <span class="n">np_dtype</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">[</span><span class="o">*</span><span class="n">_custom_float_scalar_types</span><span class="p">,</span> <span class="n">int4</span><span class="p">,</span> <span class="n">uint4</span><span class="p">]</span>
+  <span class="k">if</span> <span class="n">np_dtype</span><span class="o">.</span><span class="n">kind</span> <span class="ow">not</span> <span class="ow">in</span> <span class="s2">&quot;biufc&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_custom_dtype</span><span class="p">:</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;JAX only supports number and bool dtypes, got dtype </span><span class="si">{</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">msg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; in </span><span class="si">{</span><span class="n">fun_name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">fun_name</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">dtype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">np_dtype</span> <span class="o">!=</span> <span class="n">canonicalize_dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">):</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Explicitly requested dtype </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2"> is not available, &quot;</span>
+           <span class="s2">&quot;and will be truncated to dtype </span><span class="si">{}</span><span class="s2">. To enable more dtypes, set the &quot;</span>
+           <span class="s2">&quot;jax_enable_x64 configuration option or the JAX_ENABLE_X64 shell &quot;</span>
+           <span class="s2">&quot;environment variable. &quot;</span>
+           <span class="s2">&quot;See https://github.com/google/jax#current-gotchas for more.&quot;</span><span class="p">)</span>
+    <span class="n">fun_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;requested in </span><span class="si">{</span><span class="n">fun_name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">fun_name</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">truncated_dtype</span> <span class="o">=</span> <span class="n">canonicalize_dtype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="n">fun_name</span><span class="p">,</span> <span class="n">truncated_dtype</span><span class="p">),</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">safe_to_cast</span><span class="p">(</span><span class="n">input_dtype_or_value</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+                 <span class="n">output_dtype_or_value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Check if a dtype/value is safe to cast to another dtype/value</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    input_dtype_or_value: a dtype or value (to be passed to result_type)</span>
+<span class="sd">      representing the source dtype.</span>
+<span class="sd">    output_dtype_or_value: a dtype or value (to be passed to result_type)</span>
+<span class="sd">      representing the target dtype.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    boolean representing whether the values are safe to cast according to</span>
+<span class="sd">    default type promotion semantics.</span>
+
+<span class="sd">  Raises:</span>
+<span class="sd">    TypePromotionError: if the inputs have differing types and no type promotion</span>
+<span class="sd">    path under the current jax_numpy_dtype_promotion setting.</span>
+
+<span class="sd">  Examples:</span>
+
+<span class="sd">    &gt;&gt;&gt; safe_to_cast(&#39;int32&#39;, &#39;float64&#39;)</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; safe_to_cast(&#39;float64&#39;, &#39;int32&#39;)</span>
+<span class="sd">    False</span>
+<span class="sd">    &gt;&gt;&gt; safe_to_cast(&#39;float32&#39;, &#39;complex64&#39;)</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; safe_to_cast(&#39;complex64&#39;, &#39;float64&#39;)</span>
+<span class="sd">    False</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">input_dtype</span> <span class="o">=</span> <span class="n">dtype</span><span class="p">(</span><span class="n">input_dtype_or_value</span><span class="p">,</span> <span class="n">canonicalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">output_dtype</span> <span class="o">=</span> <span class="n">dtype</span><span class="p">(</span><span class="n">output_dtype_or_value</span><span class="p">,</span> <span class="n">canonicalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">input_dtype</span> <span class="o">==</span> <span class="n">output_dtype</span><span class="p">:</span>
+    <span class="k">return</span> <span class="kc">True</span>
+  <span class="c1"># We deliberately use output_dtype rather than output_dtype_or_value here:</span>
+  <span class="c1"># this effectively treats the output dtype as always strongly-typed.</span>
+  <span class="k">return</span> <span class="n">result_type</span><span class="p">(</span><span class="n">input_dtype_or_value</span><span class="p">,</span> <span class="n">output_dtype</span><span class="p">)</span> <span class="o">==</span> <span class="n">output_dtype</span>
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The JAX authors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, The JAX Authors. NumPy and SciPy documentation are copyright the respective authors..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,953 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>jax.example_libraries.stax &#8212; JAX  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/style.css?v=02ed413a" />
+    <link rel="stylesheet" href="../../../_static/style.css" type="text/css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../../../_static/design-tabs.js?v=36754332"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/jax/example_libraries/stax';</script>
+    <link rel="icon" href="../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/jax_logo_250px.png" class="logo__image only-light" alt="JAX  documentation - Home"/>
+    <script>document.write(`<img src="../../../_static/jax_logo_250px.png" class="logo__image only-dark" alt="JAX  documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installing JAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/quickstart.html">JAX Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/thinking_in_jax.html">How to Think in JAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/Common_Gotchas_in_JAX.html">🔪 JAX - The Sharp Bits 🔪</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq.html">JAX Frequently Asked Questions (FAQ)</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../jax-101/index.html">Tutorial: JAX 101</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/01-jax-basics.html">JAX As Accelerated NumPy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/02-jitting.html">Just In Time Compilation with JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/03-vectorization.html">Automatic Vectorization in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/04-advanced-autodiff.html">Advanced Automatic Differentiation in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/05-random-numbers.html">Pseudo Random Numbers in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/05.1-pytrees.html">Working with Pytrees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/06-parallelism.html">Parallel Evaluation in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/07-state.html">Stateful Computations in JAX</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Further Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../user_guides.html">User Guides</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../profiling.html">Profiling JAX programs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../device_memory_profiling.html">Device Memory Profiling</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../debugging/index.html">Runtime value debugging in JAX</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../debugging/print_breakpoint.html"><code class="docutils literal notranslate"><span class="pre">jax.debug.print</span></code> and <code class="docutils literal notranslate"><span class="pre">jax.debug.breakpoint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../debugging/checkify_guide.html">The <code class="docutils literal notranslate"><span class="pre">checkify</span></code> transformation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../debugging/flags.html">JAX debugging flags</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../gpu_performance_tips.html">GPU performance tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../persistent_compilation_cache.html">Persistent Compilation Cache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jaxpr.html">Understanding Jaxprs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/external_callbacks.html">External Callbacks in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../type_promotion.html">Type promotion semantics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytrees.html">Pytrees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../aot.html">Ahead-of-time lowering and compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../errors.html">JAX Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../transfer_guard.html">Transfer guard</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../pallas/index.html">Pallas: a JAX kernel language</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../pallas/design.html">Pallas Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pallas/quickstart.html">Pallas Quickstart</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../pallas/tpu/index.html">Pallas TPU</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../pallas/tpu/details.html">Writing TPU kernels with Pallas</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../pallas/tpu/pipelining.html">Pipelining and <code class="docutils literal notranslate"><span class="pre">BlockSpec</span></code>s</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../advanced_guide.html">Advanced Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/neural_network_with_tfds_data.html">Training a Simple Neural Network, with tensorflow/datasets Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Neural_Network_and_Data_Loading.html">Training a Simple Neural Network, with PyTorch Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/vmapped_log_probs.html">Autobatching for Bayesian Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../multi_process.html">Using JAX in multi-host and multi-process environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Distributed_arrays_and_automatic_parallelization.html">Distributed arrays and automatic parallelization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/shard_map.html">SPMD multi-device parallelism with <code class="docutils literal notranslate"><span class="pre">shard_map</span></code></a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/xmap_tutorial.html">Named axes and easy-to-revise parallelism with <code class="docutils literal notranslate"><span class="pre">xmap</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/autodiff_cookbook.html">The Autodiff Cookbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Custom_derivative_rules_for_Python_code.html">Custom derivative rules for JAX-transformable Python functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/autodiff_remat.html">Control autodiff’s saved values with <code class="docutils literal notranslate"><span class="pre">jax.checkpoint</span></code> (aka <code class="docutils literal notranslate"><span class="pre">jax.remat</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/How_JAX_primitives_work.html">How JAX primitives work</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Writing_custom_interpreters_in_Jax.html">Writing custom Jaxpr interpreters in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Custom_Operation_for_GPUs.html">Custom operations for GPUs with C++ and CUDA</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/convolutions.html">Generalized Convolutions in JAX</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../contributor_guide.html">Developer Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html">Contributing to JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../developer.html">Building from source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax_internal_api.html">Internal APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autodidax.html">Autodidax: JAX core from scratch</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jep/index.html">JAX Enhancement Proposals (JEPs)</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/263-prng.html">263: JAX PRNG Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/2026-custom-derivatives.html">2026: Custom JVP/VJP rules for JAX-transformable functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/4008-custom-vjp-update.html">4008: Custom VJP and `nondiff_argnums` update</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/4410-omnistaging.html">4410: Omnistaging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/9263-typed-keys.html">9263: Typed keys &amp; pluggable RNGs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/9407-type-promotion.html">9407: Design of Type Promotion Semantics for JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/9419-jax-versioning.html">9419: Jax and Jaxlib versioning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/10657-sequencing-effects.html">10657: Sequencing side-effects in JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/11830-new-remat-checkpoint.html">11830: `jax.remat` / `jax.checkpoint` new implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/12049-type-annotations.html">12049: Type Annotation Roadmap for JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/14273-shard-map.html">14273: `shard_map` (`shmap`) for simple per-device code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/15856-jex.html">15856: `jax.extend`, an extensions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/17111-shmap-transpose.html">17111: Efficient transposition of `shard_map` (and other maps)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/18137-numpy-scipy-scope.html">18137: Scope of JAX NumPy &amp; SciPy Wrappers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../investigating_a_regression.html">Investigating a regression</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../building_on_jax.html">Building on JAX</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../notes.html">Notes</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_compatibility.html">API compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../deprecation.html">Python and NumPy version support policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax_array_migration.html">jax.Array migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../async_dispatch.html">Asynchronous dispatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../concurrency.html">Concurrency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../gpu_memory_allocation.html">GPU memory allocation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../rank_promotion_warning.html">Rank promotion warning</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../jax.html">Public API: jax package</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.numpy.html"><code class="docutils literal notranslate"><span class="pre">jax.numpy</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fft.html">jax.numpy.fft.fft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fft2.html">jax.numpy.fft.fft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fftfreq.html">jax.numpy.fft.fftfreq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fftn.html">jax.numpy.fft.fftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fftshift.html">jax.numpy.fft.fftshift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.hfft.html">jax.numpy.fft.hfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifft.html">jax.numpy.fft.ifft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifft2.html">jax.numpy.fft.ifft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifftn.html">jax.numpy.fft.ifftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifftshift.html">jax.numpy.fft.ifftshift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ihfft.html">jax.numpy.fft.ihfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.irfft.html">jax.numpy.fft.irfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.irfft2.html">jax.numpy.fft.irfft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.irfftn.html">jax.numpy.fft.irfftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfft.html">jax.numpy.fft.rfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfft2.html">jax.numpy.fft.rfft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfftfreq.html">jax.numpy.fft.rfftfreq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfftn.html">jax.numpy.fft.rfftn</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.scipy.html"><code class="docutils literal notranslate"><span class="pre">jax.scipy</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.logpmf.html">jax.scipy.stats.bernoulli.logpmf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.pmf.html">jax.scipy.stats.bernoulli.pmf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.cdf.html">jax.scipy.stats.bernoulli.cdf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.ppf.html">jax.scipy.stats.bernoulli.ppf</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.lax.html"><code class="docutils literal notranslate"><span class="pre">jax.lax</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.random.html"><code class="docutils literal notranslate"><span class="pre">jax.random</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.sharding.html"><code class="docutils literal notranslate"><span class="pre">jax.sharding</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.debug.html"><code class="docutils literal notranslate"><span class="pre">jax.debug</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.dlpack.html"><code class="docutils literal notranslate"><span class="pre">jax.dlpack</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.distributed.html"><code class="docutils literal notranslate"><span class="pre">jax.distributed</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.dtypes.html"><code class="docutils literal notranslate"><span class="pre">jax.dtypes</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.flatten_util.html"><code class="docutils literal notranslate"><span class="pre">jax.flatten_util</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.image.html"><code class="docutils literal notranslate"><span class="pre">jax.image</span></code> module</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.nn.html"><code class="docutils literal notranslate"><span class="pre">jax.nn</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-13"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.nn.initializers.html"><code class="docutils literal notranslate"><span class="pre">jax.nn.initializers</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.ops.html"><code class="docutils literal notranslate"><span class="pre">jax.ops</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.profiler.html"><code class="docutils literal notranslate"><span class="pre">jax.profiler</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.stages.html"><code class="docutils literal notranslate"><span class="pre">jax.stages</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.tree.html"><code class="docutils literal notranslate"><span class="pre">jax.tree</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.tree_util.html"><code class="docutils literal notranslate"><span class="pre">jax.tree_util</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.typing.html"><code class="docutils literal notranslate"><span class="pre">jax.typing</span></code> module</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.extend.html"><code class="docutils literal notranslate"><span class="pre">jax.extend</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.extend.linear_util.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.linear_util</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.extend.mlir.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.mlir</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.extend.random.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.random</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.example_libraries.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-15"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.example_libraries.optimizers.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries.optimizers</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.example_libraries.stax.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries.stax</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.experimental.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.array_api.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.array_api</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.checkify.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.checkify</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.host_callback.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.host_callback</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.maps.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.maps</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.pjit.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.pjit</span></code> module</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../jax.experimental.sparse.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.sparse</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.BCOO.html">jax.experimental.sparse.BCOO</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_broadcast_in_dim.html">jax.experimental.sparse.bcoo_broadcast_in_dim</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_concatenate.html">jax.experimental.sparse.bcoo_concatenate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_dot_general.html">jax.experimental.sparse.bcoo_dot_general</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_dot_general_sampled.html">jax.experimental.sparse.bcoo_dot_general_sampled</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_dynamic_slice.html">jax.experimental.sparse.bcoo_dynamic_slice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_extract.html">jax.experimental.sparse.bcoo_extract</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_fromdense.html">jax.experimental.sparse.bcoo_fromdense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_gather.html">jax.experimental.sparse.bcoo_gather</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_multiply_dense.html">jax.experimental.sparse.bcoo_multiply_dense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_multiply_sparse.html">jax.experimental.sparse.bcoo_multiply_sparse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_update_layout.html">jax.experimental.sparse.bcoo_update_layout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_reduce_sum.html">jax.experimental.sparse.bcoo_reduce_sum</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_reshape.html">jax.experimental.sparse.bcoo_reshape</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_slice.html">jax.experimental.sparse.bcoo_slice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_sort_indices.html">jax.experimental.sparse.bcoo_sort_indices</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_squeeze.html">jax.experimental.sparse.bcoo_squeeze</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_sum_duplicates.html">jax.experimental.sparse.bcoo_sum_duplicates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_todense.html">jax.experimental.sparse.bcoo_todense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_transpose.html">jax.experimental.sparse.bcoo_transpose</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.jet.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.jet</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.custom_partitioning.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.custom_partitioning</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.multihost_utils.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.multihost_utils</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.compilation_cache.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.compilation_cache</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.key_reuse.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.key_reuse</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.mesh_utils.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.mesh_utils</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.lib.html"><code class="docutils literal notranslate"><span class="pre">jax.lib</span></code> module</a></li>
+</ul>
+</li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../glossary.html">JAX Glossary of Terms</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/google/jax" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for jax.example_libraries.stax</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2018 The JAX Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     https://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+
+<span class="sd">&quot;&quot;&quot;Stax is a small but flexible neural net specification library from scratch.</span>
+
+<span class="sd">You likely do not mean to import this module! Stax is intended as an example</span>
+<span class="sd">library only. There are a number of other much more fully-featured neural</span>
+<span class="sd">network libraries for JAX, including `Flax`_ from Google, and `Haiku`_ from</span>
+<span class="sd">DeepMind.</span>
+
+<span class="sd">.. _Haiku: https://github.com/deepmind/dm-haiku</span>
+<span class="sd">.. _Flax: https://github.com/google/flax</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">operator</span> <span class="k">as</span> <span class="nn">op</span>
+
+<span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">lax</span>
+<span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">random</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+
+<span class="kn">from</span> <span class="nn">jax.nn</span> <span class="kn">import</span> <span class="p">(</span><span class="n">relu</span><span class="p">,</span> <span class="n">log_softmax</span><span class="p">,</span> <span class="n">softmax</span><span class="p">,</span> <span class="n">softplus</span><span class="p">,</span> <span class="n">sigmoid</span><span class="p">,</span> <span class="n">elu</span><span class="p">,</span>
+                    <span class="n">leaky_relu</span><span class="p">,</span> <span class="n">selu</span><span class="p">,</span> <span class="n">gelu</span><span class="p">,</span> <span class="n">standardize</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">jax.nn.initializers</span> <span class="kn">import</span> <span class="n">glorot_normal</span><span class="p">,</span> <span class="n">normal</span><span class="p">,</span> <span class="n">ones</span><span class="p">,</span> <span class="n">zeros</span>
+
+<span class="c1"># aliases for backwards compatibility</span>
+<span class="n">glorot</span> <span class="o">=</span> <span class="n">glorot_normal</span>
+<span class="n">randn</span> <span class="o">=</span> <span class="n">normal</span>
+<span class="n">logsoftmax</span> <span class="o">=</span> <span class="n">log_softmax</span>
+
+<span class="c1"># Following the convention used in Keras and tf.layers, we use CamelCase for the</span>
+<span class="c1"># names of layer constructors, like Conv and Relu, while using snake_case for</span>
+<span class="c1"># other functions, like lax.conv and relu.</span>
+
+<span class="c1"># Each layer constructor function returns an (init_fun, apply_fun) pair, where</span>
+<span class="c1">#   init_fun: takes an rng key and an input shape and returns an</span>
+<span class="c1">#     (output_shape, params) pair,</span>
+<span class="c1">#   apply_fun: takes params, inputs, and an rng key and applies the layer.</span>
+
+
+<div class="viewcode-block" id="Dense">
+<a class="viewcode-back" href="../../../jax.example_libraries.stax.html#jax.example_libraries.stax.Dense">[docs]</a>
+<span class="k">def</span> <span class="nf">Dense</span><span class="p">(</span><span class="n">out_dim</span><span class="p">,</span> <span class="n">W_init</span><span class="o">=</span><span class="n">glorot_normal</span><span class="p">(),</span> <span class="n">b_init</span><span class="o">=</span><span class="n">normal</span><span class="p">()):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Layer constructor function for a dense (fully-connected) layer.&quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="nf">init_fun</span><span class="p">(</span><span class="n">rng</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">):</span>
+    <span class="n">output_shape</span> <span class="o">=</span> <span class="n">input_shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">out_dim</span><span class="p">,)</span>
+    <span class="n">k1</span><span class="p">,</span> <span class="n">k2</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span>
+    <span class="n">W</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">W_init</span><span class="p">(</span><span class="n">k1</span><span class="p">,</span> <span class="p">(</span><span class="n">input_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">out_dim</span><span class="p">)),</span> <span class="n">b_init</span><span class="p">(</span><span class="n">k2</span><span class="p">,</span> <span class="p">(</span><span class="n">out_dim</span><span class="p">,))</span>
+    <span class="k">return</span> <span class="n">output_shape</span><span class="p">,</span> <span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">apply_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">W</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">params</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+  <span class="k">return</span> <span class="n">init_fun</span><span class="p">,</span> <span class="n">apply_fun</span></div>
+
+
+
+<div class="viewcode-block" id="GeneralConv">
+<a class="viewcode-back" href="../../../jax.example_libraries.stax.html#jax.example_libraries.stax.GeneralConv">[docs]</a>
+<span class="k">def</span> <span class="nf">GeneralConv</span><span class="p">(</span><span class="n">dimension_numbers</span><span class="p">,</span> <span class="n">out_chan</span><span class="p">,</span> <span class="n">filter_shape</span><span class="p">,</span>
+                <span class="n">strides</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;VALID&#39;</span><span class="p">,</span> <span class="n">W_init</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">b_init</span><span class="o">=</span><span class="n">normal</span><span class="p">(</span><span class="mf">1e-6</span><span class="p">)):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Layer construction function for a general convolution layer.&quot;&quot;&quot;</span>
+  <span class="n">lhs_spec</span><span class="p">,</span> <span class="n">rhs_spec</span><span class="p">,</span> <span class="n">out_spec</span> <span class="o">=</span> <span class="n">dimension_numbers</span>
+  <span class="n">one</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">filter_shape</span><span class="p">)</span>
+  <span class="n">strides</span> <span class="o">=</span> <span class="n">strides</span> <span class="ow">or</span> <span class="n">one</span>
+  <span class="n">W_init</span> <span class="o">=</span> <span class="n">W_init</span> <span class="ow">or</span> <span class="n">glorot_normal</span><span class="p">(</span><span class="n">rhs_spec</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;I&#39;</span><span class="p">),</span> <span class="n">rhs_spec</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;O&#39;</span><span class="p">))</span>
+  <span class="k">def</span> <span class="nf">init_fun</span><span class="p">(</span><span class="n">rng</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">):</span>
+    <span class="n">filter_shape_iter</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">filter_shape</span><span class="p">)</span>
+    <span class="n">kernel_shape</span> <span class="o">=</span> <span class="p">[</span><span class="n">out_chan</span> <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;O&#39;</span> <span class="k">else</span>
+                    <span class="n">input_shape</span><span class="p">[</span><span class="n">lhs_spec</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">)]</span> <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;I&#39;</span> <span class="k">else</span>
+                    <span class="nb">next</span><span class="p">(</span><span class="n">filter_shape_iter</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">rhs_spec</span><span class="p">]</span>
+    <span class="n">output_shape</span> <span class="o">=</span> <span class="n">lax</span><span class="o">.</span><span class="n">conv_general_shape_tuple</span><span class="p">(</span>
+        <span class="n">input_shape</span><span class="p">,</span> <span class="n">kernel_shape</span><span class="p">,</span> <span class="n">strides</span><span class="p">,</span> <span class="n">padding</span><span class="p">,</span> <span class="n">dimension_numbers</span><span class="p">)</span>
+    <span class="n">bias_shape</span> <span class="o">=</span> <span class="p">[</span><span class="n">out_chan</span> <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;C&#39;</span> <span class="k">else</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">out_spec</span><span class="p">]</span>
+    <span class="n">k1</span><span class="p">,</span> <span class="n">k2</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span>
+    <span class="n">W</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">W_init</span><span class="p">(</span><span class="n">k1</span><span class="p">,</span> <span class="n">kernel_shape</span><span class="p">),</span> <span class="n">b_init</span><span class="p">(</span><span class="n">k2</span><span class="p">,</span> <span class="n">bias_shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">output_shape</span><span class="p">,</span> <span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">apply_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">W</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">params</span>
+    <span class="k">return</span> <span class="n">lax</span><span class="o">.</span><span class="n">conv_general_dilated</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">strides</span><span class="p">,</span> <span class="n">padding</span><span class="p">,</span> <span class="n">one</span><span class="p">,</span> <span class="n">one</span><span class="p">,</span>
+                                    <span class="n">dimension_numbers</span><span class="o">=</span><span class="n">dimension_numbers</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+  <span class="k">return</span> <span class="n">init_fun</span><span class="p">,</span> <span class="n">apply_fun</span></div>
+
+<span class="n">Conv</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">GeneralConv</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;NHWC&#39;</span><span class="p">,</span> <span class="s1">&#39;HWIO&#39;</span><span class="p">,</span> <span class="s1">&#39;NHWC&#39;</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="GeneralConvTranspose">
+<a class="viewcode-back" href="../../../jax.example_libraries.stax.html#jax.example_libraries.stax.GeneralConvTranspose">[docs]</a>
+<span class="k">def</span> <span class="nf">GeneralConvTranspose</span><span class="p">(</span><span class="n">dimension_numbers</span><span class="p">,</span> <span class="n">out_chan</span><span class="p">,</span> <span class="n">filter_shape</span><span class="p">,</span>
+                         <span class="n">strides</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;VALID&#39;</span><span class="p">,</span> <span class="n">W_init</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                         <span class="n">b_init</span><span class="o">=</span><span class="n">normal</span><span class="p">(</span><span class="mf">1e-6</span><span class="p">)):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Layer construction function for a general transposed-convolution layer.&quot;&quot;&quot;</span>
+  <span class="n">lhs_spec</span><span class="p">,</span> <span class="n">rhs_spec</span><span class="p">,</span> <span class="n">out_spec</span> <span class="o">=</span> <span class="n">dimension_numbers</span>
+  <span class="n">one</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">filter_shape</span><span class="p">)</span>
+  <span class="n">strides</span> <span class="o">=</span> <span class="n">strides</span> <span class="ow">or</span> <span class="n">one</span>
+  <span class="n">W_init</span> <span class="o">=</span> <span class="n">W_init</span> <span class="ow">or</span> <span class="n">glorot_normal</span><span class="p">(</span><span class="n">rhs_spec</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;I&#39;</span><span class="p">),</span> <span class="n">rhs_spec</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;O&#39;</span><span class="p">))</span>
+  <span class="k">def</span> <span class="nf">init_fun</span><span class="p">(</span><span class="n">rng</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">):</span>
+    <span class="n">filter_shape_iter</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">filter_shape</span><span class="p">)</span>
+    <span class="n">kernel_shape</span> <span class="o">=</span> <span class="p">[</span><span class="n">out_chan</span> <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;O&#39;</span> <span class="k">else</span>
+                    <span class="n">input_shape</span><span class="p">[</span><span class="n">lhs_spec</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">)]</span> <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;I&#39;</span> <span class="k">else</span>
+                    <span class="nb">next</span><span class="p">(</span><span class="n">filter_shape_iter</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">rhs_spec</span><span class="p">]</span>
+    <span class="n">output_shape</span> <span class="o">=</span> <span class="n">lax</span><span class="o">.</span><span class="n">conv_transpose_shape_tuple</span><span class="p">(</span>
+        <span class="n">input_shape</span><span class="p">,</span> <span class="n">kernel_shape</span><span class="p">,</span> <span class="n">strides</span><span class="p">,</span> <span class="n">padding</span><span class="p">,</span> <span class="n">dimension_numbers</span><span class="p">)</span>
+    <span class="n">bias_shape</span> <span class="o">=</span> <span class="p">[</span><span class="n">out_chan</span> <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;C&#39;</span> <span class="k">else</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">out_spec</span><span class="p">]</span>
+    <span class="n">k1</span><span class="p">,</span> <span class="n">k2</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span>
+    <span class="n">W</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">W_init</span><span class="p">(</span><span class="n">k1</span><span class="p">,</span> <span class="n">kernel_shape</span><span class="p">),</span> <span class="n">b_init</span><span class="p">(</span><span class="n">k2</span><span class="p">,</span> <span class="n">bias_shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">output_shape</span><span class="p">,</span> <span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">apply_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">W</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">params</span>
+    <span class="k">return</span> <span class="n">lax</span><span class="o">.</span><span class="n">conv_transpose</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">strides</span><span class="p">,</span> <span class="n">padding</span><span class="p">,</span>
+                              <span class="n">dimension_numbers</span><span class="o">=</span><span class="n">dimension_numbers</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+  <span class="k">return</span> <span class="n">init_fun</span><span class="p">,</span> <span class="n">apply_fun</span></div>
+
+<span class="n">Conv1DTranspose</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">GeneralConvTranspose</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;NHC&#39;</span><span class="p">,</span> <span class="s1">&#39;HIO&#39;</span><span class="p">,</span> <span class="s1">&#39;NHC&#39;</span><span class="p">))</span>
+<span class="n">ConvTranspose</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">GeneralConvTranspose</span><span class="p">,</span>
+                                  <span class="p">(</span><span class="s1">&#39;NHWC&#39;</span><span class="p">,</span> <span class="s1">&#39;HWIO&#39;</span><span class="p">,</span> <span class="s1">&#39;NHWC&#39;</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="BatchNorm">
+<a class="viewcode-back" href="../../../jax.example_libraries.stax.html#jax.example_libraries.stax.BatchNorm">[docs]</a>
+<span class="k">def</span> <span class="nf">BatchNorm</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+              <span class="n">beta_init</span><span class="o">=</span><span class="n">zeros</span><span class="p">,</span> <span class="n">gamma_init</span><span class="o">=</span><span class="n">ones</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Layer construction function for a batch normalization layer.&quot;&quot;&quot;</span>
+  <span class="n">_beta_init</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">rng</span><span class="p">,</span> <span class="n">shape</span><span class="p">:</span> <span class="n">beta_init</span><span class="p">(</span><span class="n">rng</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">center</span> <span class="k">else</span> <span class="p">()</span>
+  <span class="n">_gamma_init</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">rng</span><span class="p">,</span> <span class="n">shape</span><span class="p">:</span> <span class="n">gamma_init</span><span class="p">(</span><span class="n">rng</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">scale</span> <span class="k">else</span> <span class="p">()</span>
+  <span class="n">axis</span> <span class="o">=</span> <span class="p">(</span><span class="n">axis</span><span class="p">,)</span> <span class="k">if</span> <span class="n">jnp</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span> <span class="k">else</span> <span class="n">axis</span>
+  <span class="k">def</span> <span class="nf">init_fun</span><span class="p">(</span><span class="n">rng</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">):</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">d</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">axis</span><span class="p">)</span>
+    <span class="n">k1</span><span class="p">,</span> <span class="n">k2</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span>
+    <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span> <span class="o">=</span> <span class="n">_beta_init</span><span class="p">(</span><span class="n">k1</span><span class="p">,</span> <span class="n">shape</span><span class="p">),</span> <span class="n">_gamma_init</span><span class="p">(</span><span class="n">k2</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">input_shape</span><span class="p">,</span> <span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">apply_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span> <span class="o">=</span> <span class="n">params</span>
+    <span class="c1"># TODO(phawkins): jnp.expand_dims should accept an axis tuple.</span>
+    <span class="c1"># (https://github.com/numpy/numpy/issues/12290)</span>
+    <span class="n">ed</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="kc">None</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">axis</span> <span class="k">else</span> <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">standardize</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="n">epsilon</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">center</span> <span class="ow">and</span> <span class="n">scale</span><span class="p">:</span> <span class="k">return</span> <span class="n">gamma</span><span class="p">[</span><span class="n">ed</span><span class="p">]</span> <span class="o">*</span> <span class="n">z</span> <span class="o">+</span> <span class="n">beta</span><span class="p">[</span><span class="n">ed</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">center</span><span class="p">:</span> <span class="k">return</span> <span class="n">z</span> <span class="o">+</span> <span class="n">beta</span><span class="p">[</span><span class="n">ed</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">scale</span><span class="p">:</span> <span class="k">return</span> <span class="n">gamma</span><span class="p">[</span><span class="n">ed</span><span class="p">]</span> <span class="o">*</span> <span class="n">z</span>
+    <span class="k">return</span> <span class="n">z</span>
+  <span class="k">return</span> <span class="n">init_fun</span><span class="p">,</span> <span class="n">apply_fun</span></div>
+
+
+
+<div class="viewcode-block" id="elementwise">
+<a class="viewcode-back" href="../../../jax.example_libraries.stax.html#jax.example_libraries.stax.elementwise">[docs]</a>
+<span class="k">def</span> <span class="nf">elementwise</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="o">**</span><span class="n">fun_kwargs</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Layer that applies a scalar function elementwise on its inputs.&quot;&quot;&quot;</span>
+  <span class="n">init_fun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">rng</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">:</span> <span class="p">(</span><span class="n">input_shape</span><span class="p">,</span> <span class="p">())</span>
+  <span class="n">apply_fun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">params</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">fun</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="o">**</span><span class="n">fun_kwargs</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">init_fun</span><span class="p">,</span> <span class="n">apply_fun</span></div>
+
+<span class="n">Tanh</span> <span class="o">=</span> <span class="n">elementwise</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">tanh</span><span class="p">)</span>
+<span class="n">Relu</span> <span class="o">=</span> <span class="n">elementwise</span><span class="p">(</span><span class="n">relu</span><span class="p">)</span>
+<span class="n">Exp</span> <span class="o">=</span> <span class="n">elementwise</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">)</span>
+<span class="n">LogSoftmax</span> <span class="o">=</span> <span class="n">elementwise</span><span class="p">(</span><span class="n">log_softmax</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">Softmax</span> <span class="o">=</span> <span class="n">elementwise</span><span class="p">(</span><span class="n">softmax</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">Softplus</span> <span class="o">=</span> <span class="n">elementwise</span><span class="p">(</span><span class="n">softplus</span><span class="p">)</span>
+<span class="n">Sigmoid</span> <span class="o">=</span> <span class="n">elementwise</span><span class="p">(</span><span class="n">sigmoid</span><span class="p">)</span>
+<span class="n">Elu</span> <span class="o">=</span> <span class="n">elementwise</span><span class="p">(</span><span class="n">elu</span><span class="p">)</span>
+<span class="n">LeakyRelu</span> <span class="o">=</span> <span class="n">elementwise</span><span class="p">(</span><span class="n">leaky_relu</span><span class="p">)</span>
+<span class="n">Selu</span> <span class="o">=</span> <span class="n">elementwise</span><span class="p">(</span><span class="n">selu</span><span class="p">)</span>
+<span class="n">Gelu</span> <span class="o">=</span> <span class="n">elementwise</span><span class="p">(</span><span class="n">gelu</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_pooling_layer</span><span class="p">(</span><span class="n">reducer</span><span class="p">,</span> <span class="n">init_val</span><span class="p">,</span> <span class="n">rescaler</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">PoolingLayer</span><span class="p">(</span><span class="n">window_shape</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;VALID&#39;</span><span class="p">,</span> <span class="n">spec</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Layer construction function for a pooling layer.&quot;&quot;&quot;</span>
+    <span class="n">strides</span> <span class="o">=</span> <span class="n">strides</span> <span class="ow">or</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">window_shape</span><span class="p">)</span>
+    <span class="n">rescale</span> <span class="o">=</span> <span class="n">rescaler</span><span class="p">(</span><span class="n">window_shape</span><span class="p">,</span> <span class="n">strides</span><span class="p">,</span> <span class="n">padding</span><span class="p">)</span> <span class="k">if</span> <span class="n">rescaler</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">spec</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">non_spatial_axes</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">window_shape</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">non_spatial_axes</span> <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;N&#39;</span><span class="p">),</span> <span class="n">spec</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">non_spatial_axes</span><span class="p">):</span>
+      <span class="n">window_shape</span> <span class="o">=</span> <span class="n">window_shape</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span> <span class="o">+</span> <span class="n">window_shape</span><span class="p">[</span><span class="n">i</span><span class="p">:]</span>
+      <span class="n">strides</span> <span class="o">=</span> <span class="n">strides</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span> <span class="o">+</span> <span class="n">strides</span><span class="p">[</span><span class="n">i</span><span class="p">:]</span>
+
+    <span class="k">def</span> <span class="nf">init_fun</span><span class="p">(</span><span class="n">rng</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">):</span>
+      <span class="n">padding_vals</span> <span class="o">=</span> <span class="n">lax</span><span class="o">.</span><span class="n">padtype_to_pads</span><span class="p">(</span><span class="n">input_shape</span><span class="p">,</span> <span class="n">window_shape</span><span class="p">,</span>
+                                         <span class="n">strides</span><span class="p">,</span> <span class="n">padding</span><span class="p">)</span>
+      <span class="n">ones</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">window_shape</span><span class="p">)</span>
+      <span class="n">out_shape</span> <span class="o">=</span> <span class="n">lax</span><span class="o">.</span><span class="n">reduce_window_shape_tuple</span><span class="p">(</span>
+        <span class="n">input_shape</span><span class="p">,</span> <span class="n">window_shape</span><span class="p">,</span> <span class="n">strides</span><span class="p">,</span> <span class="n">padding_vals</span><span class="p">,</span> <span class="n">ones</span><span class="p">,</span> <span class="n">ones</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">out_shape</span><span class="p">,</span> <span class="p">()</span>
+    <span class="k">def</span> <span class="nf">apply_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+      <span class="n">out</span> <span class="o">=</span> <span class="n">lax</span><span class="o">.</span><span class="n">reduce_window</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">init_val</span><span class="p">,</span> <span class="n">reducer</span><span class="p">,</span> <span class="n">window_shape</span><span class="p">,</span>
+                              <span class="n">strides</span><span class="p">,</span> <span class="n">padding</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">rescale</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">spec</span><span class="p">)</span> <span class="k">if</span> <span class="n">rescale</span> <span class="k">else</span> <span class="n">out</span>
+    <span class="k">return</span> <span class="n">init_fun</span><span class="p">,</span> <span class="n">apply_fun</span>
+  <span class="k">return</span> <span class="n">PoolingLayer</span>
+<span class="n">MaxPool</span> <span class="o">=</span> <span class="n">_pooling_layer</span><span class="p">(</span><span class="n">lax</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="o">-</span><span class="n">jnp</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+<span class="n">SumPool</span> <span class="o">=</span> <span class="n">_pooling_layer</span><span class="p">(</span><span class="n">lax</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="mf">0.</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_normalize_by_window_size</span><span class="p">(</span><span class="n">dims</span><span class="p">,</span> <span class="n">strides</span><span class="p">,</span> <span class="n">padding</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">rescale</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">spec</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">spec</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">non_spatial_axes</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">inputs</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">non_spatial_axes</span> <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;N&#39;</span><span class="p">),</span> <span class="n">spec</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
+
+    <span class="n">spatial_shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                          <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span>
+                          <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">non_spatial_axes</span><span class="p">)</span>
+    <span class="n">one</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">spatial_shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">inputs</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="n">window_sizes</span> <span class="o">=</span> <span class="n">lax</span><span class="o">.</span><span class="n">reduce_window</span><span class="p">(</span><span class="n">one</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="n">lax</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="n">dims</span><span class="p">,</span> <span class="n">strides</span><span class="p">,</span> <span class="n">padding</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">non_spatial_axes</span><span class="p">):</span>
+      <span class="n">window_sizes</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">window_sizes</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">outputs</span> <span class="o">/</span> <span class="n">window_sizes</span>
+  <span class="k">return</span> <span class="n">rescale</span>
+<span class="n">AvgPool</span> <span class="o">=</span> <span class="n">_pooling_layer</span><span class="p">(</span><span class="n">lax</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="n">_normalize_by_window_size</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">Flatten</span><span class="p">():</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Layer construction function for flattening all but the leading dim.&quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="nf">init_fun</span><span class="p">(</span><span class="n">rng</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">):</span>
+    <span class="n">output_shape</span> <span class="o">=</span> <span class="n">input_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">functools</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">op</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">output_shape</span><span class="p">,</span> <span class="p">()</span>
+  <span class="k">def</span> <span class="nf">apply_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+  <span class="k">return</span> <span class="n">init_fun</span><span class="p">,</span> <span class="n">apply_fun</span>
+<span class="n">Flatten</span> <span class="o">=</span> <span class="n">Flatten</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">Identity</span><span class="p">():</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Layer construction function for an identity layer.&quot;&quot;&quot;</span>
+  <span class="n">init_fun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">rng</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">:</span> <span class="p">(</span><span class="n">input_shape</span><span class="p">,</span> <span class="p">())</span>
+  <span class="n">apply_fun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">params</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">inputs</span>
+  <span class="k">return</span> <span class="n">init_fun</span><span class="p">,</span> <span class="n">apply_fun</span>
+<span class="n">Identity</span> <span class="o">=</span> <span class="n">Identity</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="FanOut">
+<a class="viewcode-back" href="../../../jax.example_libraries.stax.html#jax.example_libraries.stax.FanOut">[docs]</a>
+<span class="k">def</span> <span class="nf">FanOut</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Layer construction function for a fan-out layer.&quot;&quot;&quot;</span>
+  <span class="n">init_fun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">rng</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">:</span> <span class="p">([</span><span class="n">input_shape</span><span class="p">]</span> <span class="o">*</span> <span class="n">num</span><span class="p">,</span> <span class="p">())</span>
+  <span class="n">apply_fun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">params</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="p">[</span><span class="n">inputs</span><span class="p">]</span> <span class="o">*</span> <span class="n">num</span>
+  <span class="k">return</span> <span class="n">init_fun</span><span class="p">,</span> <span class="n">apply_fun</span></div>
+
+
+
+<span class="k">def</span> <span class="nf">FanInSum</span><span class="p">():</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Layer construction function for a fan-in sum layer.&quot;&quot;&quot;</span>
+  <span class="n">init_fun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">rng</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">:</span> <span class="p">(</span><span class="n">input_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">())</span>
+  <span class="n">apply_fun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">params</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">init_fun</span><span class="p">,</span> <span class="n">apply_fun</span>
+<span class="n">FanInSum</span> <span class="o">=</span> <span class="n">FanInSum</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="FanInConcat">
+<a class="viewcode-back" href="../../../jax.example_libraries.stax.html#jax.example_libraries.stax.FanInConcat">[docs]</a>
+<span class="k">def</span> <span class="nf">FanInConcat</span><span class="p">(</span><span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Layer construction function for a fan-in concatenation layer.&quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="nf">init_fun</span><span class="p">(</span><span class="n">rng</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">):</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">axis</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">concat_size</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="n">ax</span><span class="p">]</span> <span class="k">for</span> <span class="n">shape</span> <span class="ow">in</span> <span class="n">input_shape</span><span class="p">)</span>
+    <span class="n">out_shape</span> <span class="o">=</span> <span class="n">input_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">][:</span><span class="n">ax</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">concat_size</span><span class="p">,)</span> <span class="o">+</span> <span class="n">input_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">ax</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">return</span> <span class="n">out_shape</span><span class="p">,</span> <span class="p">()</span>
+  <span class="k">def</span> <span class="nf">apply_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">init_fun</span><span class="p">,</span> <span class="n">apply_fun</span></div>
+
+
+
+<div class="viewcode-block" id="Dropout">
+<a class="viewcode-back" href="../../../jax.example_libraries.stax.html#jax.example_libraries.stax.Dropout">[docs]</a>
+<span class="k">def</span> <span class="nf">Dropout</span><span class="p">(</span><span class="n">rate</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Layer construction function for a dropout layer with given rate.&quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="nf">init_fun</span><span class="p">(</span><span class="n">rng</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">input_shape</span><span class="p">,</span> <span class="p">()</span>
+  <span class="k">def</span> <span class="nf">apply_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rng&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">rng</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Dropout layer requires apply_fun to be called with a PRNG key &quot;</span>
+             <span class="s2">&quot;argument. That is, instead of `apply_fun(params, inputs)`, call &quot;</span>
+             <span class="s2">&quot;it like `apply_fun(params, inputs, rng)` where `rng` is a &quot;</span>
+             <span class="s2">&quot;PRNG key (e.g. from `jax.random.key`).&quot;</span><span class="p">)</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;train&#39;</span><span class="p">:</span>
+      <span class="n">keep</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">bernoulli</span><span class="p">(</span><span class="n">rng</span><span class="p">,</span> <span class="n">rate</span><span class="p">,</span> <span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">keep</span><span class="p">,</span> <span class="n">inputs</span> <span class="o">/</span> <span class="n">rate</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">inputs</span>
+  <span class="k">return</span> <span class="n">init_fun</span><span class="p">,</span> <span class="n">apply_fun</span></div>
+
+
+
+<span class="c1"># Composing layers via combinators</span>
+
+
+<div class="viewcode-block" id="serial">
+<a class="viewcode-back" href="../../../jax.example_libraries.stax.html#jax.example_libraries.stax.serial">[docs]</a>
+<span class="k">def</span> <span class="nf">serial</span><span class="p">(</span><span class="o">*</span><span class="n">layers</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Combinator for composing layers in serial.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    *layers: a sequence of layers, each an (init_fun, apply_fun) pair.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    A new layer, meaning an (init_fun, apply_fun) pair, representing the serial</span>
+<span class="sd">    composition of the given sequence of layers.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">nlayers</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">layers</span><span class="p">)</span>
+  <span class="n">init_funs</span><span class="p">,</span> <span class="n">apply_funs</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">layers</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">init_fun</span><span class="p">(</span><span class="n">rng</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">):</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">init_fun</span> <span class="ow">in</span> <span class="n">init_funs</span><span class="p">:</span>
+      <span class="n">rng</span><span class="p">,</span> <span class="n">layer_rng</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span>
+      <span class="n">input_shape</span><span class="p">,</span> <span class="n">param</span> <span class="o">=</span> <span class="n">init_fun</span><span class="p">(</span><span class="n">layer_rng</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">)</span>
+      <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">input_shape</span><span class="p">,</span> <span class="n">params</span>
+  <span class="k">def</span> <span class="nf">apply_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;rng&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">rngs</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">rng</span><span class="p">,</span> <span class="n">nlayers</span><span class="p">)</span> <span class="k">if</span> <span class="n">rng</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">(</span><span class="kc">None</span><span class="p">,)</span> <span class="o">*</span> <span class="n">nlayers</span>
+    <span class="k">for</span> <span class="n">fun</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">rng</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">apply_funs</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">rngs</span><span class="p">):</span>
+      <span class="n">inputs</span> <span class="o">=</span> <span class="n">fun</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">rng</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">inputs</span>
+  <span class="k">return</span> <span class="n">init_fun</span><span class="p">,</span> <span class="n">apply_fun</span></div>
+
+
+
+<div class="viewcode-block" id="parallel">
+<a class="viewcode-back" href="../../../jax.example_libraries.stax.html#jax.example_libraries.stax.parallel">[docs]</a>
+<span class="k">def</span> <span class="nf">parallel</span><span class="p">(</span><span class="o">*</span><span class="n">layers</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Combinator for composing layers in parallel.</span>
+
+<span class="sd">  The layer resulting from this combinator is often used with the FanOut and</span>
+<span class="sd">  FanInSum layers.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    *layers: a sequence of layers, each an (init_fun, apply_fun) pair.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    A new layer, meaning an (init_fun, apply_fun) pair, representing the</span>
+<span class="sd">    parallel composition of the given sequence of layers. In particular, the</span>
+<span class="sd">    returned layer takes a sequence of inputs and returns a sequence of outputs</span>
+<span class="sd">    with the same length as the argument `layers`.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">nlayers</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">layers</span><span class="p">)</span>
+  <span class="n">init_funs</span><span class="p">,</span> <span class="n">apply_funs</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">layers</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">init_fun</span><span class="p">(</span><span class="n">rng</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">):</span>
+    <span class="n">rngs</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">rng</span><span class="p">,</span> <span class="n">nlayers</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">init</span><span class="p">(</span><span class="n">rng</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span> <span class="k">for</span> <span class="n">init</span><span class="p">,</span> <span class="n">rng</span><span class="p">,</span> <span class="n">shape</span>
+                 <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">init_funs</span><span class="p">,</span> <span class="n">rngs</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">)])</span>
+  <span class="k">def</span> <span class="nf">apply_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;rng&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">rngs</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">rng</span><span class="p">,</span> <span class="n">nlayers</span><span class="p">)</span> <span class="k">if</span> <span class="n">rng</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">(</span><span class="kc">None</span><span class="p">,)</span> <span class="o">*</span> <span class="n">nlayers</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">apply_funs</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">rngs</span><span class="p">)]</span>
+  <span class="k">return</span> <span class="n">init_fun</span><span class="p">,</span> <span class="n">apply_fun</span></div>
+
+
+
+<div class="viewcode-block" id="shape_dependent">
+<a class="viewcode-back" href="../../../jax.example_libraries.stax.html#jax.example_libraries.stax.shape_dependent">[docs]</a>
+<span class="k">def</span> <span class="nf">shape_dependent</span><span class="p">(</span><span class="n">make_layer</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Combinator to delay layer constructor pair until input shapes are known.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    make_layer: a one-argument function that takes an input shape as an argument</span>
+<span class="sd">      (a tuple of positive integers) and returns an (init_fun, apply_fun) pair.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    A new layer, meaning an (init_fun, apply_fun) pair, representing the same</span>
+<span class="sd">    layer as returned by `make_layer` but with its construction delayed until</span>
+<span class="sd">    input shapes are known.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="nf">init_fun</span><span class="p">(</span><span class="n">rng</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">make_layer</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)[</span><span class="mi">0</span><span class="p">](</span><span class="n">rng</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">apply_fun</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">make_layer</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">)[</span><span class="mi">1</span><span class="p">](</span><span class="n">params</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">init_fun</span><span class="p">,</span> <span class="n">apply_fun</span></div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The JAX authors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, The JAX Authors. NumPy and SciPy documentation are copyright the respective authors..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1135 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>jax._src.compiler &#8212; JAX  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/style.css?v=02ed413a" />
+    <link rel="stylesheet" href="../../../_static/style.css" type="text/css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../../../_static/design-tabs.js?v=36754332"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/jax/_src/compiler';</script>
+    <link rel="icon" href="../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/jax_logo_250px.png" class="logo__image only-light" alt="JAX  documentation - Home"/>
+    <script>document.write(`<img src="../../../_static/jax_logo_250px.png" class="logo__image only-dark" alt="JAX  documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installing JAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/quickstart.html">JAX Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/thinking_in_jax.html">How to Think in JAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notebooks/Common_Gotchas_in_JAX.html">🔪 JAX - The Sharp Bits 🔪</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq.html">JAX Frequently Asked Questions (FAQ)</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../jax-101/index.html">Tutorial: JAX 101</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/01-jax-basics.html">JAX As Accelerated NumPy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/02-jitting.html">Just In Time Compilation with JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/03-vectorization.html">Automatic Vectorization in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/04-advanced-autodiff.html">Advanced Automatic Differentiation in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/05-random-numbers.html">Pseudo Random Numbers in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/05.1-pytrees.html">Working with Pytrees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/06-parallelism.html">Parallel Evaluation in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax-101/07-state.html">Stateful Computations in JAX</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Further Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../user_guides.html">User Guides</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../profiling.html">Profiling JAX programs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../device_memory_profiling.html">Device Memory Profiling</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../debugging/index.html">Runtime value debugging in JAX</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../debugging/print_breakpoint.html"><code class="docutils literal notranslate"><span class="pre">jax.debug.print</span></code> and <code class="docutils literal notranslate"><span class="pre">jax.debug.breakpoint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../debugging/checkify_guide.html">The <code class="docutils literal notranslate"><span class="pre">checkify</span></code> transformation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../debugging/flags.html">JAX debugging flags</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../gpu_performance_tips.html">GPU performance tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../persistent_compilation_cache.html">Persistent Compilation Cache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jaxpr.html">Understanding Jaxprs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/external_callbacks.html">External Callbacks in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../type_promotion.html">Type promotion semantics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../pytrees.html">Pytrees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../aot.html">Ahead-of-time lowering and compilation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../errors.html">JAX Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../transfer_guard.html">Transfer guard</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../pallas/index.html">Pallas: a JAX kernel language</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../pallas/design.html">Pallas Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../pallas/quickstart.html">Pallas Quickstart</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../pallas/tpu/index.html">Pallas TPU</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../pallas/tpu/details.html">Writing TPU kernels with Pallas</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../pallas/tpu/pipelining.html">Pipelining and <code class="docutils literal notranslate"><span class="pre">BlockSpec</span></code>s</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../advanced_guide.html">Advanced Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/neural_network_with_tfds_data.html">Training a Simple Neural Network, with tensorflow/datasets Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Neural_Network_and_Data_Loading.html">Training a Simple Neural Network, with PyTorch Data Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/vmapped_log_probs.html">Autobatching for Bayesian Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../multi_process.html">Using JAX in multi-host and multi-process environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Distributed_arrays_and_automatic_parallelization.html">Distributed arrays and automatic parallelization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/shard_map.html">SPMD multi-device parallelism with <code class="docutils literal notranslate"><span class="pre">shard_map</span></code></a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/xmap_tutorial.html">Named axes and easy-to-revise parallelism with <code class="docutils literal notranslate"><span class="pre">xmap</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/autodiff_cookbook.html">The Autodiff Cookbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Custom_derivative_rules_for_Python_code.html">Custom derivative rules for JAX-transformable Python functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/autodiff_remat.html">Control autodiff’s saved values with <code class="docutils literal notranslate"><span class="pre">jax.checkpoint</span></code> (aka <code class="docutils literal notranslate"><span class="pre">jax.remat</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/How_JAX_primitives_work.html">How JAX primitives work</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/Writing_custom_interpreters_in_Jax.html">Writing custom Jaxpr interpreters in JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../Custom_Operation_for_GPUs.html">Custom operations for GPUs with C++ and CUDA</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../../notebooks/convolutions.html">Generalized Convolutions in JAX</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../contributor_guide.html">Developer Documentation</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../contributing.html">Contributing to JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../developer.html">Building from source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax_internal_api.html">Internal APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../autodidax.html">Autodidax: JAX core from scratch</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jep/index.html">JAX Enhancement Proposals (JEPs)</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/263-prng.html">263: JAX PRNG Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/2026-custom-derivatives.html">2026: Custom JVP/VJP rules for JAX-transformable functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/4008-custom-vjp-update.html">4008: Custom VJP and `nondiff_argnums` update</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/4410-omnistaging.html">4410: Omnistaging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/9263-typed-keys.html">9263: Typed keys &amp; pluggable RNGs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/9407-type-promotion.html">9407: Design of Type Promotion Semantics for JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/9419-jax-versioning.html">9419: Jax and Jaxlib versioning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/10657-sequencing-effects.html">10657: Sequencing side-effects in JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/11830-new-remat-checkpoint.html">11830: `jax.remat` / `jax.checkpoint` new implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/12049-type-annotations.html">12049: Type Annotation Roadmap for JAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/14273-shard-map.html">14273: `shard_map` (`shmap`) for simple per-device code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/15856-jex.html">15856: `jax.extend`, an extensions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/17111-shmap-transpose.html">17111: Efficient transposition of `shard_map` (and other maps)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jep/18137-numpy-scipy-scope.html">18137: Scope of JAX NumPy &amp; SciPy Wrappers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../investigating_a_regression.html">Investigating a regression</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../building_on_jax.html">Building on JAX</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../notes.html">Notes</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_compatibility.html">API compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../deprecation.html">Python and NumPy version support policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax_array_migration.html">jax.Array migration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../async_dispatch.html">Asynchronous dispatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../concurrency.html">Concurrency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../gpu_memory_allocation.html">GPU memory allocation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../rank_promotion_warning.html">Rank promotion warning</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../jax.html">Public API: jax package</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.numpy.html"><code class="docutils literal notranslate"><span class="pre">jax.numpy</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fft.html">jax.numpy.fft.fft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fft2.html">jax.numpy.fft.fft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fftfreq.html">jax.numpy.fft.fftfreq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fftn.html">jax.numpy.fft.fftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.fftshift.html">jax.numpy.fft.fftshift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.hfft.html">jax.numpy.fft.hfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifft.html">jax.numpy.fft.ifft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifft2.html">jax.numpy.fft.ifft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifftn.html">jax.numpy.fft.ifftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ifftshift.html">jax.numpy.fft.ifftshift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.ihfft.html">jax.numpy.fft.ihfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.irfft.html">jax.numpy.fft.irfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.irfft2.html">jax.numpy.fft.irfft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.irfftn.html">jax.numpy.fft.irfftn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfft.html">jax.numpy.fft.rfft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfft2.html">jax.numpy.fft.rfft2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfftfreq.html">jax.numpy.fft.rfftfreq</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.numpy.fft.rfftn.html">jax.numpy.fft.rfftn</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.scipy.html"><code class="docutils literal notranslate"><span class="pre">jax.scipy</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.logpmf.html">jax.scipy.stats.bernoulli.logpmf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.pmf.html">jax.scipy.stats.bernoulli.pmf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.cdf.html">jax.scipy.stats.bernoulli.cdf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../_autosummary/jax.scipy.stats.bernoulli.ppf.html">jax.scipy.stats.bernoulli.ppf</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.lax.html"><code class="docutils literal notranslate"><span class="pre">jax.lax</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.random.html"><code class="docutils literal notranslate"><span class="pre">jax.random</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.sharding.html"><code class="docutils literal notranslate"><span class="pre">jax.sharding</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.debug.html"><code class="docutils literal notranslate"><span class="pre">jax.debug</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.dlpack.html"><code class="docutils literal notranslate"><span class="pre">jax.dlpack</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.distributed.html"><code class="docutils literal notranslate"><span class="pre">jax.distributed</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.dtypes.html"><code class="docutils literal notranslate"><span class="pre">jax.dtypes</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.flatten_util.html"><code class="docutils literal notranslate"><span class="pre">jax.flatten_util</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.image.html"><code class="docutils literal notranslate"><span class="pre">jax.image</span></code> module</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.nn.html"><code class="docutils literal notranslate"><span class="pre">jax.nn</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-13"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.nn.initializers.html"><code class="docutils literal notranslate"><span class="pre">jax.nn.initializers</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.ops.html"><code class="docutils literal notranslate"><span class="pre">jax.ops</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.profiler.html"><code class="docutils literal notranslate"><span class="pre">jax.profiler</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.stages.html"><code class="docutils literal notranslate"><span class="pre">jax.stages</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.tree.html"><code class="docutils literal notranslate"><span class="pre">jax.tree</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.tree_util.html"><code class="docutils literal notranslate"><span class="pre">jax.tree_util</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.typing.html"><code class="docutils literal notranslate"><span class="pre">jax.typing</span></code> module</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.extend.html"><code class="docutils literal notranslate"><span class="pre">jax.extend</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.extend.linear_util.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.linear_util</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.extend.mlir.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.mlir</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.extend.random.html"><code class="docutils literal notranslate"><span class="pre">jax.extend.random</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.example_libraries.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-15"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.example_libraries.optimizers.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries.optimizers</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.example_libraries.stax.html"><code class="docutils literal notranslate"><span class="pre">jax.example_libraries.stax</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../jax.experimental.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.array_api.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.array_api</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.checkify.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.checkify</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.host_callback.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.host_callback</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.maps.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.maps</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.pjit.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.pjit</span></code> module</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../jax.experimental.sparse.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.sparse</span></code> module</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.BCOO.html">jax.experimental.sparse.BCOO</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_broadcast_in_dim.html">jax.experimental.sparse.bcoo_broadcast_in_dim</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_concatenate.html">jax.experimental.sparse.bcoo_concatenate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_dot_general.html">jax.experimental.sparse.bcoo_dot_general</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_dot_general_sampled.html">jax.experimental.sparse.bcoo_dot_general_sampled</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_dynamic_slice.html">jax.experimental.sparse.bcoo_dynamic_slice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_extract.html">jax.experimental.sparse.bcoo_extract</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_fromdense.html">jax.experimental.sparse.bcoo_fromdense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_gather.html">jax.experimental.sparse.bcoo_gather</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_multiply_dense.html">jax.experimental.sparse.bcoo_multiply_dense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_multiply_sparse.html">jax.experimental.sparse.bcoo_multiply_sparse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_update_layout.html">jax.experimental.sparse.bcoo_update_layout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_reduce_sum.html">jax.experimental.sparse.bcoo_reduce_sum</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_reshape.html">jax.experimental.sparse.bcoo_reshape</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_slice.html">jax.experimental.sparse.bcoo_slice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_sort_indices.html">jax.experimental.sparse.bcoo_sort_indices</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_squeeze.html">jax.experimental.sparse.bcoo_squeeze</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_sum_duplicates.html">jax.experimental.sparse.bcoo_sum_duplicates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_todense.html">jax.experimental.sparse.bcoo_todense</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../_autosummary/jax.experimental.sparse.bcoo_transpose.html">jax.experimental.sparse.bcoo_transpose</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.jet.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.jet</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.custom_partitioning.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.custom_partitioning</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.multihost_utils.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.multihost_utils</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.compilation_cache.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.compilation_cache</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.key_reuse.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.key_reuse</span></code> module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../jax.experimental.mesh_utils.html"><code class="docutils literal notranslate"><span class="pre">jax.experimental.mesh_utils</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../jax.lib.html"><code class="docutils literal notranslate"><span class="pre">jax.lib</span></code> module</a></li>
+</ul>
+</li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../glossary.html">JAX Glossary of Terms</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/google/jax" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for jax._src.compiler</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2018 The JAX Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     https://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+
+<span class="c1"># Interface to the compiler</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Sequence</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">compilation_cache</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">config</span> <span class="k">as</span> <span class="n">config</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">distributed</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">lib</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">monitoring</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">profiler</span>
+<span class="kn">from</span> <span class="nn">jax._src</span> <span class="kn">import</span> <span class="n">traceback_util</span>
+<span class="kn">from</span> <span class="nn">jax._src.interpreters</span> <span class="kn">import</span> <span class="n">mlir</span>
+<span class="kn">from</span> <span class="nn">jax._src.lib</span> <span class="kn">import</span> <span class="n">xla_client</span> <span class="k">as</span> <span class="n">xc</span>
+<span class="kn">from</span> <span class="nn">jax._src.lib</span> <span class="kn">import</span> <span class="n">xla_extension_version</span>
+<span class="kn">from</span> <span class="nn">jax._src.lib.mlir</span> <span class="kn">import</span> <span class="n">ir</span>
+<span class="kn">from</span> <span class="nn">jax._src.xla_bridge</span> <span class="kn">import</span> <span class="n">process_count</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<span class="n">_DISABLE_MOST_OPTIMIZATIONS</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">DEFINE_bool</span><span class="p">(</span>
+    <span class="s1">&#39;jax_disable_most_optimizations&#39;</span><span class="p">,</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">bool_env</span><span class="p">(</span><span class="s1">&#39;JAX_DISABLE_MOST_OPTIMIZATIONS&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+    <span class="s1">&#39;Try not to do much optimization work. This can be useful if the cost of &#39;</span>
+    <span class="s1">&#39;optimization is greater than that of running a less-optimized program.&#39;</span><span class="p">)</span>
+
+<span class="n">_COMPILER_DETAILED_LOGGING_MIN_OPS</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">DEFINE_integer</span><span class="p">(</span>
+    <span class="s2">&quot;jax_compiler_detailed_logging_min_ops&quot;</span><span class="p">,</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">int_env</span><span class="p">(</span><span class="s2">&quot;JAX_COMPILER_DETAILED_LOGGING_MIN_OPS&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="n">help</span><span class="o">=</span><span class="p">(</span>
+        <span class="s1">&#39;How big should a module be in MLIR operations before JAX enables &#39;</span>
+        <span class="s1">&#39;detailed compiler logging? The intent of this flag is to suppress &#39;</span>
+        <span class="s1">&#39;detailed logging for small/uninteresting computations.&#39;</span>
+    <span class="p">),</span>
+<span class="p">)</span>
+
+<span class="c1"># The special XLA-AutoFDO profile version that indicates that a profile is not</span>
+<span class="c1"># available and retrieval should not be attempted.</span>
+<span class="n">_NO_PROFILE_DONT_RETRIEVE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+<span class="n">traceback_util</span><span class="o">.</span><span class="n">register_exclusion</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+
+<span class="n">CompileOptions</span> <span class="o">=</span> <span class="n">xc</span><span class="o">.</span><span class="n">CompileOptions</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="c1"># Will be monkeypatched with the function that gets the XLA-AutoFDO profile</span>
+<span class="c1"># version. The default (-1) takes care of errors.</span>
+<span class="c1"># TODO(b/289098047): consider refactoring this interface.</span>
+<span class="k">def</span> <span class="nf">get_latest_profile_version</span><span class="p">(</span><span class="n">backend</span><span class="p">:</span> <span class="n">xc</span><span class="o">.</span><span class="n">Client</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+  <span class="k">del</span> <span class="n">backend</span>
+  <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+
+
+<span class="k">def</span> <span class="nf">_walk_operations</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+  <span class="n">k</span> <span class="o">-=</span> <span class="mi">1</span>
+  <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">k</span>
+  <span class="k">for</span> <span class="n">region</span> <span class="ow">in</span> <span class="n">op</span><span class="o">.</span><span class="n">regions</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">region</span><span class="p">:</span>
+      <span class="k">for</span> <span class="n">child_op</span> <span class="ow">in</span> <span class="n">block</span><span class="p">:</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">_walk_operations</span><span class="p">(</span><span class="n">child_op</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+          <span class="k">return</span> <span class="n">k</span>
+  <span class="k">return</span> <span class="n">k</span>
+
+
+<span class="k">def</span> <span class="nf">use_detailed_logging</span><span class="p">(</span><span class="n">module</span><span class="p">:</span> <span class="n">ir</span><span class="o">.</span><span class="n">Module</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns &#39;true&#39; if detailed logging should be enabled for &#39;module&#39;.&quot;&quot;&quot;</span>
+  <span class="n">bound</span> <span class="o">=</span> <span class="n">_COMPILER_DETAILED_LOGGING_MIN_OPS</span><span class="o">.</span><span class="n">value</span>
+  <span class="k">return</span> <span class="n">_walk_operations</span><span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="n">operation</span><span class="p">,</span> <span class="n">bound</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span>
+
+
+<div class="viewcode-block" id="get_compile_options">
+<a class="viewcode-back" href="../../../_autosummary/jax.lib.xla_bridge.get_compile_options.html#jax.lib.xla_bridge.get_compile_options">[docs]</a>
+<span class="k">def</span> <span class="nf">get_compile_options</span><span class="p">(</span>
+    <span class="n">num_replicas</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">num_partitions</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">device_assignment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">use_spmd_partitioning</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">use_auto_spmd_partitioning</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">auto_spmd_partitioning_mesh_shape</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">auto_spmd_partitioning_mesh_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">env_options_overrides</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">fdo_profile</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">detailed_logging</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">backend</span><span class="p">:</span> <span class="n">xc</span><span class="o">.</span><span class="n">Client</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xc</span><span class="o">.</span><span class="n">CompileOptions</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Returns the compile options to use, as derived from flag values.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    num_replicas: Number of replicas for which to compile.</span>
+<span class="sd">    num_partitions: Number of partitions for which to compile.</span>
+<span class="sd">    device_assignment: Optional ndarray of jax devices indicating the assignment</span>
+<span class="sd">      of logical replicas to physical devices (default inherited from</span>
+<span class="sd">      xla_client.CompileOptions). Must be consistent with `num_replicas` and</span>
+<span class="sd">      `num_partitions`.</span>
+<span class="sd">    use_spmd_partitioning: boolean indicating whether to enable SPMD or MPMD</span>
+<span class="sd">      partitioning in XLA.</span>
+<span class="sd">    use_auto_spmd_partitioning: boolean indicating whether to automatically</span>
+<span class="sd">      generate XLA shardings for SPMD partitioner.</span>
+<span class="sd">    auto_spmd_partitioning_mesh_shape: device mesh shape used to create</span>
+<span class="sd">      auto_spmd_partitioning search space.</span>
+<span class="sd">    auto_spmd_partitioning_mesh_ids: device ids used to create</span>
+<span class="sd">      auto_spmd_partitioning search space.</span>
+<span class="sd">    env_options_overrides: dict of additional options parsed by the compiler</span>
+<span class="sd">    fdo_profile: Optional profile for feedback-directed optimization passed to</span>
+<span class="sd">      XLA.</span>
+<span class="sd">    detailed_logging: Is this an &quot;interesting&quot; computation about which XLA</span>
+<span class="sd">      would be wise to log compilation information?</span>
+<span class="sd">    backend: the client, if available.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">compile_options</span> <span class="o">=</span> <span class="n">xc</span><span class="o">.</span><span class="n">CompileOptions</span><span class="p">()</span>
+  <span class="n">compile_options</span><span class="o">.</span><span class="n">num_replicas</span> <span class="o">=</span> <span class="n">num_replicas</span>
+  <span class="n">compile_options</span><span class="o">.</span><span class="n">num_partitions</span> <span class="o">=</span> <span class="n">num_partitions</span>
+  <span class="n">build_options</span> <span class="o">=</span> <span class="n">compile_options</span><span class="o">.</span><span class="n">executable_build_options</span>
+  <span class="n">build_options</span><span class="o">.</span><span class="n">use_spmd_partitioning</span> <span class="o">=</span> <span class="n">use_spmd_partitioning</span>
+  <span class="n">build_options</span><span class="o">.</span><span class="n">use_auto_spmd_partitioning</span> <span class="o">=</span> <span class="n">use_auto_spmd_partitioning</span>
+  <span class="k">if</span> <span class="n">fdo_profile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">build_options</span><span class="o">.</span><span class="n">fdo_profile</span> <span class="o">=</span> <span class="n">fdo_profile</span>
+  <span class="k">if</span> <span class="n">use_auto_spmd_partitioning</span><span class="p">:</span>
+    <span class="n">build_options</span><span class="o">.</span><span class="n">auto_spmd_partitioning_mesh_shape</span> <span class="o">=</span> <span class="n">auto_spmd_partitioning_mesh_shape</span> <span class="ow">or</span> <span class="p">[]</span>
+    <span class="n">build_options</span><span class="o">.</span><span class="n">auto_spmd_partitioning_mesh_ids</span> <span class="o">=</span> <span class="n">auto_spmd_partitioning_mesh_ids</span> <span class="ow">or</span> <span class="p">[]</span>
+  <span class="k">if</span> <span class="n">device_assignment</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+        <span class="s1">&#39;get_compile_options: num_replicas=</span><span class="si">%s</span><span class="s1"> num_partitions=</span><span class="si">%s</span><span class="s1"> device_assignment=</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+        <span class="n">num_replicas</span><span class="p">,</span> <span class="n">num_partitions</span><span class="p">,</span> <span class="n">device_assignment</span><span class="p">)</span>
+    <span class="n">device_assignment</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">device_assignment</span><span class="p">)</span>
+
+    <span class="c1"># Allow 1D device assignment if num_partitions is 1.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">device_assignment</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">num_partitions</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+      <span class="n">device_assignment</span> <span class="o">=</span> <span class="n">device_assignment</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">num_replicas</span> <span class="o">!=</span> <span class="n">device_assignment</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+      <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;device_assignment does not match num_replicas: </span><span class="si">{}</span><span class="s1"> vs </span><span class="si">{}</span><span class="s1">.&#39;</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">device_assignment</span><span class="p">,</span> <span class="n">num_replicas</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">num_partitions</span> <span class="o">!=</span> <span class="n">device_assignment</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+      <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;device_assignment does not match num_partitions: </span><span class="si">{}</span><span class="s1"> vs </span><span class="si">{}</span><span class="s1">.&#39;</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">device_assignment</span><span class="p">,</span> <span class="n">num_partitions</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">device_assignment</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="nb">object</span><span class="p">:</span>
+      <span class="n">device_assignment</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">otypes</span><span class="o">=</span><span class="p">[</span><span class="nb">int</span><span class="p">])(</span>
+          <span class="n">device_assignment</span><span class="p">)</span>
+    <span class="n">device_assignment</span> <span class="o">=</span> <span class="n">xc</span><span class="o">.</span><span class="n">DeviceAssignment</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">device_assignment</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">device_assignment</span><span class="o">.</span><span class="n">replica_count</span><span class="p">()</span> <span class="o">==</span> <span class="n">num_replicas</span>
+    <span class="k">assert</span> <span class="n">device_assignment</span><span class="o">.</span><span class="n">computation_count</span><span class="p">()</span> <span class="o">==</span> <span class="n">num_partitions</span>
+    <span class="n">compile_options</span><span class="o">.</span><span class="n">device_assignment</span> <span class="o">=</span> <span class="n">device_assignment</span>
+
+  <span class="k">if</span> <span class="n">env_options_overrides</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">compile_options</span><span class="o">.</span><span class="n">env_option_overrides</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">env_options_overrides</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+
+  <span class="n">debug_options</span> <span class="o">=</span> <span class="n">compile_options</span><span class="o">.</span><span class="n">executable_build_options</span><span class="o">.</span><span class="n">debug_options</span>
+  <span class="k">if</span> <span class="n">lib</span><span class="o">.</span><span class="n">cuda_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">debug_options</span><span class="o">.</span><span class="n">xla_gpu_cuda_data_dir</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">cuda_path</span>
+
+  <span class="k">if</span> <span class="n">_DISABLE_MOST_OPTIMIZATIONS</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+    <span class="n">debug_options</span><span class="o">.</span><span class="n">xla_backend_optimization_level</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">debug_options</span><span class="o">.</span><span class="n">xla_llvm_disable_expensive_passes</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">debug_options</span><span class="o">.</span><span class="n">xla_test_all_input_layouts</span> <span class="o">=</span> <span class="kc">False</span>
+
+  <span class="c1"># XLA-AutoFDO profile version: precedence order is:</span>
+  <span class="c1"># 1. Whatever --jax_xla_profile_version is set to.</span>
+  <span class="c1"># 2. If --jax_xla_profile_version is not set (i.e., 0), call the function</span>
+  <span class="c1">#    set in get_latest_profile_version and use the return value if non-zero.</span>
+  <span class="c1">#    If the function returns 0, set -1; this is an error.</span>
+  <span class="c1"># -1 indicates that no attempt should be made to retrieve the latest profile</span>
+  <span class="c1"># later on.</span>
+  <span class="n">jax_xla_profile_version</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">jax_xla_profile_version</span><span class="o">.</span><span class="n">value</span>
+  <span class="k">if</span> <span class="n">jax_xla_profile_version</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">compile_options</span><span class="o">.</span><span class="n">profile_version</span> <span class="o">=</span> <span class="n">jax_xla_profile_version</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;get_compile_options XLA-AutoFDO profile: &quot;</span> <span class="o">+</span>
+                 <span class="s2">&quot;using JAX XLA profile version </span><span class="si">%d</span><span class="s2"> from flag&quot;</span><span class="p">,</span>
+                 <span class="n">jax_xla_profile_version</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">compile_options</span><span class="o">.</span><span class="n">profile_version</span> <span class="o">=</span> <span class="n">_NO_PROFILE_DONT_RETRIEVE</span>
+    <span class="k">if</span> <span class="n">backend</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;get_compile_options: no backend supplied; &quot;</span>
+                   <span class="s2">&quot;disabling XLA-AutoFDO profile&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">fdo_profile_version</span> <span class="o">=</span> <span class="n">get_latest_profile_version</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">fdo_profile_version</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">compile_options</span><span class="o">.</span><span class="n">profile_version</span> <span class="o">=</span> <span class="n">fdo_profile_version</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;get_compile_options XLA-AutoFDO profile: &quot;</span> <span class="o">+</span>
+                     <span class="s2">&quot;using XLA-AutoFDO profile version </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span>
+                     <span class="n">fdo_profile_version</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;get_compile_options XLA-AutoFDO profile: &quot;</span> <span class="o">+</span>
+                     <span class="s2">&quot;XLA-AutoFDO profile version is 0; this should not happen&quot;</span><span class="p">)</span>
+
+  <span class="n">debug_options</span><span class="o">.</span><span class="n">xla_detailed_logging</span> <span class="o">=</span> <span class="n">detailed_logging</span>
+
+  <span class="k">return</span> <span class="n">compile_options</span></div>
+
+
+<span class="nd">@profiler</span><span class="o">.</span><span class="n">annotate_function</span>
+<span class="k">def</span> <span class="nf">backend_compile</span><span class="p">(</span>
+    <span class="n">backend</span><span class="p">:</span> <span class="n">xc</span><span class="o">.</span><span class="n">Client</span><span class="p">,</span>
+    <span class="n">module</span><span class="p">:</span> <span class="n">ir</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+    <span class="n">options</span><span class="p">:</span> <span class="n">xc</span><span class="o">.</span><span class="n">CompileOptions</span><span class="p">,</span>
+    <span class="n">host_callbacks</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xc</span><span class="o">.</span><span class="n">LoadedExecutable</span><span class="p">:</span>
+  <span class="c1"># Convert ir.Module to a string representation, unless the</span>
+  <span class="c1"># back-end expliclity flags the ability to handle a module directly</span>
+  <span class="c1"># (avoiding the overhead of back and forth conversions)</span>
+  <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">backend</span><span class="p">,</span> <span class="s2">&quot;needs_str_ir&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
+    <span class="n">built_c</span> <span class="o">=</span> <span class="n">mlir</span><span class="o">.</span><span class="n">module_to_bytecode</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">built_c</span> <span class="o">=</span> <span class="n">module</span>
+
+  <span class="c1"># we use a separate function call to ensure that XLA compilation appears</span>
+  <span class="c1"># separately in Python profiling results</span>
+  <span class="k">if</span> <span class="n">host_callbacks</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">backend</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">built_c</span><span class="p">,</span> <span class="n">compile_options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span>
+                           <span class="n">host_callbacks</span><span class="o">=</span><span class="n">host_callbacks</span><span class="p">)</span>
+  <span class="c1"># Some backends don&#39;t have `host_callbacks` option yet</span>
+  <span class="c1"># TODO(sharadmv): remove this fallback when all backends allow `compile`</span>
+  <span class="c1"># to take in `host_callbacks`</span>
+  <span class="k">return</span> <span class="n">backend</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">built_c</span><span class="p">,</span> <span class="n">compile_options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">compile_or_get_cached</span><span class="p">(</span>
+    <span class="n">backend</span><span class="p">:</span> <span class="n">xc</span><span class="o">.</span><span class="n">Client</span><span class="p">,</span>
+    <span class="n">computation</span><span class="p">:</span> <span class="n">ir</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+    <span class="n">devices</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">compile_options</span><span class="p">:</span> <span class="n">xc</span><span class="o">.</span><span class="n">CompileOptions</span><span class="p">,</span>
+    <span class="n">host_callbacks</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xc</span><span class="o">.</span><span class="n">LoadedExecutable</span><span class="p">:</span>
+  <span class="n">sym_name</span> <span class="o">=</span> <span class="n">computation</span><span class="o">.</span><span class="n">operation</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="s1">&#39;sym_name&#39;</span><span class="p">]</span>
+  <span class="n">module_name</span> <span class="o">=</span> <span class="n">ir</span><span class="o">.</span><span class="n">StringAttr</span><span class="p">(</span><span class="n">sym_name</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+
+  <span class="k">if</span> <span class="n">dumped_to</span> <span class="o">:=</span> <span class="n">mlir</span><span class="o">.</span><span class="n">dump_module_to_file</span><span class="p">(</span><span class="n">computation</span><span class="p">,</span> <span class="s2">&quot;compile&quot;</span><span class="p">):</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Dumped the module to </span><span class="si">%s</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="n">dumped_to</span><span class="p">)</span>
+
+  <span class="c1"># Persistent compilation cache only implemented on TPU and GPU and the backend</span>
+  <span class="c1"># that supports serialization of executables.</span>
+  <span class="c1"># TODO(skye): add warning when initializing cache on unsupported default platform</span>
+  <span class="n">supported_platforms</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;tpu&quot;</span><span class="p">,</span> <span class="s2">&quot;gpu&quot;</span><span class="p">]</span>
+  <span class="k">if</span> <span class="n">xla_extension_version</span> <span class="o">&gt;=</span> <span class="mi">253</span><span class="p">:</span>
+    <span class="n">supported_platforms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+  <span class="n">use_compilation_cache</span> <span class="o">=</span> <span class="p">(</span>
+      <span class="n">config</span><span class="o">.</span><span class="n">enable_compilation_cache</span><span class="o">.</span><span class="n">value</span>
+      <span class="ow">and</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">backend</span><span class="p">,</span> <span class="s2">&quot;supports_executable_serialization&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+      <span class="ow">and</span> <span class="n">backend</span><span class="o">.</span><span class="n">platform</span> <span class="ow">in</span> <span class="n">supported_platforms</span>
+  <span class="p">)</span>
+
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">use_compilation_cache</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">backend_compile</span><span class="p">(</span><span class="n">backend</span><span class="p">,</span> <span class="n">computation</span><span class="p">,</span> <span class="n">compile_options</span><span class="p">,</span>
+                           <span class="n">host_callbacks</span><span class="p">)</span>
+
+  <span class="n">compilation_cache</span><span class="o">.</span><span class="n">set_once_cache_used</span><span class="p">(</span>
+      <span class="k">lambda</span><span class="p">:</span> <span class="n">monitoring</span><span class="o">.</span><span class="n">record_event</span><span class="p">(</span>
+          <span class="s2">&quot;/jax/compilation_cache/tasks_using_cache&quot;</span><span class="p">))</span>
+  <span class="n">monitoring</span><span class="o">.</span><span class="n">record_event</span><span class="p">(</span><span class="s1">&#39;/jax/compilation_cache/compile_requests_use_cache&#39;</span><span class="p">)</span>
+
+  <span class="k">try</span><span class="p">:</span>
+    <span class="n">cache_key</span> <span class="o">=</span> <span class="n">compilation_cache</span><span class="o">.</span><span class="n">get_cache_key</span><span class="p">(</span>
+        <span class="n">computation</span><span class="p">,</span> <span class="n">devices</span><span class="p">,</span> <span class="n">compile_options</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+  <span class="k">except</span> <span class="n">xc</span><span class="o">.</span><span class="n">_xla</span><span class="o">.</span><span class="n">XlaRuntimeError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;compile_or_get_cached: unable to generate cache key, &quot;</span>
+                 <span class="s2">&quot;skipping the cache: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ex</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">backend_compile</span><span class="p">(</span><span class="n">backend</span><span class="p">,</span> <span class="n">computation</span><span class="p">,</span> <span class="n">compile_options</span><span class="p">,</span>
+                           <span class="n">host_callbacks</span><span class="p">)</span>
+
+  <span class="n">cache_retrieval_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+  <span class="n">retrieved_executable</span><span class="p">,</span> <span class="n">retrieved_compile_time</span> <span class="o">=</span> <span class="n">_cache_read</span><span class="p">(</span>
+      <span class="n">module_name</span><span class="p">,</span> <span class="n">cache_key</span><span class="p">,</span> <span class="n">compile_options</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+  <span class="n">cache_retrieval_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">-</span> <span class="n">cache_retrieval_start</span>
+
+  <span class="k">if</span> <span class="n">retrieved_executable</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">assert</span> <span class="n">retrieved_compile_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Persistent compilation cache hit for &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span> <span class="n">module_name</span><span class="p">)</span>
+
+    <span class="n">monitoring</span><span class="o">.</span><span class="n">record_event</span><span class="p">(</span><span class="s1">&#39;/jax/compilation_cache/cache_hits&#39;</span><span class="p">)</span>
+    <span class="n">monitoring</span><span class="o">.</span><span class="n">record_event_duration_secs</span><span class="p">(</span>
+        <span class="s1">&#39;/jax/compilation_cache/compile_time_saved_sec&#39;</span><span class="p">,</span>
+        <span class="n">retrieved_compile_time</span> <span class="o">-</span> <span class="n">cache_retrieval_time</span><span class="p">)</span>
+
+    <span class="n">monitoring</span><span class="o">.</span><span class="n">record_event_duration_secs</span><span class="p">(</span>
+        <span class="s2">&quot;/jax/compilation_cache/cache_retrieval_time_sec&quot;</span><span class="p">,</span> <span class="n">cache_retrieval_time</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">retrieved_executable</span>
+  <span class="k">elif</span> <span class="p">(</span>
+      <span class="n">process_count</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1</span>
+      <span class="ow">and</span> <span class="n">config</span><span class="o">.</span><span class="n">share_binary_between_hosts</span><span class="o">.</span><span class="n">value</span>
+      <span class="ow">and</span> <span class="n">distributed</span><span class="o">.</span><span class="n">global_state</span><span class="o">.</span><span class="n">client</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+      <span class="c1"># Host callbacks are currently baked into the HLO module so we cant share</span>
+      <span class="c1"># them.</span>
+      <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">host_callbacks</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+  <span class="p">):</span>
+    <span class="k">return</span> <span class="n">_compile_and_share_module</span><span class="p">(</span>
+        <span class="n">backend</span><span class="p">,</span>
+        <span class="n">computation</span><span class="p">,</span>
+        <span class="n">compile_options</span><span class="p">,</span>
+        <span class="n">host_callbacks</span><span class="p">,</span>
+        <span class="n">distributed</span><span class="o">.</span><span class="n">global_state</span><span class="o">.</span><span class="n">client</span><span class="p">,</span>
+        <span class="n">module_name</span><span class="p">,</span>
+        <span class="n">cache_key</span><span class="p">,</span>
+    <span class="p">)</span>
+  <span class="k">elif</span> <span class="p">(</span>
+      <span class="n">process_count</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1</span>
+      <span class="ow">and</span> <span class="n">config</span><span class="o">.</span><span class="n">share_autotune_config_between_hosts</span><span class="o">.</span><span class="n">value</span>
+      <span class="ow">and</span> <span class="n">distributed</span><span class="o">.</span><span class="n">global_state</span><span class="o">.</span><span class="n">client</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+  <span class="p">):</span>
+    <span class="k">return</span> <span class="n">_compile_and_write_autotune_config</span><span class="p">(</span>
+        <span class="n">backend</span><span class="p">,</span>
+        <span class="n">computation</span><span class="p">,</span>
+        <span class="n">compile_options</span><span class="p">,</span>
+        <span class="n">host_callbacks</span><span class="p">,</span>
+        <span class="n">distributed</span><span class="o">.</span><span class="n">global_state</span><span class="o">.</span><span class="n">client</span><span class="p">,</span>
+        <span class="n">module_name</span><span class="p">,</span>
+        <span class="n">cache_key</span><span class="p">,</span>
+    <span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">_compile_and_write_cache</span><span class="p">(</span>
+        <span class="n">backend</span><span class="p">,</span>
+        <span class="n">computation</span><span class="p">,</span>
+        <span class="n">compile_options</span><span class="p">,</span>
+        <span class="n">host_callbacks</span><span class="p">,</span>
+        <span class="n">module_name</span><span class="p">,</span>
+        <span class="n">cache_key</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="c1"># The process with id 0 should compile the module and write an autotune config</span>
+<span class="c1"># to the K-V storage.</span>
+<span class="k">def</span> <span class="nf">_compile_and_write_autotune_config</span><span class="p">(</span>
+    <span class="n">backend</span><span class="p">:</span> <span class="n">xc</span><span class="o">.</span><span class="n">Client</span><span class="p">,</span>
+    <span class="n">computation</span><span class="p">:</span> <span class="n">ir</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+    <span class="n">compile_options</span><span class="p">:</span> <span class="n">xc</span><span class="o">.</span><span class="n">CompileOptions</span><span class="p">,</span>
+    <span class="n">host_callbacks</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span>
+    <span class="n">global_client</span><span class="p">:</span> <span class="n">lib</span><span class="o">.</span><span class="n">xla_extension</span><span class="o">.</span><span class="n">DistributedRuntimeClient</span><span class="p">,</span>
+    <span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">cache_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xc</span><span class="o">.</span><span class="n">LoadedExecutable</span><span class="p">:</span>
+  <span class="n">share_timeout</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">share_binary_between_hosts_timeout_ms</span><span class="o">.</span><span class="n">value</span>
+  <span class="n">debug_options</span> <span class="o">=</span> <span class="n">compile_options</span><span class="o">.</span><span class="n">executable_build_options</span><span class="o">.</span><span class="n">debug_options</span>
+  <span class="n">autotune_tmp_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+      <span class="n">_compile_and_write_autotune_config</span><span class="o">.</span><span class="n">autotune_configs_dir</span><span class="p">,</span> <span class="n">cache_key</span>
+  <span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">autotune_tmp_file</span><span class="p">):</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+        <span class="s2">&quot;Compiling module: </span><span class="si">%s</span><span class="s2">. Use existing autotune config file: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">module_name</span><span class="p">,</span>
+        <span class="n">autotune_tmp_file</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">debug_options</span><span class="o">.</span><span class="n">xla_gpu_load_autotune_results_from</span> <span class="o">=</span> <span class="n">autotune_tmp_file</span>
+    <span class="k">return</span> <span class="n">_compile_and_write_cache</span><span class="p">(</span>
+        <span class="n">backend</span><span class="p">,</span>
+        <span class="n">computation</span><span class="p">,</span>
+        <span class="n">compile_options</span><span class="p">,</span>
+        <span class="n">host_callbacks</span><span class="p">,</span>
+        <span class="n">module_name</span><span class="p">,</span>
+        <span class="n">cache_key</span><span class="p">,</span>
+    <span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">distributed</span><span class="o">.</span><span class="n">global_state</span><span class="o">.</span><span class="n">process_id</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">debug_options</span><span class="o">.</span><span class="n">xla_gpu_dump_autotune_results_to</span> <span class="o">=</span> <span class="n">autotune_tmp_file</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Compiling and dumping autotune for module: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">module_name</span><span class="p">)</span>
+    <span class="n">executable</span> <span class="o">=</span> <span class="n">_compile_and_write_cache</span><span class="p">(</span>
+        <span class="n">backend</span><span class="p">,</span>
+        <span class="n">computation</span><span class="p">,</span>
+        <span class="n">compile_options</span><span class="p">,</span>
+        <span class="n">host_callbacks</span><span class="p">,</span>
+        <span class="n">module_name</span><span class="p">,</span>
+        <span class="n">cache_key</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+        <span class="s2">&quot;Writing autotune config for module </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">module_name</span><span class="p">,</span>
+        <span class="n">autotune_tmp_file</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">autotune_tmp_file</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+      <span class="n">autotune_config</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+    <span class="n">autotune_config</span> <span class="o">=</span> <span class="n">compilation_cache</span><span class="o">.</span><span class="n">compress_executable</span><span class="p">(</span><span class="n">autotune_config</span><span class="p">)</span>
+    <span class="n">global_client</span><span class="o">.</span><span class="n">key_value_set_bytes</span><span class="p">(</span><span class="n">cache_key</span><span class="p">,</span> <span class="n">autotune_config</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+        <span class="s2">&quot;Autotune config for module </span><span class="si">%s</span><span class="s2"> with size </span><span class="si">%d</span><span class="s2"> shared by cache_key </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">module_name</span><span class="p">,</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">autotune_config</span><span class="p">),</span>
+        <span class="n">cache_key</span><span class="p">,</span>
+    <span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+        <span class="s2">&quot;Compiling module </span><span class="si">%s</span><span class="s2">, waiting for config to be shared by cache_key </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">module_name</span><span class="p">,</span>
+        <span class="n">cache_key</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">autotune_config</span> <span class="o">=</span> <span class="n">global_client</span><span class="o">.</span><span class="n">blocking_key_value_get_bytes</span><span class="p">(</span>
+        <span class="n">cache_key</span><span class="p">,</span> <span class="n">share_timeout</span>
+    <span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+        <span class="s2">&quot;Received autotune config for module </span><span class="si">%s</span><span class="s2"> of size </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">module_name</span><span class="p">,</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">autotune_config</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">autotune_config</span> <span class="o">=</span> <span class="n">compilation_cache</span><span class="o">.</span><span class="n">decompress_executable</span><span class="p">(</span><span class="n">autotune_config</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">autotune_tmp_file</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+      <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">autotune_config</span><span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+        <span class="s2">&quot;Compiling module </span><span class="si">%s</span><span class="s2">, using autotune config from </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">module_name</span><span class="p">,</span>
+        <span class="n">autotune_tmp_file</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">debug_options</span><span class="o">.</span><span class="n">xla_gpu_load_autotune_results_from</span> <span class="o">=</span> <span class="n">autotune_tmp_file</span>
+    <span class="n">executable</span> <span class="o">=</span> <span class="n">_compile_and_write_cache</span><span class="p">(</span>
+        <span class="n">backend</span><span class="p">,</span>
+        <span class="n">computation</span><span class="p">,</span>
+        <span class="n">compile_options</span><span class="p">,</span>
+        <span class="n">host_callbacks</span><span class="p">,</span>
+        <span class="n">module_name</span><span class="p">,</span>
+        <span class="n">cache_key</span><span class="p">,</span>
+    <span class="p">)</span>
+  <span class="k">return</span> <span class="n">executable</span>
+
+<span class="n">_compile_and_write_autotune_config</span><span class="o">.</span><span class="n">autotune_configs_dir</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
+
+<span class="c1"># The process with id 0 should compile the module and write it to the K-V</span>
+<span class="c1"># storage.</span>
+<span class="c1"># TODO: In case when the process with id 0 is not participating in computation</span>
+<span class="c1"># we need to choose another process to compile the module.</span>
+<span class="k">def</span> <span class="nf">_compile_and_share_module</span><span class="p">(</span>
+    <span class="n">backend</span><span class="p">:</span> <span class="n">xc</span><span class="o">.</span><span class="n">Client</span><span class="p">,</span>
+    <span class="n">computation</span><span class="p">:</span> <span class="n">ir</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+    <span class="n">compile_options</span><span class="p">:</span> <span class="n">xc</span><span class="o">.</span><span class="n">CompileOptions</span><span class="p">,</span>
+    <span class="n">host_callbacks</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span>
+    <span class="n">global_client</span><span class="p">:</span> <span class="n">lib</span><span class="o">.</span><span class="n">xla_extension</span><span class="o">.</span><span class="n">DistributedRuntimeClient</span><span class="p">,</span>
+    <span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">cache_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xc</span><span class="o">.</span><span class="n">LoadedExecutable</span><span class="p">:</span>
+  <span class="n">share_timeout</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">share_binary_between_hosts_timeout_ms</span><span class="o">.</span><span class="n">value</span>
+
+  <span class="c1"># TODO: We need a proper eviction protocol here, otherwise all compiled</span>
+  <span class="c1"># modules will pile in memory.</span>
+  <span class="k">if</span> <span class="n">cache_key</span> <span class="ow">in</span> <span class="n">_compile_and_share_module</span><span class="o">.</span><span class="n">modules_cache</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">_compile_and_share_module</span><span class="o">.</span><span class="n">modules_cache</span><span class="p">[</span><span class="n">cache_key</span><span class="p">]</span>
+
+  <span class="k">if</span> <span class="n">distributed</span><span class="o">.</span><span class="n">global_state</span><span class="o">.</span><span class="n">process_id</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">executable</span> <span class="o">=</span> <span class="n">_compile_and_write_cache</span><span class="p">(</span>
+        <span class="n">backend</span><span class="p">,</span>
+        <span class="n">computation</span><span class="p">,</span>
+        <span class="n">compile_options</span><span class="p">,</span>
+        <span class="n">host_callbacks</span><span class="p">,</span>
+        <span class="n">module_name</span><span class="p">,</span>
+        <span class="n">cache_key</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">serialized_executable</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">serialize_executable</span><span class="p">(</span><span class="n">executable</span><span class="p">)</span>
+    <span class="n">serialized_executable</span> <span class="o">=</span> <span class="n">compilation_cache</span><span class="o">.</span><span class="n">compress_executable</span><span class="p">(</span>
+        <span class="n">serialized_executable</span>
+    <span class="p">)</span>
+    <span class="n">global_client</span><span class="o">.</span><span class="n">key_value_set_bytes</span><span class="p">(</span><span class="n">cache_key</span><span class="p">,</span> <span class="n">serialized_executable</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">serialized_executable</span> <span class="o">=</span> <span class="n">global_client</span><span class="o">.</span><span class="n">blocking_key_value_get_bytes</span><span class="p">(</span>
+        <span class="n">cache_key</span><span class="p">,</span> <span class="n">share_timeout</span>
+    <span class="p">)</span>
+    <span class="n">serialized_executable</span> <span class="o">=</span> <span class="n">compilation_cache</span><span class="o">.</span><span class="n">decompress_executable</span><span class="p">(</span>
+        <span class="n">serialized_executable</span>
+    <span class="p">)</span>
+    <span class="n">executable</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">deserialize_executable</span><span class="p">(</span>
+        <span class="n">serialized_executable</span><span class="p">,</span> <span class="n">compile_options</span>
+    <span class="p">)</span>
+
+  <span class="n">_compile_and_share_module</span><span class="o">.</span><span class="n">modules_cache</span><span class="p">[</span><span class="n">cache_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">executable</span>
+  <span class="k">return</span> <span class="n">executable</span>
+
+<span class="n">_compile_and_share_module</span><span class="o">.</span><span class="n">modules_cache</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">def</span> <span class="nf">_compile_and_write_cache</span><span class="p">(</span>
+    <span class="n">backend</span><span class="p">:</span> <span class="n">xc</span><span class="o">.</span><span class="n">Client</span><span class="p">,</span>
+    <span class="n">computation</span><span class="p">:</span> <span class="n">ir</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
+    <span class="n">compile_options</span><span class="p">:</span> <span class="n">xc</span><span class="o">.</span><span class="n">CompileOptions</span><span class="p">,</span>
+    <span class="n">host_callbacks</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span>
+    <span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">cache_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xc</span><span class="o">.</span><span class="n">LoadedExecutable</span><span class="p">:</span>
+  <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+  <span class="n">executable</span> <span class="o">=</span> <span class="n">backend_compile</span><span class="p">(</span>
+      <span class="n">backend</span><span class="p">,</span> <span class="n">computation</span><span class="p">,</span> <span class="n">compile_options</span><span class="p">,</span> <span class="n">host_callbacks</span>
+  <span class="p">)</span>
+  <span class="n">compile_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+  <span class="n">_cache_write</span><span class="p">(</span>
+      <span class="n">cache_key</span><span class="p">,</span> <span class="n">compile_time</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">executable</span><span class="p">,</span> <span class="n">host_callbacks</span>
+  <span class="p">)</span>
+  <span class="k">return</span> <span class="n">executable</span>
+
+<span class="k">def</span> <span class="nf">_cache_read</span><span class="p">(</span>
+    <span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cache_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">compile_options</span><span class="p">:</span> <span class="n">xc</span><span class="o">.</span><span class="n">CompileOptions</span><span class="p">,</span>
+    <span class="n">backend</span><span class="p">:</span> <span class="n">xc</span><span class="o">.</span><span class="n">Client</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">xc</span><span class="o">.</span><span class="n">LoadedExecutable</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Looks up the `computation` and it&#39;s compilation time in the persistent</span>
+<span class="sd">  compilation cache repository.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">try</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">compilation_cache</span><span class="o">.</span><span class="n">get_executable_and_time</span><span class="p">(</span>
+        <span class="n">cache_key</span><span class="p">,</span> <span class="n">compile_options</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+  <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">raise_persistent_cache_errors</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+      <span class="k">raise</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Error reading persistent compilation cache entry for &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">ex</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+
+<span class="k">def</span> <span class="nf">_cache_write</span><span class="p">(</span><span class="n">cache_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                 <span class="n">compile_time_secs</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                 <span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                 <span class="n">backend</span><span class="p">:</span> <span class="n">xc</span><span class="o">.</span><span class="n">Client</span><span class="p">,</span> <span class="n">executable</span><span class="p">:</span> <span class="n">xc</span><span class="o">.</span><span class="n">LoadedExecutable</span><span class="p">,</span>
+                 <span class="n">host_callbacks</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Writes the `serialized_computation` and its compilation time to the</span>
+<span class="sd">  persistent compilation cache repository.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="c1"># Only write cache entries from the first process. Otherwise we create</span>
+  <span class="c1"># problems with contention for writes on some filesystems, e.g., GCS.</span>
+  <span class="k">if</span> <span class="n">distributed</span><span class="o">.</span><span class="n">global_state</span><span class="o">.</span><span class="n">process_id</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Not writing persistent cache entry since process_id != 0&quot;</span><span class="p">)</span>
+    <span class="k">return</span>
+
+  <span class="k">if</span> <span class="n">host_callbacks</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+        <span class="s2">&quot;Not writing persistent cache entry for &#39;</span><span class="si">%s</span><span class="s2">&#39; because it uses host &quot;</span>
+        <span class="s2">&quot;callbacks (e.g. from jax.debug.print or breakpoint)&quot;</span><span class="p">,</span> <span class="n">module_name</span><span class="p">)</span>
+    <span class="k">return</span>
+
+  <span class="n">min_compile_time</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">persistent_cache_min_compile_time_secs</span><span class="o">.</span><span class="n">value</span>
+  <span class="k">if</span> <span class="n">compile_time_secs</span> <span class="o">&lt;</span> <span class="n">min_compile_time</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+        <span class="s2">&quot;Not writing persistent cache entry for &#39;</span><span class="si">%s</span><span class="s2">&#39; because it took &lt; </span><span class="si">%.2f</span><span class="s2"> &quot;</span>
+        <span class="s2">&quot;seconds to compile (</span><span class="si">%.2f</span><span class="s2">s)&quot;</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">min_compile_time</span><span class="p">,</span>
+        <span class="n">compile_time_secs</span><span class="p">)</span>
+    <span class="k">return</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+        <span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39; took at least </span><span class="si">%.2f</span><span class="s2"> seconds to compile (</span><span class="si">%.2f</span><span class="s2">s)&quot;</span><span class="p">,</span>
+        <span class="n">module_name</span><span class="p">,</span> <span class="n">min_compile_time</span><span class="p">,</span> <span class="n">compile_time_secs</span><span class="p">)</span>
+
+  <span class="k">try</span><span class="p">:</span>
+    <span class="n">compilation_cache</span><span class="o">.</span><span class="n">put_executable_and_time</span><span class="p">(</span>
+        <span class="n">cache_key</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">executable</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">compile_time_secs</span><span class="p">))</span>
+  <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">raise_persistent_cache_errors</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+      <span class="k">raise</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Error writing persistent compilation cache entry for &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">module_name</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">ex</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The JAX authors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, The JAX Authors. NumPy and SciPy documentation are copyright the respective authors..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
